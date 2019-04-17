@@ -8,6 +8,9 @@ package db;
 /**
  *
  * @author izacc
+ * 
+ * Clase con la que se instancia con la informacion que se tiene en 
+ * base de datos
  */
 public class Registro {
     

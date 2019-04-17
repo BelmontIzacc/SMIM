@@ -8,6 +8,10 @@ package herramientas;
 /**
  *
  * @author izacc
+ * 
+ * Clase para el manejo de los archivos de video
+ * son funciones estaticas, se puede obtener la ruta final de donde se guardo el video
+ * y meter metodo para abrir un video
  */
 public class GestorVideo {
     
