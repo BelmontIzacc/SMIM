@@ -10,8 +10,15 @@ import modelos.Coordenada;
 import modelos.Estadistica;
 
 /**
- *
- * @author izacc
+ * Clase Medio Termografico.
+ * Fecha Martes 30 de abril 2019.
+ * @author IBelmont.
+ * Copyright IBelmont.
+ */
+
+/**
+ * La Clase MedioTermografico es abstracta para poder heredar sus metodos y variables a las clases
+ * Imagen y Video y poder sobreescribirlos segun se necesite.
  */
 public abstract class MedioTermografico {
     private String tipProceso;
@@ -21,18 +28,19 @@ public abstract class MedioTermografico {
     private ArrayList<Coordenada> puntosInteres;
     private Estadistica estadistica;
 
-    public MedioTermografico(String tipProceso, String fecha, String nombreProceso, 
-            String rutaImagenes, ArrayList<Coordenada> puntosInteres) {
+    public MedioTermografico(String tipProceso, String fecha, String nombreProceso,
+            String rutaImagenes) {
         this.tipProceso = tipProceso;
         this.fecha = fecha;
         this.nombreProceso = nombreProceso;
         this.rutaImagenes = rutaImagenes;
-        this.puntosInteres = puntosInteres;
-        estadistica = null;
+        this.puntosInteres = new ArrayList<>();
+        this.estadistica = null;
     }
     
-    abstract void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres);
-    abstract void calcularEstadistica();
+    abstract public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres);
+    
+    abstract public void calcularEstadistica();
 
     public String getTipProceso() {
         return tipProceso;
@@ -61,4 +69,9 @@ public abstract class MedioTermografico {
     public void setEstadistica(Estadistica estadistica) {
         this.estadistica = estadistica;
     }
+
+    public void setPuntosInteres(ArrayList<Coordenada> puntosInteres) {
+        this.puntosInteres = puntosInteres;
+    }
+    
 }

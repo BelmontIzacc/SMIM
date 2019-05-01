@@ -5,20 +5,42 @@
  */
 package procesamiento;
 
+import java.util.ArrayList;
+import modelos.Coordenada;
+
 /**
- *
- * @author izacc
+ * Clase Video.
+ * Fecha Martes 01 de mayo 2019.
+ * @author IBelmont.
+ * Copyright IBelmont.
  */
 public class Video extends MedioTermografico{
+    
+    private int tiempoAnalisis;
+    private String rutaVideo;
 
-    @Override
-    void selecionPuntosInteres() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Video(String tipProceso, String fecha, String nombreProceso,
+            String rutaImagenes, int tiempoAnalisis, String rutaVideo) {
+        super(tipProceso, fecha, nombreProceso, rutaImagenes);
+        this.tiempoAnalisis  = tiempoAnalisis;
+        this.rutaVideo = rutaVideo;
     }
 
     @Override
-    void calcularEstadistica() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres) {
+        
+    }
+
+    @Override
+    public void calcularEstadistica() {
+
     }
     
+    public int getTiempoAnalisis() {
+        return tiempoAnalisis;
+    }
+
+    public String getRutaVideo() {
+        return rutaVideo;
+    }
 }

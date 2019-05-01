@@ -5,20 +5,39 @@
  */
 package procesamiento;
 
+import java.util.ArrayList;
+import modelos.Coordenada;
+import modelos.Estadistica;
+
 /**
- *
- * @author izacc
+ * Clase Imagen.
+ * Fecha Martes 01 de mayo 2019.
+ * @author IBelmont.
+ * Copyright IBelmont.
  */
 public class Imagen extends MedioTermografico{
 
-    @Override
-    void selecionPuntosInteres() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Imagen(String tipProceso, String fecha, String nombreProceso,String rutaImagenes) {
+        super(tipProceso, fecha, nombreProceso, rutaImagenes);
     }
 
     @Override
-    void calcularEstadistica() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres) {
+        super.setPuntosInteres(puntosInteres);
+    }
+
+    @Override
+    public void calcularEstadistica() {
+        Estadistica e = new Estadistica(super.getPuntosInteres());
+        super.setEstadistica(super.getEstadistica());
     }
     
+    public void procesamientoImagenes(){
+        for(int x = 0 ; x<super.getPuntosInteres().size(); x++){
+            int tamTemp = super.getPuntosInteres().get(x).getTemperatura().size();
+            for(int y = 0 ; y<tamTemp; y++){
+                super.getPuntosInteres().get(x).getTemperatura().get(y).calcularTemperatura();
+            }
+        }
+    }
 }
