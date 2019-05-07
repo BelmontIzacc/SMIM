@@ -14,20 +14,26 @@ import modelos.Estadistica;
  * Fecha Martes 01 de mayo 2019.
  * @author IBelmont.
  * Copyright IBelmont.
+ */ 
+ 
+ /** 
+ * Clase para el manejo y analisis de las imagenes seleccionadas por el usuario
+ * para su posterior procesamiento.
  */
+
 public class Imagen extends MedioTermografico{
 
-    public Imagen(String tipProceso, String fecha, String nombreProceso,String rutaImagenes) {
+    public Imagen(String tipProceso, String fecha, String nombreProceso,String rutaImagenes){
         super(tipProceso, fecha, nombreProceso, rutaImagenes);
     }
 
     @Override
-    public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres) {
+    public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres){
         super.setPuntosInteres(puntosInteres);
     }
 
     @Override
-    public void calcularEstadistica() {
+    public void calcularEstadistica(){
         Estadistica e = new Estadistica(super.getPuntosInteres());
         super.setEstadistica(super.getEstadistica());
     }

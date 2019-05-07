@@ -14,6 +14,12 @@ import modelos.Coordenada;
  * @author IBelmont.
  * Copyright IBelmont.
  */
+
+ /** 
+ * Clase para el manejo y analisis del video seleccionado por el usuario
+ * para su posterior procesamiento y segmentacion de frames.
+ */
+
 public class Video extends MedioTermografico{
     
     private int tiempoAnalisis;
@@ -27,20 +33,20 @@ public class Video extends MedioTermografico{
     }
 
     @Override
-    public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres) {
+    public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres){
         
     }
 
     @Override
-    public void calcularEstadistica() {
+    public void calcularEstadistica(){
 
     }
     
-    public int getTiempoAnalisis() {
+    public int getTiempoAnalisis(){
         return tiempoAnalisis;
     }
 
-    public String getRutaVideo() {
+    public String getRutaVideo(){
         return rutaVideo;
     }
 }

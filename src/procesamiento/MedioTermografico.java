@@ -20,7 +20,8 @@ import modelos.Estadistica;
  * La Clase MedioTermografico es abstracta para poder heredar sus metodos y variables a las clases
  * Imagen y Video y poder sobreescribirlos segun se necesite.
  */
-public abstract class MedioTermografico {
+
+public abstract class MedioTermografico{
     private String tipProceso;
     private String fecha;
     private String nombreProceso;
@@ -29,7 +30,7 @@ public abstract class MedioTermografico {
     private Estadistica estadistica;
 
     public MedioTermografico(String tipProceso, String fecha, String nombreProceso,
-            String rutaImagenes) {
+            String rutaImagenes){
         this.tipProceso = tipProceso;
         this.fecha = fecha;
         this.nombreProceso = nombreProceso;
@@ -42,35 +43,35 @@ public abstract class MedioTermografico {
     
     abstract public void calcularEstadistica();
 
-    public String getTipProceso() {
+    public String getTipProceso(){
         return tipProceso;
     }
 
-    public String getFecha() {
+    public String getFecha(){
         return fecha;
     }
 
-    public String getNombreProceso() {
+    public String getNombreProceso(){
         return nombreProceso;
     }
 
-    public String getRutaImagenes() {
+    public String getRutaImagenes(){
         return rutaImagenes;
     }
 
-    public ArrayList<Coordenada> getPuntosInteres() {
+    public ArrayList<Coordenada> getPuntosInteres(){
         return puntosInteres;
     }
 
-    public Estadistica getEstadistica() {
+    public Estadistica getEstadistica(){
         return estadistica;
     }
 
-    public void setEstadistica(Estadistica estadistica) {
+    public void setEstadistica(Estadistica estadistica){
         this.estadistica = estadistica;
     }
 
-    public void setPuntosInteres(ArrayList<Coordenada> puntosInteres) {
+    public void setPuntosInteres(ArrayList<Coordenada> puntosInteres){
         this.puntosInteres = puntosInteres;
     }
     

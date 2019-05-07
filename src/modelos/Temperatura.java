@@ -14,13 +14,19 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author IBelmont.
  * Copyright IBelmont.
  */
-public class Temperatura {
+
+ /** 
+ * Clase para el calculo de la temperatura segun el color obtenido de la
+ * coordenda seleccionada.
+ */
+
+public class Temperatura{
     private int id;
     private double temperatura;
     private Color color;
     private String nombreImagen;
 
-    public Temperatura(int id, Color color, String nombreImagen) {
+    public Temperatura(int id, Color color, String nombreImagen){
         this.id = id;
         this.temperatura = 0.0;
         this.color = color;
@@ -31,19 +37,19 @@ public class Temperatura {
         this.temperatura = ThreadLocalRandom.current().nextInt(1, 400);
     }
 
-    public int getId() {
+    public int getId(){
         return id;
     }
 
-    public double getTemperatura() {
+    public double getTemperatura(){
         return temperatura;
     }
 
-    public Color getColor() {
+    public Color getColor(){
         return color;
     }
 
-    public String getNombreImagen() {
+    public String getNombreImagen(){
         return nombreImagen;
     }
 }

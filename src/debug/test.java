@@ -6,7 +6,14 @@
 package debug;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import modelos.Coordenada;
 import modelos.Temperatura;
 import procesamiento.Imagen;
@@ -21,43 +28,52 @@ public class test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        try {
+            // TODO code application logic here
+            
+//            File archivo = new File("C:\\Users\\izacc\\Pictures\\SMIM\\1.jpg");
+//            BufferedImage bi = ImageIO.read(archivo);
+//            ImageJFrame frame = new ImageJFrame(bi);
 
-        Coordenada cor1 = new Coordenada(1,50.0,124.2);
-        Coordenada cor2 = new Coordenada(2,20.0,184.2);
-        
-        Color c1 = new Color(24,9,51);
-        Color c2 = new Color(23,212,52);
-        Color c3 = new Color(20,1,6);
-        Color c4 = new Color(105,23,4);
-        Color c5 = new Color(158,17,186);
-        
-        Temperatura t1 = new Temperatura(1,c1,"A");
-        Temperatura t2 = new Temperatura(2,c2,"B");
-        Temperatura t3 = new Temperatura(3,c3,"C");
-        Temperatura t4 = new Temperatura(4,c4,"D");
-        Temperatura t5 = new Temperatura(5,c5,"E");
-        
-        cor1.agregarTemperatura(t1);
-        cor1.agregarTemperatura(t2);
-        cor1.agregarTemperatura(t3);
-        cor1.agregarTemperatura(t4);
-        cor1.agregarTemperatura(t5);
-        
-        cor2.agregarTemperatura(t1);
-        cor2.agregarTemperatura(t2);
-        cor2.agregarTemperatura(t3);
-        cor2.agregarTemperatura(t4);
-        cor2.agregarTemperatura(t5);
-        
-        ArrayList<Coordenada> puntosInteres = new ArrayList<>();
-        puntosInteres.add(cor1);
-        puntosInteres.add(cor2);
+            int numeroCoordenadas = 5;
+            int numeroImagenes = 6;
+            String tipo = "Fundicion";
+            String nombreProyecto = "Practica_1";
+            String fecha = "02/05/19";
+            String ruta = "C:\\Users\\izacc\\Pictures\\SMIM\\Fundicion";
 
-        Imagen img = new Imagen("Fundicion","01-05-19","Practica","C:\\Documentos\\SMIM\\Fundicion");
-        img.agregarPuntosInteres(puntosInteres);
-        img.procesamientoImagenes();
-        System.out.println();
+            ArrayList<Coordenada> puntosInteres = new ArrayList<>();
+            
+            for(int d = 0 ; d<numeroCoordenadas; d++){
+                int i = ThreadLocalRandom.current().nextInt(1, 250);
+                int j = ThreadLocalRandom.current().nextInt(1, 250);    
+                Coordenada aux = new Coordenada(d,i,j);
+                puntosInteres.add(aux);
+            }
+            
+            for(int im = 0 ; im<numeroImagenes ; im++){
+                int numero = im+1;
+                File archivo = new File(""+ruta+"\\"+numero+".jpg");
+                BufferedImage bi = ImageIO.read(archivo);
+                ImageJFrame frame = new ImageJFrame(bi);
+                
+                for(int x = 0 ; x<puntosInteres.size();x++){
+                    int color = bi.getRGB((int)puntosInteres.get(x).getCoordX(),(int)puntosInteres.get(x).getCoordX());
+                    Color c = new Color(color);
+                    Temperatura temp = new Temperatura(puntosInteres.get(x).getId(),c,""+numero);
+                    puntosInteres.get(x).agregarTemperatura(temp);
+                }
+                 numero = 0;
+            }
+
+            Imagen img = new Imagen(tipo,fecha,nombreProyecto,ruta);
+            img.agregarPuntosInteres(puntosInteres);
+            img.procesamientoImagenes();
+            System.out.println();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(test.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
