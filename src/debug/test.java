@@ -30,10 +30,6 @@ public class test {
     public static void main(String[] args) {
         try {
             // TODO code application logic here
-            
-//            File archivo = new File("C:\\Users\\izacc\\Pictures\\SMIM\\1.jpg");
-//            BufferedImage bi = ImageIO.read(archivo);
-//            ImageJFrame frame = new ImageJFrame(bi);
 
             int numeroCoordenadas = 5;
             int numeroImagenes = 6;

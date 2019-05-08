@@ -21,7 +21,9 @@ import modelos.Estadistica;
  * Imagen y Video y poder sobreescribirlos segun se necesite.
  */
 
+
 public abstract class MedioTermografico{
+    
     private String tipProceso;
     private String fecha;
     private String nombreProceso;
@@ -31,12 +33,14 @@ public abstract class MedioTermografico{
 
     public MedioTermografico(String tipProceso, String fecha, String nombreProceso,
             String rutaImagenes){
+        
         this.tipProceso = tipProceso;
         this.fecha = fecha;
         this.nombreProceso = nombreProceso;
         this.rutaImagenes = rutaImagenes;
         this.puntosInteres = new ArrayList<>();
         this.estadisticas = new ArrayList<>();
+        
     }
     
     abstract public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres);
@@ -44,35 +48,44 @@ public abstract class MedioTermografico{
     abstract public void calcularEstadistica();
 
     public String getTipProceso(){
+        
         return tipProceso;
+        
     }
 
     public String getFecha(){
+        
         return fecha;
+        
     }
 
     public String getNombreProceso(){
+        
         return nombreProceso;
+        
     }
 
     public String getRutaImagenes(){
+        
         return rutaImagenes;
+        
     }
 
     public ArrayList<Coordenada> getPuntosInteres(){
+        
         return puntosInteres;
+        
     }
 
-    public ArrayList<Estadistica> getEstadisticas() {
+    public ArrayList<Estadistica> getEstadisticas(){
+        
         return estadisticas;
-    }
-
-    public void setEstadisticas(ArrayList<Estadistica> estadisticas) {
-        this.estadisticas = estadisticas;
+        
     }
 
     public void setPuntosInteres(ArrayList<Coordenada> puntosInteres){
+        
         this.puntosInteres = puntosInteres;
+        
     }
-    
 }

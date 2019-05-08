@@ -20,6 +20,7 @@ import modelos.Coordenada;
  * para su posterior procesamiento y segmentacion de frames.
  */
 
+
 public class Video extends MedioTermografico{
     
     private int tiempoAnalisis;
@@ -27,9 +28,11 @@ public class Video extends MedioTermografico{
 
     public Video(String tipProceso, String fecha, String nombreProceso,
             String rutaImagenes, int tiempoAnalisis, String rutaVideo) {
+        
         super(tipProceso, fecha, nombreProceso, rutaImagenes);
         this.tiempoAnalisis  = tiempoAnalisis;
         this.rutaVideo = rutaVideo;
+        
     }
 
     @Override
@@ -43,10 +46,14 @@ public class Video extends MedioTermografico{
     }
     
     public int getTiempoAnalisis(){
+        
         return tiempoAnalisis;
+        
     }
 
     public String getRutaVideo(){
+        
         return rutaVideo;
+        
     }
 }

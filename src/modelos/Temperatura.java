@@ -20,40 +20,56 @@ import java.util.concurrent.ThreadLocalRandom;
  * coordenda seleccionada.
  */
 
+
 public class Temperatura{
+    
     private int id;
     private double temperatura;
     private Color color;
     private String nombreImagen;
 
     public Temperatura(int id, Color color, String nombreImagen){
+        
         this.id = id;
         this.temperatura = 0.0;
         this.color = color;
         this.nombreImagen = nombreImagen;
+        
     }
     
     public void calcularTemperatura(){
+        
         this.temperatura = ThreadLocalRandom.current().nextInt(1, 400);
+        
     }
 
     public int getId(){
+        
         return id;
+        
     }
 
     public double getTemperatura(){
+        
         return temperatura;
+        
     }
 
     public Color getColor(){
+        
         return color;
+        
     }
 
     public String getNombreImagen(){
+        
         return nombreImagen;
+        
     }
 
-    public void setTemperatura(double temperatura) {
+    public void setTemperatura(double temperatura){
+        
         this.temperatura = temperatura;
+        
     }
 }

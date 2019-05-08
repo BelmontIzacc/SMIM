@@ -21,32 +21,47 @@ import modelos.Estadistica;
  * para su posterior procesamiento.
  */
 
+
 public class Imagen extends MedioTermografico{
 
-    public Imagen(String tipProceso, String fecha, String nombreProceso,String rutaImagenes){
+    public Imagen(String tipProceso, String fecha, String nombreProceso, String rutaImagenes){
+        
         super(tipProceso, fecha, nombreProceso, rutaImagenes);
+        
     }
 
     @Override
     public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres){
+        
         super.setPuntosInteres(puntosInteres);
+        
     }
 
     @Override
     public void calcularEstadistica(){
-        for(int x = 0 ; x<super.getPuntosInteres().size(); x++){
+        
+        for(int x = 0; x < super.getPuntosInteres().size(); x++){
+            
             Estadistica e = new Estadistica(super.getPuntosInteres().get(x));
             e.calcularEstadistica();
             super.getEstadisticas().add(e);
+            
         }
+        
     }
     
     public void procesamientoImagenes(){
-        for(int x = 0 ; x<super.getPuntosInteres().size(); x++){
+        
+        for(int x = 0; x < super.getPuntosInteres().size(); x++){
+            
             int tamTemp = super.getPuntosInteres().get(x).getTemperatura().size();
-            for(int y = 0 ; y<tamTemp; y++){
+            
+            for(int y = 0; y < tamTemp; y++){
+                
                 super.getPuntosInteres().get(x).getTemperatura().get(y).calcularTemperatura();
+                
             }
         }
+        
     }
 }
