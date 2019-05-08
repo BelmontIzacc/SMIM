@@ -34,8 +34,11 @@ public class Imagen extends MedioTermografico{
 
     @Override
     public void calcularEstadistica(){
-        Estadistica e = new Estadistica(super.getPuntosInteres());
-        super.setEstadistica(super.getEstadistica());
+        for(int x = 0 ; x<super.getPuntosInteres().size(); x++){
+            Estadistica e = new Estadistica(super.getPuntosInteres().get(x));
+            e.calcularEstadistica();
+            super.getEstadisticas().add(e);
+        }
     }
     
     public void procesamientoImagenes(){

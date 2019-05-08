@@ -69,6 +69,7 @@ public class test {
             Imagen img = new Imagen(tipo,fecha,nombreProyecto,ruta);
             img.agregarPuntosInteres(puntosInteres);
             img.procesamientoImagenes();
+            img.calcularEstadistica();
             System.out.println();
             
         } catch (IOException ex) {

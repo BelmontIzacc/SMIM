@@ -52,4 +52,8 @@ public class Temperatura{
     public String getNombreImagen(){
         return nombreImagen;
     }
+
+    public void setTemperatura(double temperatura) {
+        this.temperatura = temperatura;
+    }
 }

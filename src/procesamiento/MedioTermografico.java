@@ -27,7 +27,7 @@ public abstract class MedioTermografico{
     private String nombreProceso;
     private String rutaImagenes;
     private ArrayList<Coordenada> puntosInteres;
-    private Estadistica estadistica;
+    private ArrayList<Estadistica> estadisticas;
 
     public MedioTermografico(String tipProceso, String fecha, String nombreProceso,
             String rutaImagenes){
@@ -36,7 +36,7 @@ public abstract class MedioTermografico{
         this.nombreProceso = nombreProceso;
         this.rutaImagenes = rutaImagenes;
         this.puntosInteres = new ArrayList<>();
-        this.estadistica = null;
+        this.estadisticas = new ArrayList<>();
     }
     
     abstract public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres);
@@ -63,12 +63,12 @@ public abstract class MedioTermografico{
         return puntosInteres;
     }
 
-    public Estadistica getEstadistica(){
-        return estadistica;
+    public ArrayList<Estadistica> getEstadisticas() {
+        return estadisticas;
     }
 
-    public void setEstadistica(Estadistica estadistica){
-        this.estadistica = estadistica;
+    public void setEstadisticas(ArrayList<Estadistica> estadisticas) {
+        this.estadisticas = estadisticas;
     }
 
     public void setPuntosInteres(ArrayList<Coordenada> puntosInteres){
