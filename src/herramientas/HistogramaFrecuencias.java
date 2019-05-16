@@ -29,9 +29,9 @@ public class HistogramaFrecuencias{
         double frecuencias[] = new double[256];
         BufferedImage aux = GestorImagenes.toBufferedImage(imagen);
 
-        for(int x=0; x < aux.getWidth(); x++){
+        for(int x = 0; x < aux.getWidth(); x++){
             
-            for (int y=0; y < aux.getHeight(); y++){
+            for (int y = 0; y < aux.getHeight(); y++){
                 
                 Color pixel = new Color(aux.getRGB(x, y));
 
