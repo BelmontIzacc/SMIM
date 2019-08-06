@@ -8,6 +8,7 @@ package procesamiento;
 import java.util.ArrayList;
 import modelos.Coordenada;
 import modelos.Estadistica;
+import modelos.TemperaturaPromedioPuntos;
 
 /**
  * Clase Medio Termografico.
@@ -30,6 +31,7 @@ public abstract class MedioTermografico{
     private String rutaImagenes;
     private ArrayList<Coordenada> puntosInteres;
     private ArrayList<Estadistica> estadisticas;
+    private ArrayList<TemperaturaPromedioPuntos> temperaturaPorImagen;
 
     public MedioTermografico(String tipProceso, String fecha, String nombreProceso,
             String rutaImagenes){
@@ -40,6 +42,7 @@ public abstract class MedioTermografico{
         this.rutaImagenes = rutaImagenes;
         this.puntosInteres = new ArrayList<>();
         this.estadisticas = new ArrayList<>();
+        this.temperaturaPorImagen = new ArrayList<>();
         
     }
     
@@ -88,4 +91,13 @@ public abstract class MedioTermografico{
         this.puntosInteres = puntosInteres;
         
     }
+
+    public ArrayList<TemperaturaPromedioPuntos> getTemperaturaPorImagen() {
+        return temperaturaPorImagen;
+    }
+
+    public void setTemperaturaPorImagen(ArrayList<TemperaturaPromedioPuntos> temperaturaPorImagen) {
+        this.temperaturaPorImagen = temperaturaPorImagen;
+    }
+    
 }

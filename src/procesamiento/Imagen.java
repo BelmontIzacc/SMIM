@@ -48,6 +48,9 @@ public class Imagen extends MedioTermografico{
             
         }
         
+        Estadistica temp = new Estadistica();
+        super.setTemperaturaPorImagen(temp.calcularPromedioPorImagen(super.getPuntosInteres()));
+        
     }
     
     public void procesamientoImagenes(){

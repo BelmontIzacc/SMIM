@@ -29,6 +29,7 @@ public class Estadistica{
     private double moda; //falta este
     private double desviacionEstandar;
     private Coordenada puntoInteres;
+    private ArrayList<Coordenada> puntosInteres;
     
     public Estadistica(Coordenada puntoInteres){
         
@@ -38,6 +39,10 @@ public class Estadistica{
         this.moda = 0;
         this.desviacionEstandar = 0;
         this.puntoInteres = puntoInteres;
+        
+    }
+
+    public Estadistica() {
         
     }
     
@@ -80,6 +85,35 @@ public class Estadistica{
         this.varianza = (acumulado/aux.size());
         this.desviacionEstandar = Math.sqrt(this.varianza);
         
+    }
+    
+   public ArrayList<TemperaturaPromedioPuntos> calcularPromedioPorImagen(ArrayList<Coordenada> puntosInteres) {
+        
+        ArrayList<TemperaturaPromedioPuntos> aux;
+        aux = new ArrayList<>();
+        
+        double[] acumulado = new double[puntosInteres.get(0).getTemperatura().size()];
+        
+        for(int y = 0 ; y < puntosInteres.size() ; y++){
+            
+            for(int x = 0 ; x < puntosInteres.get(y).getTemperatura().size() ; x++){
+                
+                acumulado[x] += puntosInteres.get(y).getTemperatura().get(x).getTemperatura();
+                
+            }
+            
+        }
+        
+        int x = 1;
+        
+        for(int y = 0 ; y < acumulado.length ; y++){
+            
+            double promedio = acumulado[y]/puntosInteres.size();
+            aux.add(new TemperaturaPromedioPuntos(""+x,promedio));
+            x++;
+        }
+        
+        return aux;
     }
 
     public double getMedia(){

@@ -7,6 +7,7 @@ package procesamiento;
 
 import java.util.ArrayList;
 import modelos.Coordenada;
+import modelos.Estadistica;
 
 /**
  * Clase Video.
@@ -38,11 +39,39 @@ public class Video extends MedioTermografico{
     @Override
     public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres){
         
+         super.setPuntosInteres(puntosInteres);
+         
     }
 
     @Override
     public void calcularEstadistica(){
-
+        
+        for(int x = 0; x < super.getPuntosInteres().size(); x++){
+            
+            Estadistica e = new Estadistica(super.getPuntosInteres().get(x));
+            e.calcularEstadistica();
+            super.getEstadisticas().add(e);
+            
+        }
+        
+        Estadistica temp = new Estadistica();
+        super.setTemperaturaPorImagen(temp.calcularPromedioPorImagen(super.getPuntosInteres()));
+        
+    }
+    
+    public void procesamientoVideo(){
+        
+        for(int x = 0; x < super.getPuntosInteres().size(); x++){
+            
+            int tamTemp = super.getPuntosInteres().get(x).getTemperatura().size();
+            
+            for(int y = 0; y < tamTemp; y++){
+                
+                super.getPuntosInteres().get(x).getTemperatura().get(y).calcularTemperatura();
+                
+            }
+        }
+        
     }
     
     public int getTiempoAnalisis(){
