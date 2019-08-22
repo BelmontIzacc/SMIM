@@ -18,17 +18,22 @@ import org.bytedeco.javacv.FrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 
+
 /**
- *
- * @author izacc
- * 
+ * Clase GestorVideo.
+ * Fecha Martes 15 de mayo 2019.
+ * @author IBelmont.
+ * Copyright IBelmont.
+ */
+
+/**
  * Clase para el manejo de los archivos de video
  * son funciones estaticas, se puede obtener la ruta final de donde se guardo el video
  * y meter metodo para abrir un video
  */
 public class GestorVideo {
     
-    public static String obtenerRutaFrames(String ruta,int tiempoAnalisis){
+    public static String obtenerRutaFrames(String ruta, int tiempoAnalisis){
         
         String rutaImagenes = "C:\\Users\\izacc\\Pictures\\SMIM\\Manufactura\\img\\"; //ruta que se espera que regrese el metodo
         
@@ -40,12 +45,13 @@ public class GestorVideo {
             // objeto de tipo frame
             Frame i;
             //objeto del cual convertira el frame del video en imagen
-            OpenCVFrameConverter.ToIplImage converterToIplImage = new OpenCVFrameConverter.ToIplImage();
+            OpenCVFrameConverter.ToIplImage converterToIplImage = 
+                    new OpenCVFrameConverter.ToIplImage();
             int j = 30; //frame numero 30 equivale a 1s
             int nombreNum = 1; // utilizado para los nombres de las imagenes
             //este for esta preparado para sacar 10 frames por segundo de un video de 30 fps
             // el 10 simboliza que el video dura 10segundos
-            for(int x = 0 ; x<10; x++){
+            for(int x = 0 ; x<10 ; x++){
                 
                 try {
                     // seleccionas que frame vas a querer, en este caso el frame de 1s en el video, que es el
@@ -60,7 +66,8 @@ public class GestorVideo {
                     // se crea un buffered con el frame obtenido
                     BufferedImage bi = IplImageToBufferedImage(image);
                     // se guarda el frame en un directorio espesifico con el nombre deseado junto con un formato
-                    File outputfile = new File("C:\\Users\\izacc\\Pictures\\SMIM\\Manufactura\\img\\"+nombreNum+".jpg");
+                    File outputfile = 
+                            new File("C:\\Users\\izacc\\Pictures\\SMIM\\Manufactura\\img\\"+nombreNum+".jpg");
                     // se establece y valida el formato de salida
                     ImageIO.write(bi, "jpg", outputfile);
                     // aumenta en 30 los frames para calcular el siguiente segundo
@@ -91,9 +98,14 @@ public class GestorVideo {
     }
     
     private static BufferedImage IplImageToBufferedImage(opencv_core.IplImage src) {
-        OpenCVFrameConverter.ToIplImage grabberConverter = new OpenCVFrameConverter.ToIplImage();
+        
+        OpenCVFrameConverter.ToIplImage grabberConverter = 
+                new OpenCVFrameConverter.ToIplImage();
+        
         Java2DFrameConverter paintConverter = new Java2DFrameConverter();
         Frame frame = grabberConverter.convert(src);
+        
         return paintConverter.getBufferedImage(frame,1);
+        
     } 
 }

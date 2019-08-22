@@ -10,7 +10,7 @@ package db;
  * @author izacc
  * 
  * Clase para abrir,cerrar,registrar,borrar,obtener registros desde
- * base de datos
+ * base de datos para alimentar el sistema
  */
 public class SistemaInfrarrojo {
     

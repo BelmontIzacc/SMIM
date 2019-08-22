@@ -55,7 +55,8 @@ public class Video extends MedioTermografico{
         }
         
         Estadistica temp = new Estadistica();
-        super.setTemperaturaPorImagen(temp.calcularPromedioPorImagen(super.getPuntosInteres()));
+        super.setTemperaturaPorImagen(temp.calcularPromedioPorImagen(
+                super.getPuntosInteres()));
         
     }
     

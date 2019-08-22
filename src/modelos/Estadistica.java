@@ -52,7 +52,7 @@ public class Estadistica{
         QuickSort.ordenar(aux);
         int tam = (int)aux.size();
         
-        if(tam%2==0){
+        if(tam%2 == 0){
             
             int mitad = (int)aux.size()/2;
             double parteA = aux.get(mitad-1).getTemperatura();
@@ -78,7 +78,8 @@ public class Estadistica{
         
         for(int i = 0; i < aux.size(); i++){
             
-            acumulado += Math.pow((aux.get(i).getTemperatura() - this.media), 2);
+            double auxiliar = (aux.get(i).getTemperatura() - this.media);
+            acumulado += Math.pow(auxiliar, 2);
             
         }
         

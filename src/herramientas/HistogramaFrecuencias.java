@@ -10,8 +10,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 /**
- * Clase GestorImagenes.
- * Fecha Miercoles 08 de mayo 2019.
+ * Clase HistogramaFrecuencias.
+ * Fecha Martes 15 de abril 2019.
  * @author IBelmont.
  * Copyright IBelmont.
  */
@@ -27,7 +27,7 @@ public class HistogramaFrecuencias{
     public static double[] calcularHistograma(int color, Image imagen){
          
         double frecuencias[] = new double[256];
-        BufferedImage aux = GestorImagenes.toBufferedImage(imagen);
+        BufferedImage aux = GestorImagenes.ABuffered(imagen);
 
         for(int x = 0; x < aux.getWidth(); x++){
             

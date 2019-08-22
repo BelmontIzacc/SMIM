@@ -6,24 +6,37 @@
 package modelos;
 
 /**
- *
- * @author izacc
+ * Clase GestorVideo.
+ * Fecha Martes 05 de Agosto 2019.
+ * @author IBelmont.
+ * Copyright IBelmont.
  */
+
+/*
+* Clase que guardara la temperatura promedio de los puntos de interes por imagen
+*/
+
 public class TemperaturaPromedioPuntos {
     
     private String nombre;
     private double temperaturaPromedio;
 
     public TemperaturaPromedioPuntos(String nombre, double temperaturaPromedio) {
+        
         this.nombre = nombre;
         this.temperaturaPromedio = temperaturaPromedio;
+        
     }
 
     public String getNombre() {
+        
         return nombre;
+        
     }
 
     public double getTemperaturaPromedio() {
+        
         return temperaturaPromedio;
+        
     }
 }

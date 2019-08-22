@@ -24,7 +24,8 @@ import modelos.Estadistica;
 
 public class Imagen extends MedioTermografico{
 
-    public Imagen(String tipProceso, String fecha, String nombreProceso, String rutaImagenes){
+    public Imagen(String tipProceso, String fecha, String nombreProceso, 
+            String rutaImagenes){
         
         super(tipProceso, fecha, nombreProceso, rutaImagenes);
         
@@ -49,7 +50,8 @@ public class Imagen extends MedioTermografico{
         }
         
         Estadistica temp = new Estadistica();
-        super.setTemperaturaPorImagen(temp.calcularPromedioPorImagen(super.getPuntosInteres()));
+        super.setTemperaturaPorImagen(temp.calcularPromedioPorImagen(
+                super.getPuntosInteres()));
         
     }
     

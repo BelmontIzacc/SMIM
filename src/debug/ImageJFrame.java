@@ -10,13 +10,10 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Roberto Cruz Leija
+ * @author izacc
  */
 public class ImageJFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ImageJFrame
-     */
     public ImageJFrame(Image imagen) {
         initComponents();
         // mandar la imagen como icono al jlabel

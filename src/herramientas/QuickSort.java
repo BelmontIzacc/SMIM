@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import modelos.Temperatura;
 
 /**
- * Clase GestorImagenes.
+ * Clase QuickSort.
  * Fecha Miercoles 08 de mayo 2019.
  * @author IBelmont.
  * Copyright IBelmont.

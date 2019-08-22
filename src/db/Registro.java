@@ -10,7 +10,7 @@ package db;
  * @author izacc
  * 
  * Clase con la que se instancia con la informacion que se tiene en 
- * base de datos
+ * base de datos, para su uso en el sistema
  */
 public class Registro {
     

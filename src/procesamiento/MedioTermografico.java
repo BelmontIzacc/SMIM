@@ -93,11 +93,15 @@ public abstract class MedioTermografico{
     }
 
     public ArrayList<TemperaturaPromedioPuntos> getTemperaturaPorImagen() {
+        
         return temperaturaPorImagen;
+        
     }
 
     public void setTemperaturaPorImagen(ArrayList<TemperaturaPromedioPuntos> temperaturaPorImagen) {
+        
         this.temperaturaPorImagen = temperaturaPorImagen;
+        
     }
     
 }

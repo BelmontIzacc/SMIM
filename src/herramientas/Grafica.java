@@ -5,17 +5,25 @@
  */
 package herramientas;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.xy.XYDataItem;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+    import org.jfree.chart.ChartFactory;
+    import org.jfree.chart.ChartFrame;
+    import org.jfree.chart.JFreeChart;
+    import org.jfree.data.xy.XYDataItem;
+    import org.jfree.data.xy.XYSeries;
+    import org.jfree.data.xy.XYSeriesCollection;
 
 /**
- *
- * @author izacc
- */
+ * Clase Grafica.
+ * Fecha Martes 15 de abril 2019.
+ * @author IBelmont.
+ * Copyright IBelmont.
+ */ 
+
+/*
+* Clase para contruir y mostrar graficas
+* Esta clase se llenara de informacion estadistica, para poder graficar el comportamiento
+*/
+
 public class Grafica {
     
     private JFreeChart grafica;
