@@ -40,28 +40,67 @@ public class testImage {
             String ruta = "C:\\Users\\izacc\\Pictures\\SMIM\\Fundicion"; //ruta donde estan guardadas las imagenes
 
             ArrayList<Coordenada> puntosInteres = new ArrayList<>(); // creacion de arreglo de puntosInteres
-            
+//            int cord1 = 121;//Coordenada X
+//            int cord2 = 103; //Coordenada Y
+//            Coordenada a = new Coordenada(0,cord1,cord2); //Creacion de Coordenada con los valores enteriores
+//            puntosInteres.add(a); //agregado de coordenada en el array de coordenadas
+                
             for(int d = 0 ; d<numeroCoordenadas; d++){  //seleccion de puntos de interes aleatorios simulando el panel
-                int i = ThreadLocalRandom.current().nextInt(1, 250); //Coordenada X
-                int j = ThreadLocalRandom.current().nextInt(1, 250); //Coordenada Y
+                int i = ThreadLocalRandom.current().nextInt(1, 200); //Coordenada X
+                int j = ThreadLocalRandom.current().nextInt(1, 200); //Coordenada Y
                 Coordenada aux = new Coordenada(d,i,j); //Creacion de Coordenada con los valores enteriores
                 puntosInteres.add(aux); //agregado de coordenada en el array de coordenadas
             }
             
             //inicio de preprocesamiento de imagenes
             for(int im = 0 ; im<numeroImagenes ; im++){ // dependiendo del numero de imagenes se aplica los puntos de interes
+                
                 int numero = im+1;
                 File archivo = new File(""+ruta+"\\"+numero+".jpg"); // se habre o lee imagen por imagen guardada en la ruta definida
                 BufferedImage bi = ImageIO.read(archivo); // se transforma el archivo a Buffered
                 ImageJFrame frame = new ImageJFrame(bi); // por prueba se muestran las imagenes en esa carpeta, se quitara esto
                 
                 for(int x = 0 ; x<puntosInteres.size();x++){ // se aplicara por punto de interes en las imagenes
-                    int color = bi.getRGB((int)puntosInteres.get(x).getCoordX(),(int)puntosInteres.get(x).getCoordX()); // se obtiene el color de la coordenada
-                    Color c = new Color(color); //se crea el color obtenido de la coordenada
-                    Temperatura temp = new Temperatura(puntosInteres.get(x).getId(),c,""+numero); //se guarda el color de la temperatura obtenida
+                    
+                    int xInicial = (int)puntosInteres.get(x).getCoordX(); //Cordenada seleccionada por el usuario X
+                    int yInicial = (int) puntosInteres.get(x).getCoordY(); //Coordenada seleccionada por el usuario Y
+                    int muestra = 3; //tamaño final = 2*muestra + 1
+                    int xNuevoInicio = xInicial-muestra; //Nuevo inicio X para iniciar el recorrido matriz
+                    int xNuevoFin = xInicial+muestra; //Nuevo tope X para finalizar el recorrido en matriz
+                    int yNuevoInicio = yInicial-muestra; //Nuevo inicio Y para iniciar el recorrido matriz
+                    int yNuevoFin = yInicial+muestra; //Nuevo tope Y para finalizar el recorrido en matriz
+
+                    int acumuladoRojo = 0; //variable para acumular la tonalidad roja del reccorido
+                    int acumuladoVerde = 0; //variable para acumular la tonalidad verde del reccorido
+                    int acumuladoAzul = 0; //variable para acumular la tonalidad azul del reccorido
+                    int total = 0; //total de tonalidades recorridas
+            
+                    //for para recorrer por matriz las tonalidades al rededor de la coordenada seleccionada por el usuario
+                    for(int i = xNuevoInicio ; i <= xNuevoFin ; i++){
+                        for(int j = yNuevoInicio ; j <= yNuevoFin ; j++){
+                            
+                            int color = bi.getRGB((int)puntosInteres.get(x).getCoordX(),(int)puntosInteres.get(x).getCoordX()); // se obtiene el color de la coordenada                            
+                            Color pixel = new Color(color); //se crea el color obtenido de la coordenada
+                            //System.out.println(""+c.getRed()+","+c.getGreen()+","+c.getBlue());
+                            acumuladoRojo += pixel.getRed(); //acumula la tonalidad roja de los pixeles
+                            acumuladoVerde += pixel.getGreen(); //acumula la tonalidad verde de los pixeles
+                            acumuladoAzul += pixel.getBlue(); //acumula la tonalidad zul de los pixeles
+                            total += 1; //acumula cada pixel recorrido
+                        
+                        }
+                    }
+                    
+                    int r = acumuladoRojo/total; //calculo del promedio de las tonalidades rojas
+                    int g = acumuladoVerde/total; //calculo del promedio de las tonalides verdes
+                    int b = acumuladoAzul/total; //calculo del promedio de las tonalidades azules
+                    
+                    Color colorPromedio = new Color(r,g,b); //creado del color calculado del promedio anterior
+                    
+                    Temperatura temp = new Temperatura(puntosInteres.get(x).getId(),colorPromedio,""+numero); //se guarda el color de la temperatura obtenida
                     puntosInteres.get(x).agregarTemperatura(temp);
+                    
                 }
-                 numero = 0;
+                numero = 0;
             }
             
             //Inicio de procesamiento de imagenes
