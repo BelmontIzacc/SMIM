@@ -33,7 +33,7 @@ public class testImage {
              
             // esta informacion es la que se proporcionara al momento de estar seleccionando imagenes
             int numeroCoordenadas = 5; //Numero total de coordenadas seleccionadas en el panel
-            int numeroImagenes = 2; // numero total de imagenes procesadas
+            int numeroImagenes = 4; // numero total de imagenes procesadas
             String tipo = "Fundicion"; // tipo de proceso seleccionado desde los menus
             String nombreProyecto = "Practica_1"; // nombre del proyecto ingresado por el usuario
             String fecha = "02/05/19"; // fecha tomada por el sistema
@@ -94,6 +94,10 @@ public class testImage {
                     int g = acumuladoVerde/total; //calculo del promedio de las tonalides verdes
                     int b = acumuladoAzul/total; //calculo del promedio de las tonalidades azules
                     
+                    if( r > 255 ){ r = 255; }else if( r < 0 ){ r = 0; }
+                    if( g > 255 ){ g = 255; }else if( g < 0 ){ g = 0; }
+                    if( b > 255 ){ b = 255; }else if( b < 0 ){ b = 0; }
+                    
                     Color colorPromedio = new Color(r,g,b); //creado del color calculado del promedio anterior
                     
                     Temperatura temp = new Temperatura(puntosInteres.get(x).getId(),colorPromedio,""+numero); //se guarda el color de la temperatura obtenida
@@ -104,10 +108,12 @@ public class testImage {
             }
             
             //Inicio de procesamiento de imagenes
-            Imagen img = new Imagen(tipo,fecha,nombreProyecto,ruta);
+            Imagen img = new Imagen(tipo,fecha,nombreProyecto,ruta,numeroImagenes);
             img.agregarPuntosInteres(puntosInteres); //se agrega los puntos de interes a la clase imagen
             img.procesamientoImagenes(); // calculo de temperatura
             img.calcularEstadistica(); //calculo de estadisticass
+            img.graficar();
+            
             System.out.println();
             
         } catch (IOException ex) {

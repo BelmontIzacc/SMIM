@@ -28,7 +28,7 @@ public class Coordenada{
     private double coordY;
     private ArrayList<Temperatura> temperatura;
 
-    public Coordenada(int id, double coordX, double coordY){
+    public Coordenada( int id, double coordX, double coordY ){
         
         this.id = id;
         this.coordX = coordX;
@@ -37,15 +37,15 @@ public class Coordenada{
         
     }
     
-    public void agregarTemperatura(ArrayList<Temperatura> temperatura){
+    public void agregarTemperatura( ArrayList<Temperatura> temperatura ){
         
         this.temperatura = temperatura;
         
     }
     
-    public void agregarTemperatura(Temperatura temperatura){
+    public void agregarTemperatura( Temperatura temperatura ){
         
-        this.temperatura.add(temperatura);
+        this.temperatura.add( temperatura );
         
     }
 

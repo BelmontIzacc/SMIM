@@ -5,6 +5,7 @@
  */
 package procesamiento;
 
+import herramientas.Grafica;
 import java.util.ArrayList;
 import modelos.Coordenada;
 import modelos.Estadistica;
@@ -28,49 +29,73 @@ public class Video extends MedioTermografico{
     private String rutaVideo;
 
     public Video(String tipProceso, String fecha, String nombreProceso,
-            String rutaImagenes, int tiempoAnalisis, String rutaVideo) {
+            String rutaImagenes, int tiempoAnalisis, String rutaVideo, int numeroImagenes) {
         
-        super(tipProceso, fecha, nombreProceso, rutaImagenes);
+        super( tipProceso, fecha, nombreProceso, rutaImagenes, numeroImagenes );
+         
         this.tiempoAnalisis  = tiempoAnalisis;
         this.rutaVideo = rutaVideo;
         
     }
 
     @Override
-    public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres){
+    public void agregarPuntosInteres( ArrayList<Coordenada> puntosInteres ){
         
-         super.setPuntosInteres(puntosInteres);
+         super.setPuntosInteres( puntosInteres );
          
     }
 
     @Override
     public void calcularEstadistica(){
         
-        for(int x = 0; x < super.getPuntosInteres().size(); x++){
+        for( int x = 0 ; x < super.getPuntosInteres().size() ; x++ ){
             
-            Estadistica e = new Estadistica(super.getPuntosInteres().get(x));
+            Estadistica e = new Estadistica( super.getPuntosInteres().get(x) );
             e.calcularEstadistica();
             super.getEstadisticas().add(e);
             
         }
         
         Estadistica temp = new Estadistica();
-        super.setTemperaturaPorImagen(temp.calcularPromedioPorImagen(
-                super.getPuntosInteres()));
+        super.setTemperaturaPromedioPuntos( temp.calcularPromedioPorImagen( 
+                super.getPuntosInteres() ) );
         
     }
     
     public void procesamientoVideo(){
         
-        for(int x = 0; x < super.getPuntosInteres().size(); x++){
+        for( int x = 0 ; x < super.getPuntosInteres().size() ; x++ ){
             
-            int tamTemp = super.getPuntosInteres().get(x).getTemperatura().size();
+            int tamTemp = super.getPuntosInteres().get( x ).getTemperatura().size();
             
-            for(int y = 0; y < tamTemp; y++){
+            for( int y = 0 ; y < tamTemp ; y++ ){
                 
-                super.getPuntosInteres().get(x).getTemperatura().get(y).calcularTemperatura();
+                super.getPuntosInteres().get( x ).getTemperatura().get( y ).calcularTemperatura();
                 
             }
+        }
+        
+    }
+    
+    @Override
+    public void graficar() {
+        
+        ArrayList<ArrayList<double[]>> histograma = super.calcularHistogramaFrecuencias();
+        
+        for( int x = 0 ; x < histograma.size() ; x++ ){
+            
+            ArrayList<double[]> auxHistograma = histograma.get( x );
+            double[] rojo = auxHistograma.get( 0 );
+            double[] verde = auxHistograma.get( 1 );
+            double[] azul = auxHistograma.get( 2 );
+            
+            Grafica grafica = new Grafica( "Tono", "Frecuencia", "Frecuencias de Color Original" );
+            
+            grafica.agregarSerie( "Rojo", rojo );
+            grafica.agregarSerie( "Azul", verde );
+            grafica.agregarSerie( "Verde", azul );
+            grafica.crearYmostrarGrafica();
+            
         }
         
     }

@@ -24,36 +24,36 @@ import java.awt.image.BufferedImage;
 
 public class HistogramaFrecuencias{
     
-    public static double[] calcularHistograma(int color, Image imagen){
+    public static double[] calcularHistograma( int color, Image imagen ){
          
-        double frecuencias[] = new double[256];
-        BufferedImage aux = GestorImagenes.ABuffered(imagen);
+        double frecuencias[] = new double[ 256 ];
+        BufferedImage aux = GestorImagenes.ABuffered( imagen );
 
-        for(int x = 0; x < aux.getWidth(); x++){
+        for( int x = 0; x < aux.getWidth(); x++ ){
             
-            for (int y = 0; y < aux.getHeight(); y++){
+            for ( int y = 0; y < aux.getHeight(); y++ ){
                 
-                Color pixel = new Color(aux.getRGB(x, y));
+                Color pixel = new Color( aux.getRGB( x, y ) );
 
-                if(color == 0){
+                if( color == 0 ){
 
                 }
 
-                if(color == 1){
+                if( color == 1 ){
 
-                    frecuencias[pixel.getRed()]++;
+                    frecuencias[ pixel.getRed() ]++;
 
                 }
 
                 if(color == 2){
 
-                    frecuencias[pixel.getGreen()]++;
+                    frecuencias[ pixel.getGreen() ]++;
 
                 }
 
                 if(color == 3){
 
-                    frecuencias[pixel.getBlue()]++;
+                    frecuencias[ pixel.getBlue() ]++;
 
                 }
             }

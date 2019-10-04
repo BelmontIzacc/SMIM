@@ -28,13 +28,22 @@ public class Temperatura{
     private Color color;
     private String nombreImagen;
 
-    public Temperatura(int id, Color color, String nombreImagen){
+    public Temperatura( int id, Color color, String nombreImagen ){
         
         this.id = id;
         this.temperatura = 0.0;
         this.color = color;
         this.nombreImagen = nombreImagen;
         
+    }
+    
+    public Temperatura( int id, Color color, String nombreImagen, double temperatura ){
+        
+        this.id = id;
+        this.temperatura = 0.0;
+        this.color = color;
+        this.nombreImagen = nombreImagen;
+        this.temperatura = temperatura;
     }
     
     public void calcularTemperatura(){
@@ -64,12 +73,6 @@ public class Temperatura{
     public String getNombreImagen(){
         
         return nombreImagen;
-        
-    }
-
-    public void setTemperatura(double temperatura){
-        
-        this.temperatura = temperatura;
         
     }
 }

@@ -25,10 +25,10 @@ import java.awt.image.BufferedImage;
 
 public class GestorImagenes {
     
-    public static BufferedImage muestra(int x, int y, int tam, int tam1, BufferedImage bi){
+    public static BufferedImage muestra( int x, int y, int tam, int tam1, BufferedImage bi ){
         
         BufferedImage imagenCopia = 
-                new BufferedImage(tam1, tam, BufferedImage.TYPE_INT_RGB);
+                new BufferedImage( tam1, tam, BufferedImage.TYPE_INT_RGB );
         
         int c = 0;
         int v = 0;
@@ -37,17 +37,17 @@ public class GestorImagenes {
         finy = y+tam1;
         finx = x+tam;
         
-        for(int j = y ; j < finy ; j++){
+        for( int j = y ; j < finy ; j++ ){
             
-            for(int i = x ; i < finx ; i++){
+            for( int i = x ; i < finx ; i++ ){
                 
-                imagenCopia.setRGB(c ,v ,bi.getRGB(j ,i ) );
+                imagenCopia.setRGB( c ,v ,bi.getRGB( j, i ) );
                 v++;      
                 
             }
             
-            c++;
-            v=0;
+            c ++;
+            v = 0;
             
         }
         
@@ -55,26 +55,26 @@ public class GestorImagenes {
         
     }
     
-    public static Image AImagen(BufferedImage bi){
+    public static Image AImagen( BufferedImage bi ){
         
-        return bi.getScaledInstance(bi.getWidth(), 
-                bi.getHeight(), BufferedImage.TYPE_INT_RGB);
+        return bi.getScaledInstance( bi.getWidth(), 
+                bi.getHeight(), BufferedImage.TYPE_INT_RGB );
         
     }
     
-    public static BufferedImage ABuffered(Image imagen){
+    public static BufferedImage ABuffered( Image imagen ){
         
-        if(imagen instanceof BufferedImage){
+        if( imagen instanceof BufferedImage ){
             
-          return(BufferedImage)imagen;
+          return ( BufferedImage )imagen;
         
         }
         
-        BufferedImage bi = new BufferedImage(imagen.getWidth(null), 
-                imagen.getHeight(null), BufferedImage.TYPE_INT_RGB);
+        BufferedImage bi = new BufferedImage( imagen.getWidth( null ), 
+                imagen.getHeight( null ), BufferedImage.TYPE_INT_RGB );
         
         Graphics2D nueva = bi.createGraphics();
-        nueva.drawImage(imagen, 0, 0, null);
+        nueva.drawImage( imagen, 0, 0, null );
         nueva.dispose();
         
         return bi;

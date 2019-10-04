@@ -18,19 +18,19 @@ package modelos;
 
 public class TemperaturaPromedioPuntos {
     
-    private String nombre;
+    private String nombreImagen;
     private double temperaturaPromedio;
 
-    public TemperaturaPromedioPuntos(String nombre, double temperaturaPromedio) {
+    public TemperaturaPromedioPuntos( String nombre, double temperaturaPromedio ) {
         
-        this.nombre = nombre;
+        this.nombreImagen = nombre;
         this.temperaturaPromedio = temperaturaPromedio;
         
     }
 
-    public String getNombre() {
+    public String getNombreImagen() {
         
-        return nombre;
+        return nombreImagen;
         
     }
 

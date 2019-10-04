@@ -33,7 +33,7 @@ import org.bytedeco.javacv.OpenCVFrameConverter;
  */
 public class GestorVideo {
     
-    public static String obtenerRutaFrames(String ruta, int tiempoAnalisis){
+    public static String obtenerRutaFrames( String ruta, int tiempoAnalisis ){
         
         String rutaImagenes = "C:\\Users\\izacc\\Pictures\\SMIM\\Manufactura\\img\\"; //ruta que se espera que regrese el metodo
         
@@ -97,15 +97,15 @@ public class GestorVideo {
         return rutaImagenes;
     }
     
-    private static BufferedImage IplImageToBufferedImage(opencv_core.IplImage src) {
+    private static BufferedImage IplImageToBufferedImage( opencv_core.IplImage src ) {
         
         OpenCVFrameConverter.ToIplImage grabberConverter = 
                 new OpenCVFrameConverter.ToIplImage();
         
         Java2DFrameConverter paintConverter = new Java2DFrameConverter();
-        Frame frame = grabberConverter.convert(src);
+        Frame frame = grabberConverter.convert( src );
         
-        return paintConverter.getBufferedImage(frame,1);
+        return paintConverter.getBufferedImage( frame,1 );
         
     } 
 }

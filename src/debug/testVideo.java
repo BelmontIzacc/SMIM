@@ -39,7 +39,7 @@ public class testVideo {
             String nombreProyecto = "Manufactura_1"; // nombre del proyecto ingresado por el usuario
             String fecha = "05/08/19"; // fecha tomada por el sistema
             String rutaVideo = "C:\\Users\\izacc\\Pictures\\SMIM\\Manufactura\\profe.mp4"; //ruta donde estan guardadas las imagenes
-            int tiempoAnalisis = 2;
+            int tiempoAnalisis = 10;
             
             String rutaImagenes = GestorVideo.obtenerRutaFrames(rutaVideo,tiempoAnalisis);
             
@@ -55,6 +55,7 @@ public class testVideo {
             
             //inicio de preprocesamiento de las imagenes del video
             for(int im = 0 ; im<numeroImagenes ; im++){ // dependiendo del numero de imagenes se aplica los puntos de interes
+                
                 int numero = im+1;
                 File archivo = new File(""+rutaImagenes+"\\"+numero+".jpg"); // se habre o lee imagen por imagen guardada en la ruta definida
                 BufferedImage bi = ImageIO.read(archivo); // se transforma el archivo a Buffered
@@ -69,10 +70,13 @@ public class testVideo {
                  numero = 0;
             }
             
-            Video vid = new Video(tipo,fecha,nombreProyecto,rutaImagenes,tiempoAnalisis,rutaVideo);
+            Video vid = new Video(tipo,fecha,nombreProyecto,rutaImagenes,tiempoAnalisis,rutaVideo,numeroImagenes);
             vid.agregarPuntosInteres(puntosInteres);
             vid.procesamientoVideo();
             vid.calcularEstadistica();
+            vid.calcularEstadistica();
+            vid.graficar();
+            
             System.out.println();
             
         } catch (IOException ex) {
