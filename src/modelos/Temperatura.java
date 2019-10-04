@@ -16,22 +16,26 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 
  /** 
- * Clase para el calculo de la temperatura segun el color obtenido de la
- * coordenda seleccionada.
+ * Clase para el calculo de la temperaturaCelsius segun el color obtenido de la
+ coordenda seleccionada.
  */
 
 
 public class Temperatura{
     
     private int id;
-    private double temperatura;
+    private double temperaturaCelsius;
+    private double temperaturaKelvin;
+    private double temperaturaFarenheit;
     private Color color;
     private String nombreImagen;
 
     public Temperatura( int id, Color color, String nombreImagen ){
         
         this.id = id;
-        this.temperatura = 0.0;
+        this.temperaturaCelsius = 0.0;
+        this.temperaturaKelvin = 0.0;
+        this.temperaturaFarenheit = 0.0;
         this.color = color;
         this.nombreImagen = nombreImagen;
         
@@ -40,15 +44,36 @@ public class Temperatura{
     public Temperatura( int id, Color color, String nombreImagen, double temperatura ){
         
         this.id = id;
-        this.temperatura = 0.0;
         this.color = color;
         this.nombreImagen = nombreImagen;
-        this.temperatura = temperatura;
+        this.temperaturaCelsius = temperatura;
+        this.temperaturaFarenheit = convertirTemp( this.temperaturaCelsius, 1 );
+        this.temperaturaKelvin = convertirTemp( this.temperaturaCelsius, 2 );
     }
     
     public void calcularTemperatura(){
         
-        this.temperatura = ThreadLocalRandom.current().nextInt(1, 400);
+        this.temperaturaCelsius = ThreadLocalRandom.current().nextInt(1, 400);
+        this.temperaturaFarenheit = convertirTemp( this.temperaturaCelsius, 1 );
+        this.temperaturaKelvin = convertirTemp( this.temperaturaCelsius, 2 );
+        
+    }
+    
+    private double convertirTemp( double tempCelsius, int opc ){
+        
+        double calculo = 0.0;
+        
+        if( opc == 1 ){ //Farenheit (0 °C × 9/5) + 32
+            
+            calculo =  ( tempCelsius * 1.8 ) + 32;
+        
+        }else if( opc == 2 ){ //Kelvin 0 °C + 273.15 
+            
+            calculo = tempCelsius + 273.15;
+            
+        }
+        
+        return calculo;
         
     }
 
@@ -58,9 +83,9 @@ public class Temperatura{
         
     }
 
-    public double getTemperatura(){
+    public double getTemperaturaCelsius(){
         
-        return temperatura;
+        return temperaturaCelsius;
         
     }
 
@@ -75,4 +100,16 @@ public class Temperatura{
         return nombreImagen;
         
     }
+
+    public double getTemperaturaKelvin() {
+        
+        return temperaturaKelvin;
+        
+    }
+
+    public double getTemperaturaFarenheit() {
+        
+        return temperaturaFarenheit;
+        
+    }    
 }

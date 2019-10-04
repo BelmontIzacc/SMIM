@@ -52,13 +52,13 @@ public class Estadistica{
         if( tam%2 == 0 ){
             
             int mitad = ( int )aux.size()/2;
-            double parteA = aux.get( mitad - 1 ).getTemperatura();
-            double parteB = aux.get( mitad ).getTemperatura();
+            double parteA = aux.get( mitad - 1 ).getTemperaturaCelsius();
+            double parteB = aux.get( mitad ).getTemperaturaCelsius();
             this.mediana = ( parteA + parteB ) / 2;
             
         }else{
             
-            this.mediana = aux.get( ( int ) aux.size() / 2 ).getTemperatura();
+            this.mediana = aux.get( ( int ) aux.size() / 2 ).getTemperaturaCelsius();
         
         }    
         
@@ -66,7 +66,7 @@ public class Estadistica{
         
         for( int x = 0 ; x < aux.size() ; x++ ){
             
-            total += aux.get( x ).getTemperatura();
+            total += aux.get( x ).getTemperaturaCelsius();
             
         }
        
@@ -75,7 +75,7 @@ public class Estadistica{
         
         for( int i = 0 ; i < aux.size() ; i++ ){
             
-            double auxiliar = ( aux.get( i ).getTemperatura() - this.media );
+            double auxiliar = ( aux.get( i ).getTemperaturaCelsius() - this.media );
             acumulado += Math.pow( auxiliar, 2 );
             
         }
@@ -96,7 +96,7 @@ public class Estadistica{
             
             for( int x = 0 ; x < puntosInteres.get( y ).getTemperatura().size() ; x++ ){
                 
-                acumulado[ x ] += puntosInteres.get( y ).getTemperatura().get( x ).getTemperatura();
+                acumulado[ x ] += puntosInteres.get( y ).getTemperatura().get( x ).getTemperaturaCelsius();
                 
             }
             

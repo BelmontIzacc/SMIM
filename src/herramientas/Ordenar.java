@@ -32,12 +32,12 @@ public class Ordenar{
             
             for( int j = 0 ; j < listaTemperatura.size() - i - 1 ; j++ ){
                 
-                if( listaTemperatura.get( j ).getTemperatura() > listaTemperatura.get( j+1 ).getTemperatura() ){
+                if( listaTemperatura.get( j ).getTemperaturaCelsius() > listaTemperatura.get( j+1 ).getTemperaturaCelsius() ){
                     
                     int idSiguiente = listaTemperatura.get( j + 1 ).getId();
                     Color colorSiguiente = listaTemperatura.get( j + 1 ).getColor();
                     String nombreSiguiente = listaTemperatura.get( j + 1 ).getNombreImagen();
-                    double temperaturaSiguiente = listaTemperatura.get( j + 1 ).getTemperatura();
+                    double temperaturaSiguiente = listaTemperatura.get( j + 1 ).getTemperaturaCelsius();
                     
                     Temperatura nuevaTemperatura = new Temperatura( idSiguiente, colorSiguiente, 
                             nombreSiguiente, temperaturaSiguiente );
@@ -45,7 +45,7 @@ public class Ordenar{
                     int idAnterior = listaTemperatura.get( j ).getId();
                     Color colorAnterior = listaTemperatura.get( j ).getColor();
                     String nombreAnterior = listaTemperatura.get( j ).getNombreImagen();
-                    double temperaturaAnterior = listaTemperatura.get( j ).getTemperatura();
+                    double temperaturaAnterior = listaTemperatura.get( j ).getTemperaturaCelsius();
                     
                     Temperatura remplazarTemperatura = new Temperatura( idAnterior, colorAnterior, 
                             nombreAnterior, temperaturaAnterior );
