@@ -28,24 +28,20 @@ public class Estadistica{
     private double varianza;
     private double moda; //falta este
     private double desviacionEstandar;
-    private Coordenada puntoInteres;
     
-    public Estadistica( Coordenada puntoInteres ){
+    public Estadistica(){
         
         this.mediana =0;
         this.media = 0;
         this.varianza = 0;
         this.moda = 0;
         this.desviacionEstandar = 0;
-        this.puntoInteres = puntoInteres;
         
     }
-
-    public Estadistica() {}
     
-    public void calcularEstadistica(){
+    public void calcularEstadistica(Coordenada puntoInteres){
         
-        ArrayList<Temperatura> aux = this.puntoInteres.getTemperatura();
+        ArrayList<Temperatura> aux = puntoInteres.getTemperatura();
         aux = Ordenar.ordenarBurbujaOpt( aux );
         int tam = ( int )aux.size();
         
@@ -135,13 +131,7 @@ public class Estadistica{
         return desviacionEstandar;
         
     }
-
-    public Coordenada getPuntoInteres(){
-        
-        return puntoInteres;
-    }
     
-
     public double getMediana(){
         
         return mediana;

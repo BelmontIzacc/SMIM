@@ -74,7 +74,6 @@ public class testVideo {
             vid.agregarPuntosInteres(puntosInteres);
             vid.procesamientoVideo();
             vid.calcularEstadistica();
-            vid.calcularEstadistica();
             vid.graficar();
             
             System.out.println();
