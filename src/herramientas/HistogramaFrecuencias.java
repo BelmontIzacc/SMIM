@@ -27,7 +27,7 @@ public class HistogramaFrecuencias{
     public static double[] calcularHistograma( int color, Image imagen ){
          
         double frecuencias[] = new double[ 256 ];
-        BufferedImage aux = GestorImagenes.ABuffered( imagen );
+        BufferedImage aux = GestorImagen.ABuffered( imagen );
 
         for( int x = 0; x < aux.getWidth(); x++ ){
             

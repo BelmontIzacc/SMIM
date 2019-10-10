@@ -41,9 +41,12 @@ public abstract class MedioTermografico{
     private ArrayList<Coordenada> puntosInteres;
     private ArrayList<Estadistica> estadisticas;
     private ArrayList<TemperaturaPromedioPuntos> temperaturaPromedioPuntos;
+    private String folio;
+    private String nombreAlumno;
+    private String grupoAlumno;
     
     public MedioTermografico( String tipProceso, String fecha, String nombreProceso,
-            String rutaImagenes, int numeroImagenes ){
+            String rutaImagenes, int numeroImagenes, String folio, String nombreAlumno, String grupoAlumno ){
         
         this.tipProceso = tipProceso;
         this.fecha = fecha;
@@ -53,7 +56,9 @@ public abstract class MedioTermografico{
         this.puntosInteres = new ArrayList<>();
         this.estadisticas = new ArrayList<>();
         this.temperaturaPromedioPuntos = new ArrayList<>();
-        
+        this.folio = folio;
+        this.nombreAlumno = nombreAlumno;
+        this.grupoAlumno = grupoAlumno;
     }
     
     abstract public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres);
@@ -165,6 +170,42 @@ public abstract class MedioTermografico{
     public void setNumeroImagenes( int numeroImagenes ) {
         
         this.numeroImagenes = numeroImagenes;
+        
+    }
+
+    public String getFolio() {
+        
+        return folio;
+        
+    }
+
+    public void setFolio(String folio) {
+        
+        this.folio = folio;
+        
+    }
+
+    public String getNombreAlumno() {
+        
+        return nombreAlumno;
+        
+    }
+
+    public void setNombreAlumno(String nombreAlumno) {
+        
+        this.nombreAlumno = nombreAlumno;
+        
+    }
+
+    public String getGrupoAlumno() {
+        
+        return grupoAlumno;
+        
+    }
+
+    public void setGrupoAlumno(String grupoAlumno) {
+        
+        this.grupoAlumno = grupoAlumno;
         
     }
 }

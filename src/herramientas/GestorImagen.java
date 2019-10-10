@@ -8,6 +8,13 @@ package herramientas;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import org.jfree.chart.JFreeChart;
 
 /**
  * Clase GestorImagenes.
@@ -23,38 +30,43 @@ import java.awt.image.BufferedImage;
  */
 
 
-public class GestorImagenes {
+public class GestorImagen {
     
-    public static BufferedImage muestra( int x, int y, int tam, int tam1, BufferedImage bi ){
-        
-        BufferedImage imagenCopia = 
-                new BufferedImage( tam1, tam, BufferedImage.TYPE_INT_RGB );
-        
-        int c = 0;
-        int v = 0;
-        int finy;
-        int finx;
-        finy = y+tam1;
-        finx = x+tam;
-        
-        for( int j = y ; j < finy ; j++ ){
+    public static void guardarImagen( BufferedImage bi, String ruta, String nombreArchivo, String formato){
+
+        try {
             
-            for( int i = x ; i < finx ; i++ ){
-                
-                imagenCopia.setRGB( c ,v ,bi.getRGB( j, i ) );
-                v++;      
-                
-            }
+            File outputfile =
+                    new File(ruta+""+nombreArchivo+"."+formato);
+            ImageIO.write(bi, formato, outputfile);
             
-            c ++;
-            v = 0;
+        } catch (IOException ex) {
+            
+            Logger.getLogger(GestorImagen.class.getName()).log(Level.SEVERE, null, ex);
             
         }
-        
-        return imagenCopia;
-        
+          
     }
     
+    public static void guardarImagen( JFreeChart grafica, int alto, int ancho, 
+            String ruta, String nombreArchivo, String formato){
+
+        try {
+            
+            BufferedImage bi = grafica.createBufferedImage(ancho, alto);
+            
+            File outputfile =
+                    new File(ruta+""+nombreArchivo+"."+formato);
+            
+            ImageIO.write(bi, formato, outputfile);
+            
+        } catch (IOException ex) {
+            
+            Logger.getLogger(GestorImagen.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+          
+    }
     public static Image AImagen( BufferedImage bi ){
         
         return bi.getScaledInstance( bi.getWidth(), 

@@ -29,9 +29,9 @@ public class Video extends MedioTermografico{
     private String rutaVideo;
 
     public Video(String tipProceso, String fecha, String nombreProceso,
-            String rutaImagenes, int tiempoAnalisis, String rutaVideo, int numeroImagenes) {
+            String rutaImagenes, int tiempoAnalisis, String rutaVideo, int numeroImagenes, String folio, String nombreAlumno, String grupoAlumno) {
         
-        super( tipProceso, fecha, nombreProceso, rutaImagenes, numeroImagenes );
+        super( tipProceso, fecha, nombreProceso, rutaImagenes, numeroImagenes, folio, nombreAlumno, grupoAlumno );
          
         this.tiempoAnalisis  = tiempoAnalisis;
         this.rutaVideo = rutaVideo;

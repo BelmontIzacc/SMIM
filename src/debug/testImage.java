@@ -5,6 +5,7 @@
  */
 package debug;
 
+import herramientas.Folio;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -38,7 +39,10 @@ public class testImage {
             String nombreProyecto = "Practica_1"; // nombre del proyecto ingresado por el usuario
             String fecha = "02/05/19"; // fecha tomada por el sistema
             String ruta = "C:\\Users\\izacc\\Pictures\\SMIM\\Fundicion"; //ruta donde estan guardadas las imagenes
-
+            String nombreAlumno = "Izacc Belmont Belmont";
+            String grupoAlumno = "5CM1";
+            String folio;
+            
             ArrayList<Coordenada> puntosInteres = new ArrayList<>(); // creacion de arreglo de puntosInteres
 //            int cord1 = 121;//Coordenada X
 //            int cord2 = 103; //Coordenada Y
@@ -108,7 +112,8 @@ public class testImage {
             }
             
             //Inicio de procesamiento de imagenes
-            Imagen img = new Imagen(tipo,fecha,nombreProyecto,ruta,numeroImagenes);
+            folio = Folio.generarFolio(nombreProyecto);
+            Imagen img = new Imagen( tipo, fecha, nombreProyecto, ruta, numeroImagenes, folio, nombreAlumno, grupoAlumno );
             img.agregarPuntosInteres(puntosInteres); //se agrega los puntos de interes a la clase imagen
             img.procesamientoImagenes(); // calculo de temperatura
             img.calcularEstadistica(); //calculo de estadisticass

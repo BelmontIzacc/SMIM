@@ -5,6 +5,7 @@
  */
 package debug;
 
+import herramientas.Folio;
 import herramientas.GestorVideo;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -33,13 +34,16 @@ public class testVideo {
             // TODO code application logic here
              
             // esta informacion es la que se proporcionara al momento de estar seleccionando imagenes
-            int numeroCoordenadas = 5; //Numero total de coordenadas seleccionadas en el panel
-            int numeroImagenes = 10; // numero total de imagenes procesadas obtenidas del video
+            int numeroCoordenadas = 2; //Numero total de coordenadas seleccionadas en el panel
+            int numeroImagenes = 4; // numero total de imagenes procesadas obtenidas del video
             String tipo = "Fundicion"; // tipo de proceso seleccionado desde los menus
             String nombreProyecto = "Manufactura_1"; // nombre del proyecto ingresado por el usuario
             String fecha = "05/08/19"; // fecha tomada por el sistema
             String rutaVideo = "C:\\Users\\izacc\\Pictures\\SMIM\\Manufactura\\profe.mp4"; //ruta donde estan guardadas las imagenes
             int tiempoAnalisis = 10;
+            String nombreAlumno = "Alejandra Beltran Silva";
+            String grupoAlumno = "5CM1";
+            String folio;
             
             String rutaImagenes = GestorVideo.obtenerRutaFrames(rutaVideo,tiempoAnalisis);
             
@@ -70,7 +74,8 @@ public class testVideo {
                  numero = 0;
             }
             
-            Video vid = new Video(tipo,fecha,nombreProyecto,rutaImagenes,tiempoAnalisis,rutaVideo,numeroImagenes);
+            folio = Folio.generarFolio(nombreProyecto);
+            Video vid = new Video(tipo,fecha,nombreProyecto,rutaImagenes,tiempoAnalisis,rutaVideo,numeroImagenes,folio, nombreAlumno, grupoAlumno );
             vid.agregarPuntosInteres(puntosInteres);
             vid.procesamientoVideo();
             vid.calcularEstadistica();

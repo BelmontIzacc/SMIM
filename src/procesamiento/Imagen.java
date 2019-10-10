@@ -26,9 +26,9 @@ import modelos.Estadistica;
 public class Imagen extends MedioTermografico{
 
     public Imagen( String tipProceso, String fecha, String nombreProceso, 
-            String rutaImagenes, int numeroImagenes ){
+            String rutaImagenes, int numeroImagenes, String folio, String nombreAlumno, String grupoAlumno ){
         
-        super( tipProceso, fecha, nombreProceso, rutaImagenes,numeroImagenes );
+        super( tipProceso, fecha, nombreProceso, rutaImagenes,numeroImagenes, folio, nombreAlumno, grupoAlumno );
         
     }
 
