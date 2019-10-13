@@ -76,12 +76,45 @@ public class Estadistica{
             
         }
         
+        int n = puntoInteres.getTemperatura().size();
+        int frecTemp, frecModa = 0;
+        double moda1 = -1;
+
+        for ( int i = 0; i < n; i++ ) {
+            
+          frecTemp = 1; 
+          Temperatura c1 = puntoInteres.getTemperatura().get(i);
+          
+          for ( int j = i + 1; j < n; j++ ) {
+              
+            Temperatura c2 = puntoInteres.getTemperatura().get(j);  
+            
+            if ( c1.getTemperaturaCelsius() == c2.getTemperaturaCelsius() ){
+                
+              frecTemp++;
+              
+            }
+            
+          }
+          
+          if ( frecTemp > frecModa ) {
+              
+            frecModa = frecTemp;
+            moda1 = c1.getTemperaturaCelsius();
+            
+          }
+          
+        } 
+        
+        moda = moda1;
+        
         this.varianza = ( acumulado / aux.size() );
         this.desviacionEstandar = Math.sqrt( this.varianza );
         
     }
     
-   public ArrayList<TemperaturaPromedioPuntos> calcularPromedioPorImagen( ArrayList<Coordenada> puntosInteres ) {
+   public ArrayList<TemperaturaPromedioPuntos> 
+        calcularPromedioPorImagen( ArrayList<Coordenada> puntosInteres ) {
         
         ArrayList<TemperaturaPromedioPuntos> aux;
         aux = new ArrayList<>();
@@ -137,4 +170,11 @@ public class Estadistica{
         return mediana;
         
     }
+
+    @Override
+    public String toString() {
+        String es = ""+mediana+","+media+","+varianza+","+moda+","+desviacionEstandar;
+        return es;
+    }
+    
 }

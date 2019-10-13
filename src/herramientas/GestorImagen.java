@@ -53,10 +53,10 @@ public class GestorImagen {
 
         try {
             
-            BufferedImage bi = grafica.createBufferedImage(ancho, alto);
+            BufferedImage bi = grafica.createBufferedImage(alto, ancho);
             
             File outputfile =
-                    new File(ruta+""+nombreArchivo+"."+formato);
+                    new File(ruta+"\\"+nombreArchivo+"."+formato);
             
             ImageIO.write(bi, formato, outputfile);
             

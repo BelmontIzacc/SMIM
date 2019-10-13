@@ -69,6 +69,13 @@ public class Grafica {
      
     }
     
+    public void guardarGrafica(int alto, int ancho, String ruta, String nombreArchivo,
+            String formato){
+        
+        GestorImagen.guardarImagen(grafica, alto, ancho, ruta, nombreArchivo, formato);
+        
+    }
+    
     public void crearYmostrarGrafica(){
     
         this.grafica = ChartFactory.createXYLineChart( titulo, ejeX, ejeY, series );

@@ -53,7 +53,7 @@ public class Temperatura{
     
     public void calcularTemperatura(){
         
-        this.temperaturaCelsius = ThreadLocalRandom.current().nextInt(1, 400);
+        this.temperaturaCelsius = ThreadLocalRandom.current().nextInt(20, 400);
         this.temperaturaFarenheit = convertirTemp( this.temperaturaCelsius, 1 );
         this.temperaturaKelvin = convertirTemp( this.temperaturaCelsius, 2 );
         

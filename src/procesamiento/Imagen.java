@@ -72,7 +72,7 @@ public class Imagen extends MedioTermografico{
     }
 
     @Override
-    public void graficar() {
+    public void graficarHistograma() {
         
         ArrayList<ArrayList<double[]>> histograma = super.calcularHistogramaFrecuencias();
         
@@ -90,6 +90,28 @@ public class Imagen extends MedioTermografico{
             grafica.agregarSerie( "Azul", verde );
             grafica.agregarSerie( "Verde", azul );
             grafica.crearYmostrarGrafica();
+            
+            super.getListaGrafica().add(grafica);
+            
+        }
+        
+    }
+    
+    public void generarArchivos(){
+        
+        super.generarArchivos();
+        
+    }
+    
+    public void guardarGrafica( int alto, int ancho, String formato ){
+        
+        String[] nombres = { "inicio", "mitad", "final" }; 
+        String ruta = "C:\\Users\\izacc\\Documents\\Termicas\\archivosSistema\\graficas";
+        
+        for( int x = 0 ; x < super.getListaGrafica().size() ; x++ ){
+            
+            Grafica g = super.getListaGrafica().get(x);
+            g.guardarGrafica(alto, ancho, ruta, nombres[x], formato);
             
         }
         

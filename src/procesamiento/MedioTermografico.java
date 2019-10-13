@@ -5,6 +5,7 @@
  */
 package procesamiento;
 
+import herramientas.GestorArchivo;
 import herramientas.Grafica;
 import herramientas.HistogramaFrecuencias;
 import java.awt.image.BufferedImage;
@@ -44,6 +45,7 @@ public abstract class MedioTermografico{
     private String folio;
     private String nombreAlumno;
     private String grupoAlumno;
+    private ArrayList<Grafica> listaGrafica;
     
     public MedioTermografico( String tipProceso, String fecha, String nombreProceso,
             String rutaImagenes, int numeroImagenes, String folio, String nombreAlumno, String grupoAlumno ){
@@ -59,13 +61,15 @@ public abstract class MedioTermografico{
         this.folio = folio;
         this.nombreAlumno = nombreAlumno;
         this.grupoAlumno = grupoAlumno;
+        this.listaGrafica = new ArrayList<>();
+        
     }
     
     abstract public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres);
     
     abstract public void calcularEstadistica();
     
-    abstract public void graficar();
+    abstract public void graficarHistograma();
     
     public ArrayList<ArrayList<double[]>> calcularHistogramaFrecuencias(){
 
@@ -105,6 +109,12 @@ public abstract class MedioTermografico{
 
          }
          return null;
+    }
+    
+    public void generarArchivos(){
+        
+        GestorArchivo.GenerarTxt(puntosInteres, estadisticas, temperaturaPromedioPuntos);
+        
     }
     
     public String getTipProceso(){
@@ -208,4 +218,11 @@ public abstract class MedioTermografico{
         this.grupoAlumno = grupoAlumno;
         
     }
+
+    public ArrayList<Grafica> getListaGrafica() {
+        
+        return listaGrafica;
+        
+    }
+    
 }

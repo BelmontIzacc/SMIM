@@ -33,7 +33,7 @@ public class testImage {
             // TODO code application logic here
              
             // esta informacion es la que se proporcionara al momento de estar seleccionando imagenes
-            int numeroCoordenadas = 2; //Numero total de coordenadas seleccionadas en el panel
+            int numeroCoordenadas = 5; //Numero total de coordenadas seleccionadas en el panel
             int numeroImagenes = 4; // numero total de imagenes procesadas
             String tipo = "Fundicion"; // tipo de proceso seleccionado desde los menus
             String nombreProyecto = "Practica_1"; // nombre del proyecto ingresado por el usuario
@@ -117,7 +117,10 @@ public class testImage {
             img.agregarPuntosInteres(puntosInteres); //se agrega los puntos de interes a la clase imagen
             img.procesamientoImagenes(); // calculo de temperatura
             img.calcularEstadistica(); //calculo de estadisticass
-            img.graficar();
+            img.graficarHistograma();
+            img.generarArchivos();
+            
+            img.guardarGrafica(700, 250, "png");
             
             System.out.println();
             

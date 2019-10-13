@@ -79,7 +79,10 @@ public class testVideo {
             vid.agregarPuntosInteres(puntosInteres);
             vid.procesamientoVideo();
             vid.calcularEstadistica();
-            vid.graficar();
+            vid.graficarHistograma();
+            vid.generarArchivos();
+            
+            vid.guardarGrafica(700, 250, "png");
             
             System.out.println();
             
