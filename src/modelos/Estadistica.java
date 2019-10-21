@@ -23,11 +23,23 @@ import java.util.ArrayList;
 
 public class Estadistica{
     
+    private int idCoordenada;
     private double mediana;
     private double media;
     private double varianza;
     private double moda; //falta este
     private double desviacionEstandar;
+    
+    public Estadistica(int id){
+        
+        this.mediana =0;
+        this.media = 0;
+        this.varianza = 0;
+        this.moda = 0;
+        this.desviacionEstandar = 0;
+        this.idCoordenada = id;
+        
+    }
     
     public Estadistica(){
         
@@ -36,12 +48,13 @@ public class Estadistica{
         this.varianza = 0;
         this.moda = 0;
         this.desviacionEstandar = 0;
+        this.idCoordenada = 0;
         
     }
     
     public void calcularEstadistica(Coordenada puntoInteres){
         
-        ArrayList<Temperatura> aux = puntoInteres.getTemperatura();
+        ArrayList<Temperatura> aux = (ArrayList<Temperatura>) puntoInteres.getTemperatura().clone();
         aux = Ordenar.ordenarBurbujaOpt( aux );
         int tam = ( int )aux.size();
         
@@ -173,7 +186,7 @@ public class Estadistica{
 
     @Override
     public String toString() {
-        String es = ""+mediana+","+media+","+varianza+","+moda+","+desviacionEstandar;
+        String es = idCoordenada+","+mediana+","+media+","+varianza+","+moda+","+desviacionEstandar;
         return es;
     }
     

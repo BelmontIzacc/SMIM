@@ -7,8 +7,13 @@ package procesamiento;
 
 import herramientas.Grafica;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import modelos.Coordenada;
 import modelos.Estadistica;
+import modelos.Temperatura;
 
 /**
  * Clase Imagen.
@@ -44,8 +49,9 @@ public class Imagen extends MedioTermografico{
         
         for( int x = 0 ; x < super.getPuntosInteres().size() ; x++ ){
             
-            Estadistica e = new Estadistica();
-            e.calcularEstadistica(super.getPuntosInteres().get( x ));
+            Coordenada c = super.getPuntosInteres().get( x );
+            Estadistica e = new Estadistica( c.getId() );
+            e.calcularEstadistica( c );
             super.getEstadisticas().add( e );
             
         }

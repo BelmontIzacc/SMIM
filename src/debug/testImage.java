@@ -34,7 +34,7 @@ public class testImage {
              
             // esta informacion es la que se proporcionara al momento de estar seleccionando imagenes
             int numeroCoordenadas = 5; //Numero total de coordenadas seleccionadas en el panel
-            int numeroImagenes = 4; // numero total de imagenes procesadas
+            int numeroImagenes = 8; // numero total de imagenes procesadas
             String tipo = "Fundicion"; // tipo de proceso seleccionado desde los menus
             String nombreProyecto = "Practica_1"; // nombre del proyecto ingresado por el usuario
             String fecha = "02/05/19"; // fecha tomada por el sistema

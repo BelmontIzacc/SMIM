@@ -53,8 +53,8 @@ public class TemperaturaPromedioPuntos {
     @Override
     public String toString() {
         
-        String tem = ""+nombreImagen+","+temperaturaPromedioCelsius+""+temperaturaPromedioKelvin+
-                ""+temperaturaPromedioFarenheit;
+        String tem = ""+nombreImagen+","+temperaturaPromedioCelsius+","+temperaturaPromedioKelvin+
+                ","+temperaturaPromedioFarenheit;
         return tem;
         
     }

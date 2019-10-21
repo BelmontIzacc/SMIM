@@ -50,9 +50,10 @@ public class Video extends MedioTermografico{
         
         for( int x = 0 ; x < super.getPuntosInteres().size() ; x++ ){
             
-            Estadistica e = new Estadistica( );
-            e.calcularEstadistica(super.getPuntosInteres().get( x ));
-            super.getEstadisticas().add(e);
+            Coordenada c = super.getPuntosInteres().get( x );
+            Estadistica e = new Estadistica( c.getId() );
+            e.calcularEstadistica( c );
+            super.getEstadisticas().add( e );
             
         }
         
