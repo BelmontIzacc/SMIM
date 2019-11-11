@@ -258,11 +258,9 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -396,7 +394,9 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
         }
     }
     public void muestraImagenes(){
-        Panel.setLayout(new GridLayout((listaIm.size()/2),2));
+        double op = (double)listaIm.size()/2;
+        double rows = Math.ceil(op);
+        Panel.setLayout(new GridLayout((int) rows,2));
         
         for(int i=0; i<listaIm.size(); i++){
             imagen = listaIm.get(i);

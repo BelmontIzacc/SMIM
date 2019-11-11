@@ -5,6 +5,7 @@
  */
 package herramientas;
 
+import static GUI_Generales.Prueba.Procesos;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +14,8 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import static GUI_Generales.Prueba.Procesos;
 import GUI_Video.Video;
+import static GUI_Video.Video.rutaGeneral;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -151,8 +152,8 @@ public class GestorVideo {
     
     public static List<BufferedImage> obtenerRutaVideo(String ruta, int tiempoAnalisis, int duracionV,double fps){
         int im;
-        if(duracionV>300){
-            duracionV = 300;
+        if(duracionV>GUI_Generales.Prueba.duracionVideo){
+            duracionV = GUI_Generales.Prueba.duracionVideo;
             im =  (duracionV/tiempoAnalisis);
         }else{
             im =  (duracionV/tiempoAnalisis);
@@ -218,7 +219,7 @@ public class GestorVideo {
         }
         return listaIm;
     }
-    
+        
     public static String rutaEspecifica(){
         int num = 0;
         Calendar fecha = Calendar.getInstance();
@@ -258,8 +259,8 @@ public class GestorVideo {
     public static List<BufferedImage> obtenerRutaNueva(String ruta, int tiempoAnalisis, int duracionV,double fps){
         eliminarArchivo(new File(rutaArchivo));
         int im;
-        if(duracionV>300){
-            duracionV = 300;
+        if(duracionV>GUI_Generales.Prueba.duracionVideo){
+            duracionV = GUI_Generales.Prueba.duracionVideo;
             im = (duracionV/tiempoAnalisis);
         }else{
             im = (duracionV/tiempoAnalisis);
@@ -354,6 +355,7 @@ public class GestorVideo {
                     Video.nombreProceso.getText()+"_"+Video.nombreAlumno.getText()+"_"+
                     Video.Grupo.getText()+"\\VideoOriginal.mp4";
             Path origen = Paths.get(video.getAbsolutePath());
+            System.out.println(video.getAbsolutePath());
             Path fin = Paths.get(rutaOrig);
             Files.copy(origen,fin);
             /////REDUCIDO
@@ -361,7 +363,8 @@ public class GestorVideo {
                     Procesos.get(Video.tipoProceso.getSelectedIndex()-1)+"\\"+fechaDia+"_"+
                     Video.nombreProceso.getText()+"_"+Video.nombreAlumno.getText()+"_"+
                     Video.Grupo.getText()+"\\Video.mp4";
-            Path origen2 = Paths.get(rutaNueva.getAbsolutePath());
+            String rut = rutaGeneral.getAbsolutePath()+"\\Video.mp4.bak";
+            Path origen2 = Paths.get(rut);
             Path fin2 = Paths.get(rutaOrig2);
             Files.copy(origen2,fin2);
             

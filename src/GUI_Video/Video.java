@@ -21,6 +21,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,6 +56,7 @@ public final class Video extends javax.swing.JInternalFrame {
     public File file;
     public MediaPlayer oracleVid;
     public long vInfo;
+    public static long maximo;
 
     /**
      * Creates new form Video
@@ -461,6 +466,7 @@ public final class Video extends javax.swing.JInternalFrame {
         Encoder encoder = new Encoder();
         MultimediaInfo info;
         long dInfo = 0;
+        maximo = GUI_Generales.Prueba.duracionVideo*1000;
         try {
             info = encoder.getInfo(GestorVideo.video);
             dInfo = info.getDuration();
@@ -473,15 +479,15 @@ public final class Video extends javax.swing.JInternalFrame {
             }
             BufferedWriter bw;
             bw = new BufferedWriter(new FileWriter(rutaCbat));
-            if(dInfo>300000){
+            if(dInfo>maximo){
                 bw.write("@echo No sierre la ventana, al terminar se cierra sola\n" +
-                "ffmpeg -ss 00:01:00.0 -y -i "+ GestorVideo.video + " -preset superfast -s 440x440 -ab 98k -an "+ rutaNueva + "\n" +
-                "@echo termino!\n" + "exit");
+                "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -t "+GUI_Generales.Prueba.duracionVideo+" -s 440x440 -ab 98k -an " +
+                rutaNueva + "\n" + "@echo termino!\n" + "exit");
             }else{
                 bw.write("@echo No sierre la ventana, al terminar se cierra sola\n" +
                 "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -s 440x440 -ab 98k -an "+ rutaNueva + "\n" +
                 "@echo termino!\n" + "exit");
-            }
+            }            
             bw.close();
         } catch (IOException ex) {
             Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
@@ -502,6 +508,13 @@ public final class Video extends javax.swing.JInternalFrame {
                 System.out.println(linea);
             }
             input.close();
+            
+            String rutaFin = rutaGeneral+"\\Video.mp4.bak";
+            Path origen = Paths.get(rutaNueva);
+            Path fin = Paths.get(rutaFin);
+            Files.copy(origen, fin,StandardCopyOption.REPLACE_EXISTING);
+            
+            
         } catch (IOException ex) {
             ex.printStackTrace();
         }

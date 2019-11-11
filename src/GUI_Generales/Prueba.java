@@ -31,6 +31,7 @@ public class Prueba extends javax.swing.JFrame {
     public boolean abrirVideo;
     public Seguridad ventanaSeguridad;
     public static int respuestaSeguridad, maxPuntos = 4, maxImagenes = 30;
+    public static int duracionVideo = 300;
     public Pasos pasos;
     public Video ventanaVideo;
     public static Cargando cargando;
@@ -279,6 +280,7 @@ public class Prueba extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Prueba.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
        
         /* Create and display the form */

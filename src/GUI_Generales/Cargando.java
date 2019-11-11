@@ -59,7 +59,13 @@ public class Cargando extends javax.swing.JInternalFrame {
     
     public void mostrarVideo(){
         ventanaVideo = new Video(this.principal);
+        int maximo = GUI_Generales.Prueba.duracionVideo * 1000;
+        int min = GUI_Generales.Prueba.duracionVideo/60;
         if(vInfo>30000){
+            if(vInfo>maximo){
+                JOptionPane.showConfirmDialog(null,"El video dura mas de "+min+" minutos, solo se procesaran 5 minutos",null,
+                      JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+            }
             this.principal.add(ventanaVideo);
             ventanaVideo.setVisible(true);
         }else{
@@ -69,6 +75,8 @@ public class Cargando extends javax.swing.JInternalFrame {
                       respuestaSeguridad = JOptionPane.showConfirmDialog(null,"El video debe ser mayor a 30 segundos",null,
                               JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
             }
+            GUI_Generales.Prueba.archivos.setEnabled(true);
+            GUI_Generales.Prueba.creditos.setEnabled(true);
         }
     }
     /**
