@@ -10,14 +10,14 @@ import GUI_Video.Video;
  *
  * @author rebel
  */
-public class HiloTest1 extends Thread {
+public class HiloTest extends Thread {
 
     public static boolean active;
     public int cargando;
     public Cargando c;
     public Video video;
     
-    public HiloTest1(Cargando cargando) { 
+    public HiloTest(Cargando cargando) { 
         
         this.cargando = 1;
         this.c = cargando;
