@@ -499,11 +499,11 @@ public final class Video extends javax.swing.JInternalFrame {
             bw = new BufferedWriter(new FileWriter(rutaCbat));
             if(dInfo>maximo){
                 bw.write("@echo No sierre la ventana, al terminar se cierra sola\n" +
-                "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -t "+GUI_Generales.Prueba.duracionVideo+" -s 440x440 -ab 98k -an " +
+                "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -t "+GUI_Generales.Prueba.duracionVideo+" -s 440x440 -an " +
                 rutaNueva + "\n" + "@echo termino!\n" + "exit");
             }else{
                 bw.write("@echo No sierre la ventana, al terminar se cierra sola\n" +
-                "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -s 440x440 -ab 98k -an "+ rutaNueva + "\n" +
+                "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -s 440x440 -an "+ rutaNueva + "\n" +
                 "@echo termino!\n" + "exit");
             }            
             bw.close();

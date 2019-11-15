@@ -5,10 +5,11 @@
  */
 package GUI_Imagenes;
 
+import GUI_Generales.HiloProceso;
+import GUI_Generales.Procesando;
 import static herramientas.GestorImagenes.rutas;
 
-import GUI_Generales.Procesando;
-import GUI_Generales.HiloProceso;
+
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -349,7 +350,7 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
         HiloProceso h = new HiloProceso(proceso,this.listaIm,1);
         h.darProcesando(proceso);
         h.pasarProceso(this.nProceso,nombre,grupo,nombreProceso);
-
+        
         h.start();
     }//GEN-LAST:event_procesarActionPerformed
 
