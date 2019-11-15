@@ -238,9 +238,9 @@ public class Prueba extends javax.swing.JFrame {
             if(respuestaSeguridad==0){
                 cargando = new Cargando(this.principal,vInfo);
                 this.principal.add(cargando);
-                HiloTest.active  = true;
+                HiloTest1.active  = true;
                 Video ventanaVideo = new Video(this.principal);
-                HiloTest h = new HiloTest(cargando);
+                HiloTest1 h = new HiloTest1(cargando);
                 h.cargarVideo(ventanaVideo);
                 h.start();
             }else if(respuestaSeguridad==1){
