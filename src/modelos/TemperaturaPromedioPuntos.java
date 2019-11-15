@@ -32,6 +32,13 @@ public class TemperaturaPromedioPuntos {
         
     }
     
+    /**
+     * Funcion convertir la temperatura del promedio por imagen
+     * IBelmont
+     * Desde 05/08/19
+     * params temperatura en celsius, opcion a convertir 1 Farenheit 2 Kelvin
+     **/ 
+    
     private double convertirTemp( double tempCelsius, int opc ){
         
         double calculo = 0.0;

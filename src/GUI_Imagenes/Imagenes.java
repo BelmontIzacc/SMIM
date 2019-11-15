@@ -5,17 +5,17 @@
  */
 package GUI_Imagenes;
 
-//import static GUI.Prueba.Procesos;
-import GUI_Generales.Editar;
-import GUI_Generales.Instrucciones;
-import GUI_Generales.Seguridad;
-import static GUI_Generales.Instrucciones.ac;
 import static GUI_Generales.Prueba.Procesos;
 import static GUI_Generales.Prueba.maxImagenes;
 import static GUI_Generales.Prueba.maxPuntos;
-import Puntos.nodo;
-import herramientas.GestorImagenes;
 import static herramientas.GestorImagenes.rutas;
+
+import GUI_Generales.Editar;
+import GUI_Generales.Instrucciones;
+import GUI_Generales.Seguridad;
+import puntos.Hilo;
+import puntos.Nodo;
+import herramientas.GestorImagenes;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -26,13 +26,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
@@ -41,7 +41,13 @@ import javax.swing.SwingConstants;
  * @author Alejandra
  */
 public class Imagenes extends javax.swing.JInternalFrame {
-    public static File mas,menos,rutaGeneral,rutaImagen;
+
+    public static ArrayList<Nodo> vectorNodo;
+    public static BufferedImage btn;
+    public static boolean bandera;
+    public static boolean retorno = true;
+    public static int forma;
+        
     public BufferedImage imagenMas,imagenMenos;
     private List<JButton> botones;
     public BufferedImage leerImagen;
@@ -51,19 +57,12 @@ public class Imagenes extends javax.swing.JInternalFrame {
     public File extension;
     public Editar editar;
     private JDesktopPane principal;
-    public static Vector<nodo> vectorNodo;
-    public static Vector<nodo> eliminarNodo;
-    public static int numPuntos;
-    public static boolean bandera, retorno = true;
-    public static int respuesta, respuestaSeguridad;
-    public static Vector<nodo> vN;
-    public static BufferedImage btn;
-    public static boolean abrirImagenes;
     public Seguridad ventanaSeguridad;
     public String areaFaltante,proceso,rutaUsuario;
     public Pasos pasos;
-    public static int valorImagen;
     public Instrucciones instrucciones;
+    public int respuestaSeguridad;
+    public int numPuntos;
     /**
      * Creates new form AbrirImagen
      */
@@ -73,12 +72,9 @@ public class Imagenes extends javax.swing.JInternalFrame {
         botones = new ArrayList<>();
         listaIm = new ArrayList<>();
         mostrar();
-        this.vectorNodo = new Vector<>();
-        this.eliminarNodo = new Vector<>();
+        this.vectorNodo = new ArrayList<>();
         
         numPuntos = 0;
-        
-        vN = new Vector<>();
         
         this.titulo.setText("4.- Seleccionar máximo " + (maxPuntos+1) + " puntos de interés");
         this.setLocation((this.principal.getWidth()-this.getWidth())/2,(this.principal.getHeight()-this.getHeight())/2);
@@ -91,19 +87,17 @@ public class Imagenes extends javax.swing.JInternalFrame {
         mostrar();
         
         for(int i=0;i<Procesos.size();i++){
-            nomProceso.addItem(Procesos.get(i));
+            String proceso = Procesos.get(i);
+            nomProceso.addItem(proceso);
         }
         
         botones = new ArrayList<>();
         listaIm = new ArrayList<>();
         this.principal = principal;
         
-        this.vectorNodo = new Vector<>();
-        this.eliminarNodo = new Vector<>();
+        this.vectorNodo = new ArrayList<>();
         
         numPuntos = 0;
-        
-        vN = new Vector<>();
         
         this.titulo.setText("4.- Seleccionar máximo " + (maxPuntos+1) + " puntos de interés");
         this.setLocation((this.principal.getWidth()-this.getWidth())/2,(this.principal.getHeight()-this.getHeight())/2);
@@ -137,7 +131,7 @@ public class Imagenes extends javax.swing.JInternalFrame {
         coordenadaY = new javax.swing.JLabel();
         coordenadaX = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
-        Pp = new Puntos.labelPaint();
+        Pp = new puntos.LabelPaint();
         jScrollPane1 = new javax.swing.JScrollPane();
         panel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -519,12 +513,20 @@ public class Imagenes extends javax.swing.JInternalFrame {
         if(nombre.getText().length()<1 || grupo.getText().length()<1 || nombreProceso.getText().length()<1){
             areaFaltante = "Datos Generales";
             datosFaltan();
-        }else if(formas.getSelectedIndex()==0 || Editar.gc==false || Instrucciones.ac==false || vN.size()==0){
+        }else if(formas.getSelectedIndex()==0 || Editar.gc==false || Instrucciones.ac==false || vectorNodo.size()==0){
             areaFaltante = "Selección de puntos de interés";
             datosFaltan();
         }else{
             dispose();
             CorreccionImagenes ci = new CorreccionImagenes(this.principal,listaIm);
+            
+            int index = nomProceso.getSelectedIndex();
+            String nProceso = nomProceso.getItemAt(index);
+            String nom = nombre.getText();
+            String g = grupo.getText();
+            String np = nombreProceso.getText();
+            
+            ci.pasarProceso(nProceso,nom,g,np);
             this.principal.add(ci);
             ci.setVisible(true);
             ci.muestra();
@@ -534,14 +536,25 @@ public class Imagenes extends javax.swing.JInternalFrame {
 
     private void editarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarFActionPerformed
         editar = new Editar(this.principal,1);
+        editar.colocarPp(Pp);
         principal.add(editar);
-        editar.setVisible(true);
+        editar.setVisible(true); 
+        agregar.setEnabled(true);
     }//GEN-LAST:event_editarFActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+
         instrucciones = new Instrucciones(this.principal,1);
         principal.add(instrucciones);
         instrucciones.setVisible(true);
+       
+        Hilo h = new Hilo(Pp,coordenadaX,coordenadaY);
+        if(h.isAlive()){
+            
+        }else{
+            //Finalmente, comienza la ejecución del Hilo.
+             h.start();
+        }
         
         System.out.println("Numero de puntos seleccionados : "+this.numPuntos);
        
@@ -554,9 +567,8 @@ public class Imagenes extends javax.swing.JInternalFrame {
         if(this.bandera == true && Instrucciones.ac == true && retorno == false){
             if(evt.getButton() == MouseEvent.BUTTON1){
                 if(numPuntos<=maxPuntos){
-                    nodo n = new nodo(evt.getX(),evt.getY(),1);
+                    Nodo n = new Nodo(evt.getX(),evt.getY(),1);
                     this.vectorNodo.add(n);
-                     vN.add(n);
                     System.out.println("X: "+evt.getX()+" , Y: "+evt.getY());
                     numPuntos++;
                      Pp.repaint();
@@ -575,14 +587,13 @@ public class Imagenes extends javax.swing.JInternalFrame {
                 int minY = evt.getY()-radio;
                 int maxY = evt.getY()+radio;
 
-                nodo aux = new nodo(x,y,1);
+                Nodo aux = new Nodo(x,y,1);
                 for(int i = 0 ; i < vectorNodo.size() ; i++){
                     double xGuardado = vectorNodo.get(i).getX();
                     if(xGuardado >= minX && xGuardado <= maxX ){  // 12<x<15
                         double yGuardado = vectorNodo.get(i).getY();
                         if(yGuardado >= minY && yGuardado <= maxY ){
                             vectorNodo.remove(i);
-                            vN.remove(i);
                             numPuntos--;
                             break;
                         }
@@ -602,10 +613,9 @@ public class Imagenes extends javax.swing.JInternalFrame {
                 coordenadaY.setText("");
                 retorno = true;
                 Instrucciones.ac = false;
-                vN.clear();
                 vectorNodo.clear();
                 numPuntos = 0;
-                repaint();
+                Pp.repaint();
                 break;
             case 1:
                 this.editarF.setEnabled(true);
@@ -623,6 +633,7 @@ public class Imagenes extends javax.swing.JInternalFrame {
                 Pp.repaint();
                 break;
         }
+        forma = formas.getSelectedIndex();
     }//GEN-LAST:event_formasActionPerformed
 
     private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
@@ -631,7 +642,6 @@ public class Imagenes extends javax.swing.JInternalFrame {
         nombreProceso.setText("");
         formas.setSelectedIndex(0);
         Instrucciones.ac = false;
-        vN.clear();
         vectorNodo.clear();
         rutas.clear();
         listaIm.clear();
@@ -686,7 +696,7 @@ public class Imagenes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_nomProcesoActionPerformed
         
     public void mostrar(){
-        mas = new File("src\\Fotos\\mas_1.jpg");
+        File mas = new File("src\\Fotos\\mas_1.jpg");
         try {
             imagenMas = ImageIO.read(mas);
         } catch (IOException ex) {
@@ -729,7 +739,6 @@ public class Imagenes extends javax.swing.JInternalFrame {
                         int x = Integer.parseInt(ae.getActionCommand().toString());
                         btn = listaIm.get(x-1);
                         Pp.repaint();
-                        valorImagen = x;
                         System.out.println(" "+ae.getActionCommand().toString());
 ///////////////////Para verificar  que si seleccionan una opcion/////////////////
                         bandera = true;
@@ -750,7 +759,7 @@ public class Imagenes extends javax.swing.JInternalFrame {
     }
     
     public void datosFaltan(){
-        respuesta = JOptionPane.showConfirmDialog(null,"Falta completar área de "+areaFaltante,null,
+        int respuesta = JOptionPane.showConfirmDialog(null,"Falta completar área de "+areaFaltante,null,
                       JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
         while(respuesta!=0){
                   respuesta = JOptionPane.showConfirmDialog(null,"Falta completar área de "+areaFaltante,null,
@@ -768,7 +777,7 @@ public class Imagenes extends javax.swing.JInternalFrame {
     }
     
     public void abrirI(){
-        abrirImagenes = GestorImagenes.abrirImagenes();
+        boolean abrirImagenes = GestorImagenes.abrirImagenes();
         if(abrirImagenes==true){
             abrirS();
             if(respuestaSeguridad==0){
@@ -790,8 +799,8 @@ public class Imagenes extends javax.swing.JInternalFrame {
     public void guardarI() {
         try {
             rutaUsuario = System.getProperty("user.home");
-            rutaGeneral = new File(rutaUsuario+"\\Documents\\SMIM\\Proceso\\");
-            rutaImagen = new File(rutaGeneral.getAbsolutePath() + "\\imagenPrincipal.png");
+            File rutaGeneral = new File(rutaUsuario+"\\Documents\\SMIM\\Proceso\\");
+            File rutaImagen = new File(rutaGeneral.getAbsolutePath() + "\\imagenPrincipal.png");
             if(!rutaGeneral.exists()){
                 rutaGeneral.mkdirs();
             }
@@ -803,14 +812,14 @@ public class Imagenes extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JLabel Pp;
+    public javax.swing.JLabel Pp;
     private javax.swing.JButton aceptar;
-    public static javax.swing.JButton agregar;
-    public static javax.swing.JLabel coordenadaX;
-    public static javax.swing.JLabel coordenadaY;
+    public javax.swing.JButton agregar;
+    public javax.swing.JLabel coordenadaX;
+    public javax.swing.JLabel coordenadaY;
     private javax.swing.JButton editarF;
-    public static javax.swing.JComboBox<String> formas;
-    public static javax.swing.JTextField grupo;
+    public javax.swing.JComboBox<String> formas;
+    public javax.swing.JTextField grupo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
@@ -828,9 +837,9 @@ public class Imagenes extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JComboBox<String> nomProceso;
-    public static javax.swing.JTextField nombre;
-    public static javax.swing.JTextField nombreProceso;
+    public javax.swing.JComboBox<String> nomProceso;
+    public javax.swing.JTextField nombre;
+    public javax.swing.JTextField nombreProceso;
     public javax.swing.JPanel panel;
     private javax.swing.JButton regresar;
     private javax.swing.JLabel titulo;

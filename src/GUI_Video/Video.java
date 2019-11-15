@@ -5,15 +5,16 @@
  */
 package GUI_Video;
 
-import GUI_Generales.Cargando;
-import GUI_Generales.hiloTest;
+
 import static GUI_Generales.Prueba.Procesos;
 import static GUI_Generales.Prueba.Tiempo;
+
+import GUI_Generales.Cargando;
+import GUI_Generales.HiloTest;
 import herramientas.GestorVideo;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.MultimediaInfo;
-import it.sauronsoftware.jave.VideoInfo;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,11 +26,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -47,16 +46,20 @@ import org.bytedeco.javacv.OpenCVFrameConverter;
 public final class Video extends javax.swing.JInternalFrame {
     
     public static String ruta;
+    public static String rutaGeneral;
+    public static String tipoProcesoSelect;
+    
     public boolean abrirVideo;
     public JDesktopPane principal;
-    public static String rutaUsuario,rutaNueva;
-    public static File rutaCbat,rutaGeneral;
     public int respuestaSeguridad, respuesta;
     public Cargando cargando;
     public File file;
     public MediaPlayer oracleVid;
     public long vInfo;
-    public static long maximo;
+    public File rutaCbat;
+    public long maximo;
+    public String rutaNueva;
+    public String rutaUsuario;
 
     /**
      * Creates new form Video
@@ -276,7 +279,7 @@ public final class Video extends javax.swing.JInternalFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addComponent(regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
                 .addComponent(aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(100, 100, 100))
         );
@@ -287,7 +290,7 @@ public final class Video extends javax.swing.JInternalFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aceptar)
                     .addComponent(regresar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -296,18 +299,20 @@ public final class Video extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(datos, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -315,10 +320,10 @@ public final class Video extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,7 +340,6 @@ public final class Video extends javax.swing.JInternalFrame {
         dispose();
         ruta = "";
         GestorVideo.video = null;
-        GestorVideo. selectorArchivos = null;
         System.gc();
         eliminarArchivo(rutaGeneral);
         abrirV();
@@ -352,7 +356,17 @@ public final class Video extends javax.swing.JInternalFrame {
             }
         }else{
             dispose();
-            PuntosVideo pv = new PuntosVideo(this.principal,rutaNueva,(tiempoImagenes.getSelectedIndex()-1));
+            int tipoP = this.tipoProceso.getSelectedIndex();
+            
+            String tipo = this.tipoProceso.getItemAt(tipoP);
+            String g = this.Grupo.getText();
+            String al = this.nombreAlumno.getText();
+            String np = this.nombreProceso.getText();
+                    
+            tipoProcesoSelect = tipo;
+            
+            PuntosVideo pv = new PuntosVideo(this.principal,rutaNueva,(tiempoImagenes.getSelectedIndex()-1),tipo,
+                np,al,g);
             principal.add(pv);
             pv.setVisible(true);
         }
@@ -451,7 +465,7 @@ public final class Video extends javax.swing.JInternalFrame {
         return null;
     }
     
-    private static BufferedImage IplImageToBufferedImage( opencv_core.IplImage src ) {
+    private BufferedImage IplImageToBufferedImage( opencv_core.IplImage src ) {
         
         OpenCVFrameConverter.ToIplImage grabberConverter = 
                 new OpenCVFrameConverter.ToIplImage();
@@ -462,20 +476,24 @@ public final class Video extends javax.swing.JInternalFrame {
         return paintConverter.getBufferedImage( frame,1 );
     } 
     
-    public static void crearCbat(){
+    public void crearCbat(){
         Encoder encoder = new Encoder();
         MultimediaInfo info;
         long dInfo = 0;
         maximo = GUI_Generales.Prueba.duracionVideo*1000;
         try {
-            info = encoder.getInfo(GestorVideo.video);
+            File vAux = new File(GestorVideo.video);
+            info = encoder.getInfo(vAux);
             dInfo = info.getDuration();
             rutaUsuario = System.getProperty("user.home");
-            rutaGeneral = new File(rutaUsuario+"\\Documents\\SMIM\\Proceso\\");
-            rutaCbat = new File(rutaGeneral.getAbsolutePath() + "\\c.bat");
+            
+            rutaGeneral = rutaUsuario+"\\Documents\\SMIM\\Proceso\\";
+            
+            File rG = new File(rutaGeneral);
+            rutaCbat = new File(rG.getAbsolutePath() + "\\c.bat");
             rutaNueva = rutaUsuario+"\\Documents\\SMIM\\Proceso\\VideoReducido.mp4";
-            if(!rutaGeneral.exists()){
-                rutaGeneral.mkdirs();
+            if(!rG.exists()){
+                rG.mkdirs();
             }
             BufferedWriter bw;
             bw = new BufferedWriter(new FileWriter(rutaCbat));
@@ -496,7 +514,7 @@ public final class Video extends javax.swing.JInternalFrame {
         }
     }    
     
-    public static String cmd(){
+    public String cmd(){
         crearCbat();
         Runtime rt = Runtime.getRuntime();
         try {
@@ -532,8 +550,8 @@ public final class Video extends javax.swing.JInternalFrame {
             if(respuestaSeguridad==0){
                 cargando = new Cargando(this.principal,dInfo);
                 this.principal.add(cargando);
-                hiloTest.active  = true;
-                hiloTest h = new hiloTest(cargando);
+                HiloTest.active  = true;
+                HiloTest h = new HiloTest(cargando);
                 h.start();
                 h.interrupt();
             }else if(respuestaSeguridad==1){
@@ -550,7 +568,8 @@ public final class Video extends javax.swing.JInternalFrame {
             Encoder encoder = new Encoder();
             MultimediaInfo info;
             try {
-                info = encoder.getInfo(GestorVideo.video);
+                File vAux = new File(GestorVideo.video);
+                info = encoder.getInfo(vAux);
                 vInfo = info.getDuration();
                 System.out.println(""+vInfo);
             } catch (EncoderException ex) {
@@ -569,14 +588,15 @@ public final class Video extends javax.swing.JInternalFrame {
         }
     }
     
-    public void eliminarArchivo(File rutaG){
+    public void eliminarArchivo(String ruta){
+        File rutaG = new File(ruta);
         if(rutaG.isDirectory()){
             if(rutaG.list().length == 0){
                 rutaG.delete();
             }else{
                 for(String temp : rutaG.list()){
                     File file = new File(rutaG,temp);
-                    eliminarArchivo(file);
+                    eliminarArchivo(file.getAbsolutePath());
                 }
                 if(rutaG.list().length == 0){
                     rutaG.delete();
@@ -588,7 +608,7 @@ public final class Video extends javax.swing.JInternalFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JTextField Grupo;
+    public javax.swing.JTextField Grupo;
     private javax.swing.JButton aceptar;
     private javax.swing.JPanel datos;
     private javax.swing.JLabel jLabel3;
@@ -600,11 +620,11 @@ public final class Video extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
-    public static javax.swing.JTextField nombreAlumno;
-    public static javax.swing.JTextField nombreProceso;
+    public javax.swing.JTextField nombreAlumno;
+    public javax.swing.JTextField nombreProceso;
     private javax.swing.JButton regresar;
-    public static javax.swing.JComboBox<String> tiempoImagenes;
-    public static javax.swing.JComboBox<String> tipoProceso;
+    public javax.swing.JComboBox<String> tiempoImagenes;
+    public javax.swing.JComboBox<String> tipoProceso;
     // End of variables declaration//GEN-END:variables
 
 }

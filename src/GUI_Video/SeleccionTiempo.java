@@ -6,8 +6,9 @@
 package GUI_Video;
 
 import static GUI_Generales.Prueba.Tiempo;
-import herramientas.GestorVideo;
 import static herramientas.GestorVideo.video;
+
+import herramientas.GestorVideo;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import javax.swing.JDesktopPane;
@@ -23,6 +24,9 @@ public class SeleccionTiempo extends javax.swing.JInternalFrame {
     public int duracionV;
     public String rutaNueva;
     public double fps;
+    public String nombreProc;
+    public String nombreAlummno;
+    public String grupo;
     /**
      * Creates new form SeleccionTiempo
      */
@@ -117,8 +121,11 @@ public class SeleccionTiempo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
-        listaIm = GestorVideo.obtenerRutaNueva(video.getAbsolutePath(),Integer.parseInt(Tiempo.get(tiempoImagenes.getSelectedIndex()-1)),duracionV,fps);
-        CorreccionVideo cv = new CorreccionVideo(this.principal,this.rutaNueva,listaIm,duracionV,this.fps);
+        listaIm = GestorVideo.obtenerRutaNueva(video,Integer.parseInt(Tiempo.get(tiempoImagenes.getSelectedIndex()-1)),duracionV,fps);
+        int index = tiempoImagenes.getSelectedIndex();
+        String tipo = tiempoImagenes.getItemAt(index);
+        CorreccionVideo cv = new CorreccionVideo(this.principal,this.rutaNueva,listaIm,duracionV,this.fps,tipo);
+        cv.agregarProyecto(nombreProc, nombreAlummno, grupo);
         this.principal.add(cv);
         cv.muestraImagenes();
         cv.muestraVideo();
@@ -126,6 +133,11 @@ public class SeleccionTiempo extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_aceptarActionPerformed
 
+    public void agregarProyecto(String nombreProc, String nombreAlummno , String grupo){
+        this.nombreProc = nombreProc;
+        this.nombreAlummno = nombreAlummno;
+        this.grupo = grupo;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptar;

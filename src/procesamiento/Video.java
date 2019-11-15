@@ -38,13 +38,28 @@ public class Video extends MedioTermografico{
         
     }
 
+    /**
+     * Funcion que sobrescribe el metodo agregarPuntosInteres para agregar un arreglo 
+     * al objeto de tipo imagen
+     * IBelmont
+     * Desde 01/05/19
+     * params arreglo de coordenadas
+     **/
+    
     @Override
     public void agregarPuntosInteres( ArrayList<Coordenada> puntosInteres ){
         
          super.setPuntosInteres( puntosInteres );
          
     }
-
+    
+    /**
+     * Funcion que sobrescribe el metodo calcular estadistica para calcular la estadistica
+     * apartir de los puntos de interes
+     * IBelmont
+     * Desde 01/05/19
+     **/ 
+    
     @Override
     public void calcularEstadistica(){
         
@@ -63,6 +78,13 @@ public class Video extends MedioTermografico{
         
     }
     
+    /**
+     * Funcion Para iniciar el computo en celcius
+     * de la temperatura obteniendo el rgb de las imagenes
+     * IBelmont
+     * Desde 01/05/19
+     **/ 
+    
     public void procesamientoVideo(){
         
         for( int x = 0 ; x < super.getPuntosInteres().size() ; x++ ){
@@ -77,6 +99,12 @@ public class Video extends MedioTermografico{
         }
         
     }
+    
+    /**
+     * Funcion que sobrescribe el metodo para crear el histograma de frecuencias
+     * IBelmont
+     * Desde 01/05/19
+     **/ 
     
     @Override
     public void graficarHistograma() {
@@ -101,11 +129,24 @@ public class Video extends MedioTermografico{
         
     }
     
+    /**
+     * Funcion Para generar los archivos apartir del arreglo de puntos de interes
+     * IBelmont
+     * Desde 01/05/19
+     **/ 
+    
     public void generarArchivos(){
         
         super.generarArchivos();
         
     }
+    
+    /**
+     * Funcion para guardar el histograma de frecuencias de inicio, medio y final de las imagenes
+     * procesadas del medio termografico
+     * IBelmont
+     * Desde 01/05/19
+     **/ 
     
     public void guardarGrafica( int alto, int ancho, String formato ){
         

@@ -42,6 +42,13 @@ public class Grafica {
         
     }
     
+    /**
+     * Funcion para generar una nueva coleccion para su visualizacion en la grafica
+     * IBelmont
+     * Desde 15/04/19
+     * params nombre de la coleccion
+     **/ 
+    
     public void agrearSerie( String nombre ){
         
         XYSeries serie = new XYSeries( nombre );
@@ -49,11 +56,25 @@ public class Grafica {
      
     }
     
+    /**
+     * Funcion para agregar datos a la coleccion
+     * IBelmont
+     * Desde 15/04/19
+     * params nombre de la coleccion y dato del punto para agregar a la coleccion
+     **/ 
+    
     public void agregarDatoASerie( String nombre, XYDataItem dato ){
         
        this.series.getSeries( nombre ).add( dato );
        
     }
+    
+    /**
+     * Funcion para agregar a una coleccion un conjunto de datos
+     * IBelmont
+     * Desde 15/04/19
+     * params nombre de la coleccion y arreglo de datos a agregar
+     **/ 
     
     public void agregarSerie( String nombre, double[] datos ){
     
@@ -69,12 +90,25 @@ public class Grafica {
      
     }
     
+    /**
+     * Funcion para guardar grafica
+     * IBelmont
+     * Desde 15/04/19
+     * params alto de la imagen, ancho de la imagen, ruta donde se guardara y nombre del archivo
+     **/ 
+    
     public void guardarGrafica(int alto, int ancho, String ruta, String nombreArchivo,
             String formato){
         
         GestorImagen.guardarImagen(grafica, alto, ancho, ruta, nombreArchivo, formato);
         
     }
+    
+    /**
+     * Funcion para crear y mostrar la grafica
+     * IBelmont
+     * Desde 15/04/19
+     **/ 
     
     public void crearYmostrarGrafica(){
     

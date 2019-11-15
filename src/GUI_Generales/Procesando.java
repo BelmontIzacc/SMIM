@@ -6,8 +6,6 @@
 package GUI_Generales;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 

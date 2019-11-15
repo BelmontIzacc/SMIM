@@ -65,11 +65,36 @@ public abstract class MedioTermografico{
         
     }
     
+    /**
+     * Funcion para agregar los puntos de interes
+     * IBelmont
+     * Desde 30/04/19
+     * params arreglo de coordenadas
+     **/ 
+    
     abstract public void agregarPuntosInteres(ArrayList<Coordenada> puntosInteres);
+    
+    /**
+     * Funcion calcular la estadistica
+     * IBelmont
+     * Desde 30/04/19
+     **/ 
     
     abstract public void calcularEstadistica();
     
+    /**
+     * Funcion para graficar el histograma
+     * IBelmont
+     * Desde 30/04/19
+     **/ 
+    
     abstract public void graficarHistograma();
+    
+     /**
+     * Funcion para calcular Histograma de frecuencias
+     * IBelmont
+     * Desde 30/04/19
+     **/ 
     
     public ArrayList<ArrayList<double[]>> calcularHistogramaFrecuencias(){
 
@@ -110,6 +135,12 @@ public abstract class MedioTermografico{
          }
          return null;
     }
+    
+    /**
+     * Funcion para generar los archivos .txt del proyecto procesado
+     * IBelmont
+     * Desde 30/04/19
+     **/ 
     
     public void generarArchivos(){
         

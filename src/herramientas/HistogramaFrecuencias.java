@@ -24,6 +24,13 @@ import java.awt.image.BufferedImage;
 
 public class HistogramaFrecuencias{
     
+    /**
+     * Funcion calcular el histograma de color de una imagen
+     * IBelmont
+     * Desde 15/04/19
+     * params identificacion del color , imagen a calcular histograma
+     **/ 
+    
     public static double[] calcularHistograma( int color, Image imagen ){
          
         double frecuencias[] = new double[ 256 ];

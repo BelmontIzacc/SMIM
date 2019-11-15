@@ -5,26 +5,21 @@
  */
 package GUI_Generales;
 
-import GUI_Imagenes.Imagenes;
+import static herramientas.GestorImagenes.toBufferedImage;
+
 import GUI_Imagenes.CorreccionPuntosI;
 import GUI_Video.PuntosVideo;
 import GUI_Video.CorreccionPuntosV;
-import static GUI_Imagenes.Imagenes.Pp;
-import static herramientas.GestorImagenes.toBufferedImage;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JDesktopPane;
+import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
@@ -33,15 +28,20 @@ import javax.swing.border.Border;
  * @author rebel
  */
 public class Editar extends javax.swing.JInternalFrame {
-        
+    
+    public static int tamanioS;
+    public static int grosorS;
+    public static int nC;
+    public static Color colorS;
+    public static Color ini;
+    public static boolean gc=false;
+    
+    public JDesktopPane Principal;
+    
     public ArrayList<Color> color;
     public int menos,mas;
-    public static int tamanioS,grosorS, nC;
-    public static Color colorS, ini;
-    public static boolean gc=false;
-    public static JDesktopPane Principal;
     public int ventana; 
-   
+    public JLabel Pp;
     /**
      * Creates new form Editar
      */
@@ -93,6 +93,7 @@ public class Editar extends javax.swing.JInternalFrame {
             lGrosor.setBorder(border);
         }
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -378,14 +379,11 @@ public class Editar extends javax.swing.JInternalFrame {
         grosorS = sGrosor.getValue();
         gc = true;
         if(ventana == 1){
-            Imagenes.agregar.setEnabled(true);
             Pp.repaint();
         }else if(ventana ==2){
-            CorreccionPuntosI.agregar.setEnabled(true);
-            CorreccionPuntosI.Pp.repaint();
+            Pp.repaint();
         }else if(ventana ==3){
-            PuntosVideo.agregar.setEnabled(true);
-            PuntosVideo.Pp.repaint();
+            Pp.repaint();
         }else if(ventana == 4){
             CorreccionPuntosV.agregar.setEnabled(true);
             CorreccionPuntosV.Pp.repaint();
@@ -419,7 +417,11 @@ public class Editar extends javax.swing.JInternalFrame {
     public static javax.swing.JSlider sGrosor;
     public static javax.swing.JSlider sTamanio;
     // End of variables declaration//GEN-END:variables
-
+    
+    public void colocarPp(JLabel Pp){
+        this.Pp = Pp;
+    }
+    
     private void cargarColor() {
         try {
             this.color = new ArrayList<>();

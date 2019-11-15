@@ -6,11 +6,6 @@
 package GUI_Generales;
 
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 
@@ -241,15 +236,23 @@ public class Instrucciones extends javax.swing.JInternalFrame {
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         dispose();
-        if(ventana == 1){
-            ac = true;
-        }else if(ventana == 2){
-            ac = true;
-        }else if(ventana == 3){
-            ac = true;
-        }else if(ventana == 4){
-            ac = true;
-        }
+        ac = true;
+//        switch (ventana) {
+//            case 1:
+//                ac = true;
+//                break;
+//            case 2:
+//                ac = true;
+//                break;
+//            case 3:
+//                ac = true;
+//                break;
+//            case 4:
+//                ac = true;
+//                break;
+//            default:
+//                break;
+//        }
     }//GEN-LAST:event_aceptarActionPerformed
 
     public void fotos(){

@@ -16,6 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import GUI_Video.Video;
 import static GUI_Video.Video.rutaGeneral;
+import static GUI_Video.Video.tipoProcesoSelect;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,9 +44,7 @@ import org.bytedeco.javacv.OpenCVFrameConverter;
  */
 public class GestorVideo {
     
-    public static FileNameExtensionFilter filtroLectura;
-    public static JFileChooser selectorArchivos;
-    public static File video, rutaNueva;
+    public static String video;
     public static String rutaArchivo;
     
     public static String obtenerRutaFrames( String ruta, int tiempoAnalisis ){
@@ -124,9 +123,9 @@ public class GestorVideo {
     //////PARTE ALE
     public static boolean abrirVideo(){
         //Filtro de lectura
-        filtroLectura = new FileNameExtensionFilter("Video","mp4","3gp","avi");
+        FileNameExtensionFilter filtroLectura = new FileNameExtensionFilter("Video","mp4","3gp","avi");
         //Selector de archivos
-        selectorArchivos = new JFileChooser();
+        JFileChooser selectorArchivos = new JFileChooser();
         //Se le agrega el filtro al selector de archivos
         selectorArchivos.setAcceptAllFileFilterUsed(false);
         selectorArchivos.setFileFilter(filtroLectura);
@@ -138,7 +137,8 @@ public class GestorVideo {
         if(selectorArchivos.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
             //Si lo que seleccionaron es un video
             if(selectorArchivos.getSelectedFile().isFile()){
-                video = selectorArchivos.getSelectedFile();
+                File v = selectorArchivos.getSelectedFile();
+                video = v.getAbsolutePath();
                 selectorArchivos.cancelSelection();
                 System.out.println("Selecciono un video: "+video);
             }
@@ -150,7 +150,8 @@ public class GestorVideo {
         }
     }
     
-    public static List<BufferedImage> obtenerRutaVideo(String ruta, int tiempoAnalisis, int duracionV,double fps){
+    public static List<BufferedImage> obtenerRutaVideo(String ruta, int tiempoAnalisis, int duracionV,double fps,
+            String nombreProceso, String nombreAlumno, String grupo){
         int im;
         if(duracionV>GUI_Generales.Prueba.duracionVideo){
             duracionV = GUI_Generales.Prueba.duracionVideo;
@@ -177,7 +178,7 @@ public class GestorVideo {
             }
             
             int nombreNum = 1; // utilizado para los nombres de las imagenes
-            rutaImagenes = rutaEspecifica();
+            rutaImagenes = rutaEspecifica(nombreProceso,nombreAlumno,grupo);
             
             for(int x = 0 ; x<im ; x++){
                 try {
@@ -220,15 +221,16 @@ public class GestorVideo {
         return listaIm;
     }
         
-    public static String rutaEspecifica(){
+    public static String rutaEspecifica(String nombreProceso, String nombreAlumno, String grupo){
+        File rutaNueva;
         int num = 0;
         Calendar fecha = Calendar.getInstance();
         String fechaDia = fecha.get(Calendar.DAY_OF_MONTH)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
         String rutaUsuario = System.getProperty("user.home");
         rutaArchivo = rutaUsuario+"\\Documents\\SMIM\\"+ 
-                Procesos.get(Video.tipoProceso.getSelectedIndex()-1)+"\\"+fechaDia+"_"+
-                Video.nombreProceso.getText()+"_"+Video.nombreAlumno.getText()+"_"+
-                Video.Grupo.getText()+"\\Imagenes";
+                tipoProcesoSelect+"\\"+fechaDia+"_"+
+                nombreProceso+"_"+nombreAlumno+"_"+
+                grupo+"\\Imagenes";
         
         rutaNueva = new File(rutaArchivo);
         
@@ -240,13 +242,13 @@ public class GestorVideo {
             while(existe){
                 num++;
                 aux = rutaArchivo+"_"+num;
-                existe = validarexiste(aux);
+                existe = validarexiste(aux,rutaNueva);
             }
         }
         return rutaNueva.getAbsolutePath();
     }
 
-    private static boolean validarexiste(String rutaArchivo) {
+    private static boolean validarexiste(String rutaArchivo,File rutaNueva) {
         rutaNueva = new File(rutaArchivo);
          if(!rutaNueva.exists()){
              rutaNueva = new File(rutaArchivo);
@@ -344,26 +346,26 @@ public class GestorVideo {
         }
     }
     
-    public static void guardarVideos(){
+    public static void guardarVideos(String alumno, String grupo , String nombreProceso){
         try {
             /////ORIGINAL
             Calendar fecha = Calendar.getInstance();
             String fechaDia = fecha.get(Calendar.DAY_OF_MONTH)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
             String rutaUsuario = System.getProperty("user.home");
             String rutaOrig = rutaUsuario+"\\Documents\\SMIM\\"+
-                    Procesos.get(Video.tipoProceso.getSelectedIndex()-1)+"\\"+fechaDia+"_"+
-                    Video.nombreProceso.getText()+"_"+Video.nombreAlumno.getText()+"_"+
-                    Video.Grupo.getText()+"\\VideoOriginal.mp4";
-            Path origen = Paths.get(video.getAbsolutePath());
-            System.out.println(video.getAbsolutePath());
+                    tipoProcesoSelect+"\\"+fechaDia+"_"+
+                    nombreProceso+"_"+alumno+"_"+
+                    grupo+"\\VideoOriginal.mp4";
+            Path origen = Paths.get(video);
+            System.out.println(video);
             Path fin = Paths.get(rutaOrig);
             Files.copy(origen,fin);
             /////REDUCIDO
             String rutaOrig2 = rutaUsuario+"\\Documents\\SMIM\\"+
-                    Procesos.get(Video.tipoProceso.getSelectedIndex()-1)+"\\"+fechaDia+"_"+
-                    Video.nombreProceso.getText()+"_"+Video.nombreAlumno.getText()+"_"+
-                    Video.Grupo.getText()+"\\Video.mp4";
-            String rut = rutaGeneral.getAbsolutePath()+"\\Video.mp4.bak";
+                    tipoProcesoSelect+"\\"+fechaDia+"_"+
+                    nombreProceso+"_"+alumno+"_"+
+                    grupo+"\\Video.mp4";
+            String rut = rutaGeneral+"\\Video.mp4.bak";
             Path origen2 = Paths.get(rut);
             Path fin2 = Paths.get(rutaOrig2);
             Files.copy(origen2,fin2);

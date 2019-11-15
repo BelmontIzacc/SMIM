@@ -5,9 +5,10 @@
  */
 package GUI_Imagenes;
 
-import GUI_Generales.Procesando;
-import GUI_Generales.hiloProceso;
 import static herramientas.GestorImagenes.rutas;
+
+import GUI_Generales.Procesando;
+import GUI_Generales.HiloProceso;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -30,18 +31,20 @@ import javax.swing.Timer;
  * @author rebel
  */
 public class CorreccionImagenes extends javax.swing.JInternalFrame {
-
-    public static File extension;
-    public static BufferedImage leerImagen;
+    
     public JButton boton;
     public JDesktopPane principal;
     public int s;
 //    public ImageIcon imagen[] = new ImageIcon[Imagenes.listaIm.size()];
-     public ImageIcon imagen[] ;
+    public ImageIcon imagen[] ;
     public int contador = 1;
     public Timer timer;
-    public static Procesando proceso;
     public List<BufferedImage> listaIm;
+    public String nProceso;
+    public String nombre;
+    public String grupo;
+    public String nombreProceso;
+    public Procesando proceso;
     /**
      * Creates new form CorrecciónImagenes
      */
@@ -332,11 +335,9 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_seleccionarPuntosActionPerformed
 
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
-        Imagenes.vN.clear();
         Imagenes.vectorNodo.clear();
         rutas.clear();
         Imagenes.btn = null;
-        Imagenes.Pp.repaint();
         dispose();
     }//GEN-LAST:event_menuActionPerformed
 
@@ -344,13 +345,18 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
         dispose();
         proceso = new Procesando(this.principal);
         this.principal.add(proceso);
-        hiloProceso.active = true;
-        hiloProceso h = new hiloProceso(proceso,this.listaIm,1);
+        HiloProceso.active = true;
+        HiloProceso h = new HiloProceso(proceso,this.listaIm,1);
+        h.darProcesando(proceso);
+        h.pasarProceso(this.nProceso,nombre,grupo,nombreProceso);
+
         h.start();
     }//GEN-LAST:event_procesarActionPerformed
 
     public void muestra(){
         Panel.setLayout(new GridLayout((int)(rutas.size()/2),2));
+        BufferedImage leerImagen;
+        File extension;
         
         for(int i=0; i<rutas.size(); i++){
             try {
@@ -375,6 +381,13 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
             }
         }
     }
+    
+    public void pasarProceso(String nProceso, String nom, String g, String np) {
+        this.nProceso = nProceso;
+        this.nombre = nom;
+        this.grupo = g;
+        this.nombreProceso = np;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel;
@@ -393,4 +406,5 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
     private javax.swing.JButton procesar;
     private javax.swing.JButton seleccionarPuntos;
     // End of variables declaration//GEN-END:variables
+
 }

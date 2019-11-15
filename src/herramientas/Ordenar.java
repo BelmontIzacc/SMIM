@@ -24,6 +24,13 @@ import modelos.Temperatura;
 
 public class Ordenar{
     
+    /**
+     * Funcion para ordenar toda una coleccion de temperatura para calculos estadisticos
+     * IBelmont
+     * Desde 08/05/19
+     * params arreglo de temperatura
+     **/ 
+    
     public static ArrayList ordenarBurbujaOpt( ArrayList<Temperatura> t ){
         
         ArrayList<Temperatura> listaTemperatura = t;

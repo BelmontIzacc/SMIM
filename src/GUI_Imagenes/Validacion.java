@@ -6,8 +6,9 @@
 package GUI_Imagenes;
 
 import static GUI_Generales.Prueba.maxImagenes;
-import herramientas.GestorImagenes;
 import static herramientas.GestorImagenes.rutas;
+
+import herramientas.GestorImagenes;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 
@@ -17,12 +18,12 @@ import javax.swing.JOptionPane;
  */
 public class Validacion extends javax.swing.JInternalFrame {
     
+//    public static boolean validar = false;
+    
     private JDesktopPane principal;
-    public static boolean validar = false;
     public boolean abrirImagenes;
-    public static int respuestaSeguridad;
     public Pasos pasos;
-
+    public int respuestaSeguridad;
     /**
      * Creates new form Validacion
      */

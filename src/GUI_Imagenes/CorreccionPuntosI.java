@@ -5,11 +5,12 @@
  */
 package GUI_Imagenes;
 
+import static GUI_Generales.Prueba.maxPuntos;
+
 import GUI_Generales.Editar;
 import GUI_Generales.Instrucciones;
-import static GUI_Generales.Editar.sColor;
-import static GUI_Generales.Prueba.maxPuntos;
-import Puntos.nodo;
+import puntos.Hilo;
+import puntos.Nodo;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -22,7 +23,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import static javax.swing.SwingConstants.CENTER;
 
 /**
  *
@@ -30,6 +30,9 @@ import static javax.swing.SwingConstants.CENTER;
  */
 public class CorreccionPuntosI extends javax.swing.JInternalFrame {
 
+    public static int ventana = 0;
+    public static int forma;
+    
     public JDesktopPane principal;
     public File mas,imagen;
     public BufferedImage imagenMas,imagenInicio;
@@ -37,7 +40,6 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
     public Instrucciones instrucciones;
     public int numPuntos = 0, valorFalta = maxPuntos+1, valorVa = 0;
     public int respuesta;
-    public static int ventana = 0;
     public String areaFaltante;
     
     /**
@@ -49,6 +51,15 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
     
     CorreccionPuntosI(JDesktopPane principal){
         initComponents();
+        
+        Hilo h = new Hilo(Pp,coordenadaX,coordenadaY);
+        if(h.isAlive()){
+            
+        }else{
+            //Finalmente, comienza la ejecución del Hilo.
+             h.start();
+        }
+        
         this.principal = principal;
         muestra();
         this.titulo.setText("Seleccionar máximo " + (maxPuntos+1) + " puntos de interés");
@@ -65,9 +76,7 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
         Editar.sGrosor.setValue(0);
         Editar.gc = false;
         Instrucciones.ac = false;
-        Imagenes.vN.clear();
         Imagenes.vectorNodo.clear();
-        Imagenes.numPuntos = 0;
         ventana = 1;
         System.out.println("------------------------------------------------------------------------------------  "+ventana);
         repaint();
@@ -91,8 +100,13 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
         puntosFaltan = new javax.swing.JLabel();
         aceptar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        coordenadaX = new javax.swing.JLabel();
+        coordenadaY = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        Pp = new Puntos.labelPaint();
+        Pp = new puntos.LabelPaint();
         jPanel4 = new javax.swing.JPanel();
         titulo = new javax.swing.JLabel();
 
@@ -137,6 +151,20 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Puntos restantes:");
 
+        coordenadaX.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        coordenadaX.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        coordenadaX.setEnabled(false);
+
+        coordenadaY.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        coordenadaY.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        coordenadaY.setEnabled(false);
+
+        jLabel8.setText("Coordenadas:");
+
+        jLabel9.setText("X:");
+
+        jLabel10.setText("Y:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -159,7 +187,18 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(puntosVan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(aceptar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                                .addComponent(puntosFaltan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(puntosFaltan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel9)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(coordenadaX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel8)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel10)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(coordenadaY, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGap(32, 32, 32)))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -179,7 +218,17 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(puntosFaltan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(coordenadaX, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(coordenadaY, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(aceptar)
                 .addContainerGap())
         );
@@ -242,10 +291,12 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 77, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -261,8 +312,8 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -274,10 +325,11 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
                 this.editarF.setEnabled(false);
                 this.agregar.setEnabled(false);
                 Instrucciones.ac = false;
-                Imagenes.vN.clear();
                 Imagenes.vectorNodo.clear();
-                Imagenes.numPuntos = 0;
-                repaint();
+                numPuntos = 0;
+                valorFalta = maxPuntos+1;
+                valorVa = 0;
+                Pp.repaint();
                 break;
             case 1:
                 this.editarF.setEnabled(true);
@@ -292,12 +344,15 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
                 Pp.repaint();
                 break;
         }
+        forma = formas.getSelectedIndex();
     }//GEN-LAST:event_formasActionPerformed
 
     private void editarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarFActionPerformed
         editar = new Editar(this.principal,2);
+        editar.colocarPp(Pp);
         principal.add(editar);
         editar.setVisible(true);
+        agregar.setEnabled(true);
     }//GEN-LAST:event_editarFActionPerformed
 
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
@@ -311,9 +366,8 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
         if(Instrucciones.ac == true){
             if(evt.getButton() == MouseEvent.BUTTON1){
                 if(numPuntos<=maxPuntos){
-                    nodo n = new nodo(evt.getX(),evt.getY(),2);
+                    Nodo n = new Nodo(evt.getX(),evt.getY(),2);
                     Imagenes.vectorNodo.add(n);
-                    Imagenes.vN.add(n);
                     System.out.println("X: "+evt.getX()+" , Y: "+evt.getY());
                     numPuntos++;
                     
@@ -338,14 +392,13 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
                 int minY = evt.getY()-radio;
                 int maxY = evt.getY()+radio;
 
-                nodo aux = new nodo(x,y,2);
+                Nodo aux = new Nodo(x,y,2);
                 for(int i = 0 ; i < Imagenes.vectorNodo.size() ; i++){
                     double xGuardado = Imagenes.vectorNodo.get(i).getX();
                     if(xGuardado >= minX && xGuardado <= maxX ){  // 12<x<15
                         double yGuardado = Imagenes.vectorNodo.get(i).getY();
                         if(yGuardado >= minY && yGuardado <= maxY ){
                             Imagenes.vectorNodo.remove(i);
-                            Imagenes.vN.remove(i);
                             numPuntos--;
                             
                             valorFalta = valorFalta + 1; //Para mostrar cuantos puntos faltan por seleccionar
@@ -369,7 +422,7 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
         }else if(Editar.gc == false){
             areaFaltante = "Editar";
             datosFaltan();
-        }else if(Instrucciones.ac == false || Imagenes.vN.isEmpty()){
+        }else if(Instrucciones.ac == false || Imagenes.vectorNodo.isEmpty()){
             areaFaltante = "boton agregar";
             datosFaltan();
         }else {
@@ -387,7 +440,12 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
     }
     
     private void muestra() {
-        imagen = new File(""+Imagenes.rutaImagen);
+        
+        String rutaUsuario = System.getProperty("user.home");
+        File rutaGeneral = new File(rutaUsuario+"\\Documents\\SMIM\\Proceso\\");
+        File rutaImagen = new File(rutaGeneral.getAbsolutePath() + "\\imagenPrincipal.png");
+        
+        imagen = rutaImagen;
         mas = new File("src\\Fotos\\mas_1.jpg");
         try {
             imagenMas = ImageIO.read(mas);
@@ -401,13 +459,18 @@ public class CorreccionPuntosI extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JLabel Pp;
+    public javax.swing.JLabel Pp;
     private javax.swing.JButton aceptar;
-    public static javax.swing.JButton agregar;
+    public javax.swing.JButton agregar;
+    public javax.swing.JLabel coordenadaX;
+    public javax.swing.JLabel coordenadaY;
     private javax.swing.JButton editarF;
-    public static javax.swing.JComboBox<String> formas;
+    public javax.swing.JComboBox<String> formas;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

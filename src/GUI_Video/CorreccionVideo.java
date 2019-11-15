@@ -8,10 +8,7 @@ package GUI_Video;
 import GUI_Generales.Editar;
 import GUI_Generales.Instrucciones;
 import GUI_Generales.Procesando;
-import static GUI_Generales.Prueba.Procesos;
-import GUI_Generales.hiloProceso;
-import static GUI_Video.PuntosVideo.formas;
-import static GUI_Video.PuntosVideo.vN;
+import GUI_Generales.HiloProceso;
 import static GUI_Video.PuntosVideo.vectorNodo;
 import static GUI_Video.Video.rutaGeneral;
 import herramientas.GestorVideo;
@@ -22,7 +19,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -51,6 +47,7 @@ import org.bytedeco.javacv.OpenCVFrameConverter;
  */
 public class CorreccionVideo extends javax.swing.JInternalFrame {
 
+    public Procesando proceso;
     public JDesktopPane principal;
     public String rutaNueva;
     public List<BufferedImage> listaIm;
@@ -60,10 +57,12 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
     private final JFXPanel jfxPanel = new JFXPanel();
     public JButton boton;
     public int duracionV;
-    public static Procesando proceso;
     public double fps;
     public String rutaEliminar;
-    
+    public String tipoProceso;
+    public String nombreProc;
+    public String nombreAlummno;
+    public String grupo;
     /**
      * Creates new form CorreccionVideo
      */
@@ -71,7 +70,9 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    CorreccionVideo(JDesktopPane principal, String rutaNueva,List<BufferedImage> listaIm, int duracionV,double fps) {
+    CorreccionVideo(JDesktopPane principal, String rutaNueva,List<BufferedImage> listaIm, int duracionV,
+            double fps, String tipoProceso) {
+        
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.principal = principal;
@@ -79,6 +80,8 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
         this.listaIm = listaIm;
         this.duracionV = duracionV;
         this.fps = fps;
+        this.tipoProceso = tipoProceso;
+        
 //        muestraVideo();
         muestraVideo.setLayout(new BorderLayout());
         muestraVideo.add(jfxPanel, BorderLayout.CENTER);
@@ -287,8 +290,6 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
         ///////////QUE SE BORRE TODO
         Editar.gc = false;
         Instrucciones.ac = false;
-        PuntosVideo.numPuntos = 0;
-        PuntosVideo.vN.clear();
         PuntosVideo.vectorNodo.clear();
         CorreccionPuntosV cp = new CorreccionPuntosV(this.principal);
         this.principal.add(cp);
@@ -300,8 +301,11 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
         dispose();
         proceso = new Procesando(this.principal);
         this.principal.add(proceso);
-        hiloProceso.active = true;
-        hiloProceso h = new hiloProceso(proceso,this.listaIm,2);
+        HiloProceso.active = true;
+        HiloProceso h = new HiloProceso(proceso,this.listaIm,2);
+        h.pasarProceso("",nombreAlummno,grupo,nombreProc);
+        h.darProcesando(proceso);
+        
         h.start();
     }//GEN-LAST:event_procesarActionPerformed
 
@@ -324,6 +328,7 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
         dispose();
         //Eliminar carpeta con las cosas(Imagenes)
         SeleccionTiempo st = new SeleccionTiempo(this.principal,this.duracionV,this.rutaNueva,this.fps);
+        st.agregarProyecto(nombreProc, nombreAlummno, grupo);
         this.principal.add(st);
         st.setVisible(true);
     }//GEN-LAST:event_tiempoActionPerformed
@@ -331,14 +336,12 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
         ////////////ELIMINAR TODO HASTA LA CARPETA CREADA
         GestorVideo.video = null;
-        GestorVideo. selectorArchivos = null;
         archivo();
-        eliminarArchivo(new File(rutaEliminar));
+        eliminarArchivo(rutaEliminar);
         eliminarArchivo(rutaGeneral);
-        formas.setSelectedIndex(0);
+        GUI_Video.PuntosVideo.forma = 0;
         Editar.gc = false;
         Instrucciones.ac = false;
-        vN.clear();
         vectorNodo.clear();
         System.gc();
         dispose();
@@ -347,23 +350,25 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_menuActionPerformed
 
     public void archivo(){
+        
         Calendar fecha = Calendar.getInstance();
         String fechaDia = fecha.get(Calendar.DAY_OF_MONTH)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
         String rutaUsuario = System.getProperty("user.home");
         rutaEliminar = rutaUsuario+"\\Documents\\SMIM\\"+ 
-                Procesos.get(Video.tipoProceso.getSelectedIndex()-1)+"\\"+fechaDia+"_"+
-                Video.nombreProceso.getText()+"_"+Video.nombreAlumno.getText()+"_"+
-                Video.Grupo.getText();
+                tipoProceso+"\\"+fechaDia+"_"+
+                nombreProc+"_"+nombreAlummno+"_"+
+                grupo;
     }
     
-    public void eliminarArchivo(File rutaG){
+    public void eliminarArchivo(String ruta){
+        File rutaG = new File(ruta);
         if(rutaG.isDirectory()){
             if(rutaG.list().length == 0){
                 rutaG.delete();
             }else{
                 for(String temp : rutaG.list()){
                     File file = new File(rutaG,temp);
-                    eliminarArchivo(file);
+                    eliminarArchivo(file.getAbsolutePath());
                 }
                 if(rutaG.list().length == 0){
                     rutaG.delete();
@@ -448,7 +453,7 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
         return null;
     }
     
-    private static BufferedImage IplImageToBufferedImage( opencv_core.IplImage src ) {
+    private BufferedImage IplImageToBufferedImage( opencv_core.IplImage src ) {
         
         OpenCVFrameConverter.ToIplImage grabberConverter = 
                 new OpenCVFrameConverter.ToIplImage();
@@ -457,6 +462,12 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
         org.bytedeco.javacv.Frame frame = grabberConverter.convert( src );
         
         return paintConverter.getBufferedImage( frame,1 );
+    }
+    
+    public void agregarProyecto(String nombreProc, String nombreAlummno , String grupo){
+        this.nombreProc = nombreProc;
+        this.nombreAlummno = nombreAlummno;
+        this.grupo = grupo;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

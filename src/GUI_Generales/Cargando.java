@@ -57,8 +57,8 @@ public class Cargando extends javax.swing.JInternalFrame {
         cargando.setImageObserver(gif);
     }
     
-    public void mostrarVideo(){
-        ventanaVideo = new Video(this.principal);
+    public void mostrarVideo(Video v){
+        ventanaVideo = v;
         int maximo = GUI_Generales.Prueba.duracionVideo * 1000;
         int min = GUI_Generales.Prueba.duracionVideo/60;
         if(vInfo>30000){

@@ -19,8 +19,15 @@ import modelos.Temperatura;
 import modelos.TemperaturaPromedioPuntos;
 
 /**
- *
- * @author izacc
+ * Clase GestorArchivo.
+ * Fecha Martes 20 de octubre 2019.
+ * @author IBelmont.
+ * Copyright IBelmont.
+ */
+
+ /** 
+ * Clase que ayuda a la creacion de los archivos necesarios resultantes del 
+ * procesamiento del medio termografico en rutas espesificadas
  */
 public class GestorArchivo {
     
@@ -35,6 +42,13 @@ public class GestorArchivo {
     
     private static String linkTemPorImagen = "C:\\Users\\izacc\\Documents\\Termicas\\archivosSistema\\txt";
     
+    /**
+     * Funcion principal para generar los archivos en formato txt
+     * IBelmont
+     * Desde 20/10/19
+     * params arreglo de puntos de interes
+     **/ 
+    
     public static void GenerarTxt( ArrayList<Coordenada> puntosInteres,
             ArrayList<Estadistica> estadisticas, ArrayList<TemperaturaPromedioPuntos> temperaturaPromedioPuntos ) {
         
@@ -47,6 +61,13 @@ public class GestorArchivo {
         //temperatura de los puntos por imagen
         generarTemperaturaPorImagen(puntosInteres);
     }
+    
+    /**
+     * Funcion para generar el archivo de txt correspondiente a las coordenadas
+     * IBelmont
+     * Desde 20/10/19
+     * params arrelo de coordenadas
+     **/ 
     
     private static void generarCoordendas( ArrayList<Coordenada> puntosInteres ){
         
@@ -101,6 +122,13 @@ public class GestorArchivo {
         
     }
 
+    /**
+     * Funcion para generar los archivos txt correspondiente a la estadistica
+     * IBelmont
+     * Desde 20/10/19
+     * params arreglo de estadisticas
+     **/ 
+    
     private static void generarEstadistica(ArrayList<Estadistica> estadisticas) {
         try {
             
@@ -138,7 +166,14 @@ public class GestorArchivo {
             
         }
     }
-
+    
+    /**
+     * Funcion para generar archivos txt correspondientes al promedio de temperatura por imagen
+     * IBelmont
+     * Desde 20/10/19
+     * params arreglo de temperatura en promedio de los puntos por imagen
+     **/ 
+    
     private static void generarEstadisticaPorImagen(ArrayList<TemperaturaPromedioPuntos>
             temperaturaPromedioPuntos) {
         
@@ -176,6 +211,13 @@ public class GestorArchivo {
         }
     }
 
+    /**
+     * Funcion para generar los txt correspondientes al calculo de temperaturas por punto de interes 
+     * IBelmont
+     * Desde 20/10/19
+     * params arreglo de coordenadas
+     **/ 
+    
     private static void generarTemperaturaPorImagen(ArrayList<Coordenada> puntosInteres) {
         
         String auxRuta = linkTemPorImagen;

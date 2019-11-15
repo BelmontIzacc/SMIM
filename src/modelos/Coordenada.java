@@ -37,11 +37,25 @@ public class Coordenada{
         
     }
     
+    /**
+     * Funcion agregar un arreglo de temperaturas a la coordenada
+     * IBelmont
+     * Desde 01/05/19
+     * params arreglo de temperatura
+     **/ 
+    
     public void agregarTemperatura( ArrayList<Temperatura> temperatura ){
         
         this.temperatura = temperatura;
         
     }
+    
+    /**
+     * Funcion agregar temperatura al arreglo de temepratura
+     * IBelmont
+     * Desde 01/05/19
+     * params objeto de tipo temperatura
+     **/ 
     
     public void agregarTemperatura( Temperatura temperatura ){
         

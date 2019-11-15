@@ -5,8 +5,9 @@
  */
 package herramientas;
 
-import GUI_Imagenes.Imagenes;
 import static GUI_Generales.Prueba.Procesos;
+
+import GUI_Imagenes.Imagenes;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -26,18 +27,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author rebel
  */
 public class GestorImagenes {
-    public static FileNameExtensionFilter filtroLectura;
-    public static JFileChooser selectorArchivos;
-    public static File[] listaImagenes;
+    
     public static ArrayList<String> rutas;
-    public static String rutaUsuario;
-    public static File rutaNueva,rutaCarpeta;
+    public static String rutaProyecto;
     
     public static boolean abrirImagenes(){
         int i=0;
+        File[] listaImagenes;
         //Filtro de lectura
-        filtroLectura = new FileNameExtensionFilter("Imagenes o Directorio","jpg","jpeg","png");
+        FileNameExtensionFilter filtroLectura 
+                = new FileNameExtensionFilter("Imagenes o Directorio","jpg","jpeg","png");
         //Selector de archivos
+        JFileChooser selectorArchivos;
         selectorArchivos = new JFileChooser();
         //Se le agrega el filtro al selector de archivos
         selectorArchivos.setAcceptAllFileFilterUsed(false);
@@ -141,17 +142,25 @@ public class GestorImagenes {
         
     }
     
-    public static void crearCarpetas(List<BufferedImage> listaIm){
+    public static void crearCarpetas(List<BufferedImage> listaIm, 
+            String nProceso,String nombreAlumno, String grupo, String nombreProceso){
+        
         int num = 0;
+        File rutaCarpeta;
+        File rutaNueva;
+        String rutaUsuario;
+        
         Calendar fecha = Calendar.getInstance();
         String fechaDia = fecha.get(Calendar.DAY_OF_MONTH)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
         rutaUsuario = System.getProperty("user.home");
         String rutaArchivo = rutaUsuario+"\\Documents\\SMIM\\"+ 
-                Procesos.get(Imagenes.nomProceso.getSelectedIndex()-1)+"\\"+fechaDia+"_"+
-                Imagenes.nombreProceso.getText()+"_"+Imagenes.nombre.getText()+"_"+
-                Imagenes.grupo.getText();
+                nProceso+"\\"+fechaDia+"_"+
+                nombreProceso+"_"+nombreAlumno+"_"+
+                grupo;
         
         rutaNueva = new File(rutaArchivo);
+        
+        rutaProyecto = rutaArchivo;
         
         if(!rutaNueva.exists()){
             rutaNueva.mkdirs();
@@ -162,7 +171,7 @@ public class GestorImagenes {
             while(existe){
                 num++;
                 aux = rutaArchivo+"_"+num;
-                existe = validarexiste(aux);
+                existe = validarexiste(aux, rutaNueva);
             }
         }
         
@@ -174,9 +183,10 @@ public class GestorImagenes {
                 Logger.getLogger(GestorImagenes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
     }
 
-    private static boolean validarexiste(String rutaArchivo) {
+    private static boolean validarexiste(String rutaArchivo, File rutaNueva) {
         rutaNueva = new File(rutaArchivo);
          if(!rutaNueva.exists()){
              rutaNueva = new File(rutaArchivo);

@@ -52,6 +52,13 @@ public class Estadistica{
         
     }
     
+    /**
+     * Funcion para calcular estadistica apartir de un punto de interes
+     * IBelmont
+     * Desde 01/05/19
+     * params objeto de tipo coordenada
+     **/ 
+    
     public void calcularEstadistica(Coordenada puntoInteres){
         
         ArrayList<Temperatura> aux = (ArrayList<Temperatura>) puntoInteres.getTemperatura().clone();
@@ -125,6 +132,13 @@ public class Estadistica{
         this.desviacionEstandar = Math.sqrt( this.varianza );
         
     }
+    
+   /**
+     * Funcion Para calcular el promedio de temperatura de los puntos de interes por imagen
+     * IBelmont
+     * Desde 01/05/19
+     * params Arreglo de coordenadas
+     **/ 
     
    public ArrayList<TemperaturaPromedioPuntos> 
         calcularPromedioPorImagen( ArrayList<Coordenada> puntosInteres ) {

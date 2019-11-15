@@ -5,13 +5,15 @@
  */
 package GUI_Generales;
 
+
+import static herramientas.GestorImagenes.rutas;
+import static herramientas.GestorVideo.video;
+
 import GUI_Imagenes.Pasos;
 import GUI_Imagenes.Validacion;
 import GUI_Video.Video;
 import herramientas.GestorImagenes;
-import static herramientas.GestorImagenes.rutas;
 import herramientas.GestorVideo;
-import static herramientas.GestorVideo.video;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.MultimediaInfo;
@@ -26,16 +28,19 @@ import javax.swing.JOptionPane;
  * @author Alejandra
  */
 public class Prueba extends javax.swing.JFrame {
-    int x,y;
+    
+    public static int maxPuntos = 4, maxImagenes = 30;
+    public static int duracionVideo = 300;
+    public static ArrayList<String> Procesos,Tiempo;
+    
+    public int respuestaSeguridad;
+    public int x,y;
     public boolean abrirImagenes;
     public boolean abrirVideo;
     public Seguridad ventanaSeguridad;
-    public static int respuestaSeguridad, maxPuntos = 4, maxImagenes = 30;
-    public static int duracionVideo = 300;
     public Pasos pasos;
-    public Video ventanaVideo;
-    public static Cargando cargando;
-    public static ArrayList<String> Procesos,Tiempo;
+    public Cargando cargando;
+    
     public int respuestaOk;
     /**
      * Creates new form Prueba
@@ -46,11 +51,13 @@ public class Prueba extends javax.swing.JFrame {
         this.setSize(1200,900);
         this.setLocationRelativeTo(this);
         this.setTitle("SMIM");
+        
         Procesos = new ArrayList<>();
-        Tiempo = new ArrayList<>();
         Procesos.add("Soldadura");
         Procesos.add("Fundicion");
         Procesos.add("Manufactura");
+        
+        Tiempo = new ArrayList<>();
         Tiempo.add("10");
         Tiempo.add("15");
 //        this.setExtendedState(MAXIMIZED_BOTH);
@@ -231,8 +238,10 @@ public class Prueba extends javax.swing.JFrame {
             if(respuestaSeguridad==0){
                 cargando = new Cargando(this.principal,vInfo);
                 this.principal.add(cargando);
-                hiloTest.active  = true;
-                hiloTest h = new hiloTest(cargando);
+                HiloTest.active  = true;
+                Video ventanaVideo = new Video(this.principal);
+                HiloTest h = new HiloTest(cargando);
+                h.cargarVideo(ventanaVideo);
                 h.start();
             }else if(respuestaSeguridad==1){
                 abrirV();
@@ -245,7 +254,7 @@ public class Prueba extends javax.swing.JFrame {
         MultimediaInfo info;
         long dInfo = 0;
         try {
-            info = encoder.getInfo(new File(video.getAbsolutePath()));
+            info = encoder.getInfo(new File(video));
             dInfo = info.getDuration();
             System.out.println(""+dInfo);
         } catch (EncoderException ex) {

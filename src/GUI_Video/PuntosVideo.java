@@ -10,7 +10,8 @@ import GUI_Generales.Instrucciones;
 import static GUI_Generales.Prueba.Tiempo;
 import static GUI_Generales.Prueba.maxPuntos;
 import static GUI_Video.Video.rutaGeneral;
-import Puntos.nodo;
+import puntos.HiloV;
+import puntos.Nodo;
 import herramientas.GestorVideo;
 import static herramientas.GestorVideo.rutaArchivo;
 import static herramientas.GestorVideo.video;
@@ -57,24 +58,29 @@ import it.sauronsoftware.jave.VideoInfo;
  * @author rebel
  */
 public class PuntosVideo extends javax.swing.JInternalFrame {
-
+    
+    public static int forma;
+    public static BufferedImage im;
+    public static ArrayList<Nodo> vectorNodo;
+    
     public JDesktopPane principal;
     public String rutaNueva,areaFaltante;
     public File file,mas;
     public MediaPlayer oracleVid;
-    private final JFXPanel jfxPanel = new JFXPanel();
-    public static BufferedImage im;
-    public static int numPuntos = 0;
+    private JFXPanel jfxPanel = new JFXPanel();
     public Editar editar;
     public int valorFalta = maxPuntos+1, valorVa = 0,respuesta;
     public BufferedImage imagenMas;
     public Instrucciones instrucciones;
-    public static Vector<nodo> vN;
-    public static Vector<nodo> vectorNodo;
     public int tiempo;
     public int duracionV;
     public List<BufferedImage> listaIm;
     public int vInfo;
+    public int numPuntos = 0;
+    public String tipoProceso;
+    public String nombreProc;
+    public String nombreAlummno;
+    public String grupo;
     /**
      * Creates new form PuntosVideo
      */
@@ -83,10 +89,18 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
         Platform.setImplicitExit(false);
     }
 
-    PuntosVideo(JDesktopPane principal, String rutaNueva, int tiempo) {
+    PuntosVideo(JDesktopPane principal, String rutaNueva, int tiempo, String tipo,
+            String np, String al, String g) {
+        
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         muestra();
+        
+        this.tipoProceso = tipo;
+        this.nombreProc = np;
+        this.nombreAlummno = al;
+        this.grupo = g;
+        
         this.principal = principal;
         this.rutaNueva = rutaNueva;
         this.tiempo = tiempo;
@@ -102,8 +116,7 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
         muestraVideo.add(jfxPanel, BorderLayout.CENTER);
         muestraVideo.repaint();
         this.setLocation((this.principal.getWidth()-this.getWidth())/2,(this.principal.getHeight()-this.getHeight())/2);
-        vN = new Vector<>();
-        vectorNodo = new Vector<>();
+        vectorNodo = new ArrayList<>();
         listaIm = new ArrayList<>();
         Platform.setImplicitExit(false);
     }
@@ -131,7 +144,7 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
         coordenadaY = new javax.swing.JLabel();
         coordenadaX = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
-        Pp = new Puntos.labelPaintV();
+        Pp = new puntos.LabelPaintV();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -468,7 +481,7 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -496,7 +509,16 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
         instrucciones = new Instrucciones(this.principal,3);
         principal.add(instrucciones);
         instrucciones.setVisible(true);
-        this.aceptar.setEnabled(true);
+        aceptar.setEnabled(true);
+        
+        HiloV h = new HiloV(Pp,coordenadaX,coordenadaY);
+        if(h.isAlive()){
+            
+        }else{
+            //Finalmente, comienza la ejecución del hilo.
+             h.start();
+        }
+        
     }//GEN-LAST:event_agregarActionPerformed
 
     private void formasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formasActionPerformed
@@ -507,10 +529,11 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
                 coordenadaX.setText("");
                 coordenadaY.setText("");
                 Instrucciones.ac = false;
-                vN.clear();
                 vectorNodo.clear();
                 numPuntos = 0;
-                repaint();
+                valorFalta = maxPuntos+1;
+                valorVa = 0;
+                Pp.repaint();
                 break;
             case 1:
                 this.editarF.setEnabled(true);
@@ -525,19 +548,21 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
                 Pp.repaint();
                 break;
         }
+        forma = formas.getSelectedIndex();
     }//GEN-LAST:event_formasActionPerformed
 
     private void editarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarFActionPerformed
         editar = new Editar(this.principal,3);
+        editar.colocarPp(Pp);
         principal.add(editar);
         editar.setVisible(true);
+        agregar.setEnabled(true);
     }//GEN-LAST:event_editarFActionPerformed
 
     private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
         formas.setSelectedIndex(0);
         Editar.gc = false;
         Instrucciones.ac = false;
-        vN.clear();
         vectorNodo.clear();
         numPuntos = 0;
         eliminarArchivo(rutaGeneral);
@@ -568,9 +593,8 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
         if(Instrucciones.ac == true){
             if(evt.getButton() == MouseEvent.BUTTON1){
                 if(numPuntos<=maxPuntos){
-                    nodo n = new nodo(evt.getX(),evt.getY(),3);
+                    Nodo n = new Nodo(evt.getX(),evt.getY(),3);
                     vectorNodo.add(n);
-                    vN.add(n);
                     System.out.println("X: "+evt.getX()+" , Y: "+evt.getY());
                     numPuntos++;
                     
@@ -595,14 +619,13 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
                 int minY = evt.getY()-radio;
                 int maxY = evt.getY()+radio;
 
-                nodo aux = new nodo(x,y,3);
+                Nodo aux = new Nodo(x,y,3);
                 for(int i = 0 ; i < vectorNodo.size() ; i++){
                     double xGuardado = vectorNodo.get(i).getX();
                     if(xGuardado >= minX && xGuardado <= maxX ){  // 12<x<15
                         double yGuardado = vectorNodo.get(i).getY();
                         if(yGuardado >= minY && yGuardado <= maxY ){
                             vectorNodo.remove(i);
-                            vN.remove(i);
                             numPuntos--;
                             
                             valorFalta = valorFalta + 1; //Para mostrar cuantos puntos faltan por seleccionar
@@ -626,7 +649,7 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
         }else if(Editar.gc == false){
             areaFaltante = "Editar";
             datosFaltan();
-        }else if(Instrucciones.ac == false || vN.isEmpty()){
+        }else if(Instrucciones.ac == false || vectorNodo.isEmpty()){
             areaFaltante = "agregar puntos";
             datosFaltan();
         }else{
@@ -637,8 +660,11 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
                 VideoInfo vInfo = info.getVideo();
                 double fps = vInfo.getFrameRate();
                 
-                listaIm = GestorVideo.obtenerRutaVideo(video.getAbsolutePath(),Integer.parseInt(Tiempo.get(tiempo)),duracionV,fps);
-                CorreccionVideo cv = new CorreccionVideo(this.principal,this.rutaNueva,listaIm,duracionV,fps);
+                listaIm = GestorVideo.obtenerRutaVideo(video,Integer.parseInt(Tiempo.get(tiempo)),duracionV,fps,
+                        nombreProc,nombreAlummno,grupo);
+                CorreccionVideo cv = new CorreccionVideo(this.principal,this.rutaNueva,listaIm,duracionV,fps,tipoProceso);
+                cv.agregarProyecto(nombreProc, nombreAlummno, grupo);
+                
                 this.principal.add(cv);
                 cv.muestraImagenes();
                 cv.muestraVideo();
@@ -650,14 +676,15 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_aceptarActionPerformed
 
-    private void eliminarArchivo(File rutaG) {
+    private void eliminarArchivo(String ruta) {
+        File rutaG = new File(ruta);
         if(rutaG.isDirectory()){
             if(rutaG.list().length == 0){
                 rutaG.delete();
             }else{
                 for(String temp : rutaG.list()){
                     File file = new File(rutaG,temp);
-                    eliminarArchivo(file);
+                    eliminarArchivo(file.getAbsolutePath());
                 }
                 if(rutaG.list().length == 0){
                     rutaG.delete();
@@ -741,7 +768,7 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
         return null;
     }
     
-    private static BufferedImage IplImageToBufferedImage( opencv_core.IplImage src ) {
+    private BufferedImage IplImageToBufferedImage( opencv_core.IplImage src ) {
         
         OpenCVFrameConverter.ToIplImage grabberConverter = 
                 new OpenCVFrameConverter.ToIplImage();
@@ -753,14 +780,14 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JLabel Pp;
+    public javax.swing.JLabel Pp;
     private javax.swing.JButton aceptar;
-    public static javax.swing.JButton agregar;
-    public static javax.swing.JLabel coordenadaX;
-    public static javax.swing.JLabel coordenadaY;
+    public javax.swing.JButton agregar;
+    public javax.swing.JLabel coordenadaX;
+    public javax.swing.JLabel coordenadaY;
     private javax.swing.JSlider duracionVideo;
     private javax.swing.JButton editarF;
-    public static javax.swing.JComboBox<String> formas;
+    public javax.swing.JComboBox<String> formas;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

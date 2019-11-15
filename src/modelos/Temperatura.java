@@ -59,6 +59,13 @@ public class Temperatura{
         
     }
     
+    /**
+     * Funcion convertir temperaturas
+     * IBelmont
+     * Desde 01/05/19
+     * params temperatura en celcius , opcion a convertir 1 farenheit 2 kelvin
+     **/ 
+    
     private double convertirTemp( double tempCelsius, int opc ){
         
         double calculo = 0.0;
