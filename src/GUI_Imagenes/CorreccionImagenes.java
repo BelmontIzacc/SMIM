@@ -46,6 +46,7 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
     public String grupo;
     public String nombreProceso;
     public Procesando proceso;
+    public int forma;
     /**
      * Creates new form CorrecciónImagenes
      */
@@ -350,7 +351,7 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
         HiloProceso h = new HiloProceso(proceso,this.listaIm,1);
         h.darProcesando(proceso);
         h.pasarProceso(this.nProceso,nombre,grupo,nombreProceso);
-        
+        h.forma(forma);
         h.start();
     }//GEN-LAST:event_procesarActionPerformed
 
@@ -389,6 +390,10 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
         this.grupo = g;
         this.nombreProceso = np;
     }
+    
+    public void forma(int f) {
+       forma = f;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel;
@@ -407,5 +412,6 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
     private javax.swing.JButton procesar;
     private javax.swing.JButton seleccionarPuntos;
     // End of variables declaration//GEN-END:variables
+
 
 }

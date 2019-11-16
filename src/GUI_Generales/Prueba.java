@@ -48,7 +48,7 @@ public class Prueba extends javax.swing.JFrame {
     public Prueba() {
         initComponents();
 //        this.setResizable(true);
-        this.setSize(1200,900);
+        this.setSize(1200,800);
         this.setLocationRelativeTo(this);
         this.setTitle("SMIM");
         
@@ -238,9 +238,9 @@ public class Prueba extends javax.swing.JFrame {
             if(respuestaSeguridad==0){
                 cargando = new Cargando(this.principal,vInfo);
                 this.principal.add(cargando);
-                HiloTest1.active  = true;
+                HiloTest.active  = true;
                 Video ventanaVideo = new Video(this.principal);
-                HiloTest1 h = new HiloTest1(cargando);
+                HiloTest h = new HiloTest(cargando);
                 h.cargarVideo(ventanaVideo);
                 h.start();
             }else if(respuestaSeguridad==1){

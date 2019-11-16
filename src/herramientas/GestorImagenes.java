@@ -156,7 +156,7 @@ public class GestorImagenes {
         String rutaArchivo = rutaUsuario+"\\Documents\\SMIM\\"+ 
                 nProceso+"\\"+fechaDia+"_"+
                 nombreProceso+"_"+nombreAlumno+"_"+
-                grupo;
+                grupo+"\\Imagenes";
         
         rutaNueva = new File(rutaArchivo);
         

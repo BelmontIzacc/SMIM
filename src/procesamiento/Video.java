@@ -6,6 +6,7 @@
 package procesamiento;
 
 import herramientas.Grafica;
+import java.io.File;
 import java.util.ArrayList;
 import modelos.Coordenada;
 import modelos.Estadistica;
@@ -151,12 +152,22 @@ public class Video extends MedioTermografico{
     public void guardarGrafica( int alto, int ancho, String formato ){
         
         String[] nombres = { "inicio", "mitad", "final" }; 
-        String ruta = "C:\\Users\\izacc\\Documents\\Termicas\\archivosSistema\\graficas";
+        String ruta = super.getRutaImagenes();
+        String[] rutaPrincipal = ruta.split("Imagenes");
+        String rg = rutaPrincipal[0]+"graficas";
+        
+        File f = new File(rg);
+        
+        if(!f.exists()){
+            f.mkdirs();
+        }
+        
+        int graficas = super.getListaGrafica().size();
         
         for( int x = 0 ; x < super.getListaGrafica().size() ; x++ ){
             
             Grafica g = super.getListaGrafica().get(x);
-            g.guardarGrafica(alto, ancho, ruta, nombres[x], formato);
+            g.guardarGrafica(alto, ancho, rg, nombres[x], formato);
             
         }
         

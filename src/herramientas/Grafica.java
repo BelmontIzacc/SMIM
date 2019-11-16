@@ -113,9 +113,9 @@ public class Grafica {
     public void crearYmostrarGrafica(){
     
         this.grafica = ChartFactory.createXYLineChart( titulo, ejeX, ejeY, series );
-        ChartFrame frame = new ChartFrame( "Histograma de color", grafica );
-        frame.setSize( 700, 250 );
-        frame.setVisible( true );
+//        ChartFrame frame = new ChartFrame( "Histograma de color", grafica );
+//        frame.setSize( 700, 250 );
+//        frame.setVisible( true );
          
     }
 }

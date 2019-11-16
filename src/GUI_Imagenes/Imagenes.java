@@ -11,6 +11,7 @@ import static GUI_Generales.Prueba.maxPuntos;
 import static herramientas.GestorImagenes.rutas;
 
 import GUI_Generales.Editar;
+import static GUI_Generales.Editar.tamanioS;
 import GUI_Generales.Instrucciones;
 import GUI_Generales.Seguridad;
 import puntos.Hilo;
@@ -526,7 +527,11 @@ public class Imagenes extends javax.swing.JInternalFrame {
             String g = grupo.getText();
             String np = nombreProceso.getText();
             
+            int f = formas.getSelectedIndex();
+            
             ci.pasarProceso(nProceso,nom,g,np);
+            ci.forma(f);
+            
             this.principal.add(ci);
             ci.setVisible(true);
             ci.muestra();

@@ -31,17 +31,6 @@ import modelos.TemperaturaPromedioPuntos;
  */
 public class GestorArchivo {
     
-    private static String linkCoordenada = "C:\\Users\\izacc\\Documents\\Termicas\\archivosSistema"
-                    + "\\coordenada\\coordenada.txt";
-    
-    private static String linkEstadistica = "C:\\Users\\izacc\\Documents\\Termicas\\archivosSistema"
-                    + "\\Estadistica";
-    
-    private static String linkEstadisticaImagen = "C:\\Users\\izacc\\Documents\\Termicas\\archivosSistema"
-                    + "\\estadisticaXimagen";
-    
-    private static String linkTemPorImagen = "C:\\Users\\izacc\\Documents\\Termicas\\archivosSistema\\txt";
-    
     /**
      * Funcion principal para generar los archivos en formato txt
      * IBelmont
@@ -50,16 +39,19 @@ public class GestorArchivo {
      **/ 
     
     public static void GenerarTxt( ArrayList<Coordenada> puntosInteres,
-            ArrayList<Estadistica> estadisticas, ArrayList<TemperaturaPromedioPuntos> temperaturaPromedioPuntos ) {
+            ArrayList<Estadistica> estadisticas, ArrayList<TemperaturaPromedioPuntos> temperaturaPromedioPuntos,
+            String ruta) {
+        
+        String[] rutaPrincipal = ruta.split("Imagenes");
         
         //coordenada
-        generarCoordendas(puntosInteres);
+        generarCoordendas(puntosInteres,rutaPrincipal[0]);
         //estadistica
-        generarEstadistica(estadisticas);
+        generarEstadistica(estadisticas,rutaPrincipal[0]);
         //temperaturaPRomedioPuntos
-        generarEstadisticaPorImagen(temperaturaPromedioPuntos);
+        generarEstadisticaPorImagen(temperaturaPromedioPuntos,rutaPrincipal[0]);
         //temperatura de los puntos por imagen
-        generarTemperaturaPorImagen(puntosInteres);
+        generarTemperaturaPorImagen(puntosInteres,rutaPrincipal[0]);
     }
     
     /**
@@ -69,14 +61,21 @@ public class GestorArchivo {
      * params arrelo de coordenadas
      **/ 
     
-    private static void generarCoordendas( ArrayList<Coordenada> puntosInteres ){
+    private static void generarCoordendas( ArrayList<Coordenada> puntosInteres, String ruta ){
         
         try {
             
-            String auxRuta = linkCoordenada;
-            
+            String auxRuta = ruta + "coordenada";
             File file = new File(auxRuta);
 
+            if( !file.exists() ){
+                
+                file.mkdirs();
+            }
+            
+            auxRuta = ruta + "coordenada\\coordenada.txt";
+            file = new File(auxRuta);
+            
             if( !file.exists() ){
                 
                 file.createNewFile();
@@ -129,10 +128,16 @@ public class GestorArchivo {
      * params arreglo de estadisticas
      **/ 
     
-    private static void generarEstadistica(ArrayList<Estadistica> estadisticas) {
+    private static void generarEstadistica(ArrayList<Estadistica> estadisticas, String ruta) {
         try {
             
-            String auxRuta = linkEstadistica;
+            String auxRuta = ruta + "Estadistica";
+            File f = new File(auxRuta);
+            
+            if( !f.exists() ){
+                
+                f.mkdirs();
+            }
             
             for( int x = 0 ; x < estadisticas.size() ; x++ ){
                 
@@ -147,6 +152,7 @@ public class GestorArchivo {
                     file.createNewFile();
                 
                 }
+                
                 
                 FileWriter fw = new FileWriter(file);
                 BufferedWriter bw = new BufferedWriter(fw);
@@ -175,9 +181,15 @@ public class GestorArchivo {
      **/ 
     
     private static void generarEstadisticaPorImagen(ArrayList<TemperaturaPromedioPuntos>
-            temperaturaPromedioPuntos) {
+            temperaturaPromedioPuntos , String ruta) {
         
-        String auxRuta = linkEstadisticaImagen;
+        String auxRuta = ruta + "estadisticaXimagen";
+        File f = new File(auxRuta);
+        
+        if( !f.exists() ){
+                
+            f.mkdirs();
+        }
         
         for(int x = 0 ; x < temperaturaPromedioPuntos.size() ; x++ ){
             
@@ -218,9 +230,16 @@ public class GestorArchivo {
      * params arreglo de coordenadas
      **/ 
     
-    private static void generarTemperaturaPorImagen(ArrayList<Coordenada> puntosInteres) {
+    private static void generarTemperaturaPorImagen(ArrayList<Coordenada> puntosInteres, String ruta) {
         
-        String auxRuta = linkTemPorImagen;
+        String auxRuta = ruta + "txt";
+        
+        File f = new File(auxRuta);
+        
+        if( !f.exists() ){
+                
+            f.mkdirs();
+        }
         
         for(int x = 0 ; x < puntosInteres.size() ; x++){
             

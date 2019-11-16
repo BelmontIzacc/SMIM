@@ -46,6 +46,8 @@ public class GestorVideo {
     
     public static String video;
     public static String rutaArchivo;
+    public static String rutaImagenesFinal;
+    public static int tiempoAnalisisVideo;
     
     public static String obtenerRutaFrames( String ruta, int tiempoAnalisis ){
         
@@ -178,7 +180,9 @@ public class GestorVideo {
             }
             
             int nombreNum = 1; // utilizado para los nombres de las imagenes
-            rutaImagenes = rutaEspecifica(nombreProceso,nombreAlumno,grupo);
+            tiempoAnalisisVideo = tiempoAnalisis;
+            rutaImagenesFinal = rutaEspecifica(nombreProceso,nombreAlumno,grupo);
+            rutaImagenes = rutaImagenesFinal;
             
             for(int x = 0 ; x<im ; x++){
                 try {

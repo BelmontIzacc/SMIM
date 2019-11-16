@@ -7,8 +7,6 @@ package GUI_Generales;
 
 import static herramientas.GestorImagenes.toBufferedImage;
 
-import GUI_Imagenes.CorreccionPuntosI;
-import GUI_Video.PuntosVideo;
 import GUI_Video.CorreccionPuntosV;
 import java.awt.Color;
 import java.awt.Image;

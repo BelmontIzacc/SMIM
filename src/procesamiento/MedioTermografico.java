@@ -111,7 +111,7 @@ public abstract class MedioTermografico{
                      
                      ArrayList<double[]> tonos = new ArrayList<>();
 
-                     File archivo = new File( "" + rutaImagenes + "\\" + nums[x] + ".jpg" );
+                     File archivo = new File( "" + rutaImagenes + "\\" + nums[x] + ".png" );
                      BufferedImage bi = ImageIO.read(archivo);
 
                      double hRojo [] = HistogramaFrecuencias.calcularHistograma( 1, bi );
@@ -144,7 +144,8 @@ public abstract class MedioTermografico{
     
     public void generarArchivos(){
         
-        GestorArchivo.GenerarTxt(puntosInteres, estadisticas, temperaturaPromedioPuntos);
+        String r = this.rutaImagenes;
+        GestorArchivo.GenerarTxt(puntosInteres, estadisticas, temperaturaPromedioPuntos,r);
         
     }
     

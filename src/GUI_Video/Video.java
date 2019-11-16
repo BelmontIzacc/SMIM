@@ -10,7 +10,7 @@ import static GUI_Generales.Prueba.Procesos;
 import static GUI_Generales.Prueba.Tiempo;
 
 import GUI_Generales.Cargando;
-import GUI_Generales.HiloTest1;
+import GUI_Generales.HiloTest;
 import herramientas.GestorVideo;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
@@ -550,8 +550,8 @@ public final class Video extends javax.swing.JInternalFrame {
             if(respuestaSeguridad==0){
                 cargando = new Cargando(this.principal,dInfo);
                 this.principal.add(cargando);
-                HiloTest1.active  = true;
-                HiloTest1 h = new HiloTest1(cargando);
+                HiloTest.active  = true;
+                HiloTest h = new HiloTest(cargando);
                 h.start();
                 h.interrupt();
             }else if(respuestaSeguridad==1){
