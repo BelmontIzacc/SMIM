@@ -169,6 +169,19 @@ public class Imagen extends MedioTermografico{
             
         }
         
+        super.generarGraficaPromedioPunto();
+        String[] nombresTemp = { "Celsius", "Farenheit", "Kelvin" }; 
+        int listGraficasPromedio = super.getGraficasPromedio().size();
+        
+        for( int i = 0 ; i < listGraficasPromedio ; i++ ){
+            
+            Grafica g = super.getGraficasPromedio().get(i);
+            g.guardarGrafica(alto+250, ancho+200, rg, nombresTemp[i], formato);
+            
+        }
+        
+        super.generarGraficaPorPunto(rg);
+        
     }
     
 }

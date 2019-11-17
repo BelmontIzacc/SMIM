@@ -498,14 +498,25 @@ public final class Video extends javax.swing.JInternalFrame {
             BufferedWriter bw;
             bw = new BufferedWriter(new FileWriter(rutaCbat));
             if(dInfo>maximo){
-                bw.write("@echo No sierre la ventana, al terminar se cierra sola\n" +
+                bw.write("" +
                 "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -t "+GUI_Generales.Prueba.duracionVideo+" -s 440x440 -an " +
-                rutaNueva + "\n" + "@echo termino!\n" + "exit");
+                rutaNueva + "\n" + "" + "exit");
             }else{
-                bw.write("@echo No sierre la ventana, al terminar se cierra sola\n" +
+                bw.write("" +
                 "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -s 440x440 -an "+ rutaNueva + "\n" +
-                "@echo termino!\n" + "exit");
-            }            
+                "" + "exit");
+            }
+
+//            if(dInfo>maximo){
+//                bw.write("@echo No sierre la ventana, al terminar se cierra sola\n" +
+//                "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -t "+GUI_Generales.Prueba.duracionVideo+" -s 440x440 -an " +
+//                rutaNueva + "\n" + "@echo termino!\n" + "exit");
+//            }else{
+//                bw.write("@echo No sierre la ventana, al terminar se cierra sola\n" +
+//                "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -s 440x440 -an "+ rutaNueva + "\n" +
+//                "@echo termino!\n" + "exit");
+//            } 
+            
             bw.close();
         } catch (IOException ex) {
             Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
@@ -520,7 +531,10 @@ public final class Video extends javax.swing.JInternalFrame {
         try {
             
             String linea;
-            Process p = rt.exec(new String[]{"cmd.exe","/c","start","/MIN",rutaCbat.getAbsolutePath()});
+            
+            Process p = rt.exec(new String[]{"cmd.exe","/C","start","/MIN",rutaCbat.getAbsolutePath()});
+//            Process p = rt.exec(new String[]{"cmd.exe","/c","start","/MIN",rutaCbat.getAbsolutePath()});
+            System.out.println(p.isAlive());
             BufferedReader input = new BufferedReader (new InputStreamReader(p.getInputStream()));
             while((linea=input.readLine())!=null){
                 System.out.println(linea);

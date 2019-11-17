@@ -57,6 +57,7 @@ public class Estadistica{
      * IBelmont
      * Desde 01/05/19
      * params objeto de tipo coordenada
+     * @param puntoInteres
      **/ 
     
     public void calcularEstadistica(Coordenada puntoInteres){
@@ -70,6 +71,7 @@ public class Estadistica{
             int mitad = ( int )aux.size()/2;
             double parteA = aux.get( mitad - 1 ).getTemperaturaCelsius();
             double parteB = aux.get( mitad ).getTemperaturaCelsius();
+
             this.mediana = ( parteA + parteB ) / 2;
             
         }else{
@@ -87,6 +89,7 @@ public class Estadistica{
         }
        
         this.media = ( total / aux.size() );
+
         double acumulado = 0;
         
         for( int i = 0 ; i < aux.size() ; i++ ){
@@ -138,6 +141,8 @@ public class Estadistica{
      * IBelmont
      * Desde 01/05/19
      * params Arreglo de coordenadas
+     * @param puntosInteres
+     * @return 
      **/ 
     
    public ArrayList<TemperaturaPromedioPuntos> 

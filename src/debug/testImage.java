@@ -117,10 +117,10 @@ public class testImage {
             img.agregarPuntosInteres(puntosInteres); //se agrega los puntos de interes a la clase imagen
             img.procesamientoImagenes(); // calculo de temperatura
             img.calcularEstadistica(); //calculo de estadisticass
-            img.graficarHistograma();
+//            img.graficarHistograma();
             img.generarArchivos();
             
-            img.guardarGrafica(700, 250, "png");
+//            img.guardarGrafica(700, 250, "png");
             
             System.out.println();
             

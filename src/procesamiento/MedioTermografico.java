@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import modelos.Coordenada;
 import modelos.Estadistica;
+import modelos.Temperatura;
 import modelos.TemperaturaPromedioPuntos;
 
 /**
@@ -46,6 +47,7 @@ public abstract class MedioTermografico{
     private String nombreAlumno;
     private String grupoAlumno;
     private ArrayList<Grafica> listaGrafica;
+    private ArrayList<Grafica> graficasPromedio;
     
     public MedioTermografico( String tipProceso, String fecha, String nombreProceso,
             String rutaImagenes, int numeroImagenes, String folio, String nombreAlumno, String grupoAlumno ){
@@ -62,6 +64,7 @@ public abstract class MedioTermografico{
         this.nombreAlumno = nombreAlumno;
         this.grupoAlumno = grupoAlumno;
         this.listaGrafica = new ArrayList<>();
+        this.graficasPromedio = new ArrayList<>();
         
     }
     
@@ -134,6 +137,127 @@ public abstract class MedioTermografico{
 
          }
          return null;
+    }
+    
+    /**
+     * Funcion para generar las graficas por punto de interes
+     * IBelmont
+     * Desde 15/11/19
+     **/ 
+    
+    public void generarGraficaPorPunto(String rg){
+        
+        int alto = 950;
+        int ancho = 550;
+        
+//        ArrayList<Grafica> comportamiento = new ArrayList<>();
+        ArrayList<double[]> comportamientoC = new ArrayList<>();
+        ArrayList<double[]> comportamientoF = new ArrayList<>();
+        ArrayList<double[]> comportamientoK = new ArrayList<>();
+        
+        for(int x = 0 ; x < puntosInteres.size() ; x++){
+            
+            Coordenada c = puntosInteres.get(x);
+            ArrayList<Temperatura> t = c.getTemperatura();
+            
+            int tamTemp = t.size();
+            
+            double[] datosC = new double[tamTemp];
+            double[] datosF = new double[tamTemp];
+            double[] datosK = new double[tamTemp];
+            
+            for( int i = 0 ; i < t.size() ; i++ ){
+
+                String nombre = t.get(i).getNombreImagen();
+                double tempCelsius = t.get(i).getTemperaturaCelsius();
+                double tempFar = t.get(i).getTemperaturaFarenheit();
+                double tempKelvin = t.get(i).getTemperaturaKelvin();
+
+                datosC[i] = tempCelsius;
+                datosF[i] = tempFar;
+                datosK[i] = tempKelvin;
+            }
+            
+            comportamientoC.add(datosC);
+            comportamientoK.add(datosF);
+            comportamientoF.add(datosK);
+            
+        }
+        
+        Grafica grafica = new Grafica( "Punto de Interes", "Temperatura","Comportamiento de Temperatura por punto de Interes Celsius" );
+        
+        for( int i = 0 ; i < comportamientoC.size() ; i++ ){
+            
+            grafica.agregarSerie( ""+i, comportamientoC.get(i) );
+            grafica.crearYmostrarGrafica();
+            
+        }
+        
+        grafica.guardarGrafica(alto, ancho, rg, "Punto Interes Celsius", "png");
+        
+        Grafica grafica1 = new Grafica( "Punto de Interes", "Temperatura","Comportamiento de Temperatura por punto de Interes Farenheit" );
+        
+        for( int i = 0 ; i < comportamientoF.size() ; i++ ){
+            
+            grafica1.agregarSerie( ""+i, comportamientoF.get(i) );
+            grafica1.crearYmostrarGrafica();
+            
+        }
+        
+        grafica1.guardarGrafica(alto, ancho, rg, "Punto Interes Farenheit", "png");
+        
+        Grafica grafica2 = new Grafica( "Punto de Interes", "Temperatura","Comportamiento de Temperatura por punto de Interes Kelvin" );
+        
+        for( int i = 0 ; i < comportamientoK.size() ; i++ ){
+            
+            grafica2.agregarSerie( ""+i, comportamientoK.get(i) );
+            grafica2.crearYmostrarGrafica();
+            
+        }
+        
+        grafica2.guardarGrafica(alto, ancho, rg, "Punto Interes Kelvin", "png");
+        
+    }
+    
+    /**
+     * Funcion para generar las graficas de promedio por temperatura
+     * IBelmont
+     * Desde 15/11/19
+     **/ 
+    
+    public void generarGraficaPromedioPunto(){
+        
+        double[] datosC = new double[temperaturaPromedioPuntos.size()];
+        double[] datosF = new double[temperaturaPromedioPuntos.size()];
+        double[] datosK = new double[temperaturaPromedioPuntos.size()];
+        
+        for( int x = 0 ; x < datosC.length ; x++ ){
+            
+            datosC[x] = temperaturaPromedioPuntos.get(x).getTemperaturaPromedioCelsius();
+            datosF[x] = temperaturaPromedioPuntos.get(x).getTemperaturaPromedioFarenheit();
+            datosK[x] = temperaturaPromedioPuntos.get(x).getTemperaturaPromedioKelvin();
+            
+        }
+        
+        Grafica grafica1 = new Grafica( "Imagen", "Temperatura","Nivel de Temperatura promedio por Imagen Celsius" );
+            
+        grafica1.agregarSerie( "Celsius", datosC );
+        grafica1.crearYmostrarGrafica();
+        
+        Grafica grafica2 = new Grafica( "Imagen", "Temperatura","Nivel de Temperatura promedio por Imagen Farenheit" );
+            
+        grafica2.agregarSerie( "Farenheit", datosF );
+        grafica2.crearYmostrarGrafica();
+        
+        Grafica grafica3 = new Grafica( "Imagen", "Temperatura","Nivel de Temperatura promedio por Imagen Kelvin" );
+            
+        grafica3.agregarSerie( "Kelvin", datosK );
+        grafica3.crearYmostrarGrafica();
+        
+        this.graficasPromedio.add(grafica1);
+        this.graficasPromedio.add(grafica2);
+        this.graficasPromedio.add(grafica3);
+        
     }
     
     /**
@@ -255,6 +379,10 @@ public abstract class MedioTermografico{
         
         return listaGrafica;
         
+    }
+
+    public ArrayList<Grafica> getGraficasPromedio() {
+        return graficasPromedio;
     }
     
 }

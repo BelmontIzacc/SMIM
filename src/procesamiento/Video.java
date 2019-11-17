@@ -126,6 +126,7 @@ public class Video extends MedioTermografico{
             grafica.agregarSerie( "Verde", azul );
             grafica.crearYmostrarGrafica();
             
+            super.getListaGrafica().add(grafica);
         }
         
     }
@@ -162,7 +163,6 @@ public class Video extends MedioTermografico{
             f.mkdirs();
         }
         
-        int graficas = super.getListaGrafica().size();
         
         for( int x = 0 ; x < super.getListaGrafica().size() ; x++ ){
             
@@ -170,6 +170,19 @@ public class Video extends MedioTermografico{
             g.guardarGrafica(alto, ancho, rg, nombres[x], formato);
             
         }
+        
+        super.generarGraficaPromedioPunto();
+        String[] nombresTemp = { "Celsius", "Farenheit", "Kelvin" }; 
+        int listGraficasPromedio = super.getGraficasPromedio().size();
+        
+        for( int i = 0 ; i < listGraficasPromedio ; i++ ){
+            
+            Grafica g = super.getGraficasPromedio().get(i);
+            g.guardarGrafica(alto+200, ancho+200, rg, nombresTemp[i], formato);
+            
+        }
+        
+        super.generarGraficaPorPunto(rg);
         
     }
     

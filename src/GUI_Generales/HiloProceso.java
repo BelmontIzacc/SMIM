@@ -184,8 +184,6 @@ public class HiloProceso extends Thread{
                 
                 vid.guardarGrafica(700, 250, "png");
                 
-                int tam = tamanioS;
-                int f = forma;
                 
                 active = false;
                 proceso.setVisible(false);
@@ -213,6 +211,9 @@ public class HiloProceso extends Thread{
 
     private void preProseamiento(ArrayList<Coordenada> puntosInteres, int numeroImagenes, String ruta) {
         
+        int f = forma;
+        int muestra = tamanioS;
+        
         for(int im = 0 ; im<numeroImagenes ; im++){
 
             try {
@@ -225,7 +226,7 @@ public class HiloProceso extends Thread{
                     int xInicial = (int)puntosInteres.get(x).getCoordX(); 
                     int yInicial = (int) puntosInteres.get(x).getCoordY();
                     //int muestra = (tamanioS/2); //tamaño final = 2*muestra + 1
-                    int muestra = tamanioS;
+                    
                     int xNuevoInicio = xInicial-muestra; 
                     int xNuevoFin = xInicial+muestra;
                     int yNuevoInicio = yInicial-muestra;
