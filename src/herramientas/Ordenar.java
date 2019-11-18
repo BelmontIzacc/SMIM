@@ -7,6 +7,7 @@ package herramientas;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import modelos.NodoTemp;
 import modelos.Temperatura;
 
 /**
@@ -69,6 +70,39 @@ public class Ordenar{
         
         return listaTemperatura;
         
+    }
+
+    /**
+     * Funcion para ordenar nodos de paleta de temperatura por tonalidad pra busqueda binaria
+     * IBelmont
+     * Desde 18/11/19
+     * params arreglo de temperatura rango espesificado
+     **/ 
+    
+    public static ArrayList ordenarPorTonalidad(ArrayList<NodoTemp> c){
+       
+       ArrayList<NodoTemp> colores = c;
+       
+        for(int i = 0; i < colores.size()- 1; i++)
+        {
+
+            for(int j = 0; j < colores.size() - i - 1; j++)
+            { 
+                  //                           
+                if (colores.get(j).getTonalidad() > colores.get(j+1).getTonalidad())
+                {
+                    NodoTemp tmp = new NodoTemp(colores.get(j+1).getTemperatura(),colores.get(j+1).getTonalidad());
+
+                    colores.set(j+1, new NodoTemp(colores.get(j).getTemperatura(),colores.get(j).getTonalidad()));
+
+                    colores.set(j,new NodoTemp(tmp.getTemperatura(), tmp.getTonalidad()));
+                    tmp = null;
+                }
+            }
+        }
+       
+       return colores;
+       
     }
     
 }

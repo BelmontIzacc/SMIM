@@ -8,12 +8,15 @@ package conexion;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -324,10 +327,10 @@ public class EndPoint {
      * Funcion para subir un archivo al servidor
      * IBelmont
      * Desde 14/11/19
-     * params ruta del archivo, carpeta destino dentro del servidor
+     * params ruta del archivo, carpeta destino dentro del servidor, tipo de archivo
      **/ 
     
-    public String subirArchivo( String archivo, String carpetaDestino ) {
+    public String subirArchivo( String archivo, String carpetaDestino, int tipo ) {
         
         int serverResponseCode = 0;  
         String upLoadServerUri = rutaAccesoArchivo;
@@ -343,7 +346,15 @@ public class EndPoint {
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024; 
         File sourceFile = new File( archivo ); 
-           
+        
+        boolean validarArchivo = pesoArchivo(sourceFile,tipo);
+        
+        if( validarArchivo == false ){
+            
+            return null;
+            
+        }
+        
         try { 
 
             FileInputStream fileInputStream = new FileInputStream( sourceFile );
@@ -429,5 +440,124 @@ public class EndPoint {
         return null; 
         
     } 
-     
+
+    
+    /**
+     * Funcion que valida el peso del archivo txt img vid
+     * IBelmont
+     * Desde 17/11/19
+     * params File para validar tamaño
+     **/
+    
+    
+    public boolean pesoArchivo(File file, int tipo){
+        
+        long tamBytes = file.length();
+        double tamKBytes = (tamBytes / 1024.0);
+        
+        switch(tipo){
+            
+            case 1:{
+                
+                if( tamKBytes <= 6 ){ // 6kB = 200 imagenes procesadas
+                    
+                    return true;
+                    
+                }else{
+                    
+                    return false;
+                    
+                }
+                
+            }
+            
+            case 2:{
+                
+                double tamMBytes = (tamKBytes/1024.0);
+                
+                if( tamMBytes <= 4 ){ // 4Mb 
+                    
+                    return true;
+                    
+                }else{
+                    
+                    return false;
+                    
+                }
+                
+            }
+            
+            case 3:{
+                
+                double tamMBytes = (tamKBytes/1024.0);
+                
+                if( tamMBytes <= 20 ){ // 20 Mb
+                    
+                    return true;
+                    
+                }else{
+                    
+                    return false;
+                    
+                }
+                
+            }
+            
+            default : {
+                
+                return false;
+                
+            }
+        }
+        
+    }
+    
+    /**
+     * Funcion que descarga un archivo del servidor
+     * IBelmont
+     * Desde 17/11/19
+     * params ruta a descargar, nombre paletaDescargada
+     **/
+    
+    public String descargarArchivo( String rutaPaleta, String nombrePaleta) {
+        
+        try {
+            
+            String path =  ""+ nombrePaleta;
+            File file = new File( path );
+            
+            URLConnection conn = new URL(rutaPaleta).openConnection();
+            conn.connect();
+            
+            InputStream in = conn.getInputStream();
+            OutputStream out = new FileOutputStream(file);
+            
+            int b = 0;
+            
+            while ( b != -1 ) {
+                
+              b = in.read();
+              
+              if ( b != -1 ){
+                  
+                out.write(b);
+                
+              }
+              
+            }
+            
+            out.close();
+            in.close();
+            
+            return ""+path;
+            
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(EndPoint.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EndPoint.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+        
+    }
 }

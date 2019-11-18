@@ -8,15 +8,19 @@ package procesamiento;
 import herramientas.GestorArchivo;
 import herramientas.Grafica;
 import herramientas.HistogramaFrecuencias;
+import herramientas.Ordenar;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import modelos.Coordenada;
 import modelos.Estadistica;
+import modelos.NodoTemp;
+import modelos.PaletaColor;
 import modelos.Temperatura;
 import modelos.TemperaturaPromedioPuntos;
 
@@ -48,6 +52,8 @@ public abstract class MedioTermografico{
     private String grupoAlumno;
     private ArrayList<Grafica> listaGrafica;
     private ArrayList<Grafica> graficasPromedio;
+    private ArrayList<NodoTemp> paletaColorAsignadaPartA;
+    private ArrayList<NodoTemp> paletaColorAsignadaPartB;
     
     public MedioTermografico( String tipProceso, String fecha, String nombreProceso,
             String rutaImagenes, int numeroImagenes, String folio, String nombreAlumno, String grupoAlumno ){
@@ -65,6 +71,8 @@ public abstract class MedioTermografico{
         this.grupoAlumno = grupoAlumno;
         this.listaGrafica = new ArrayList<>();
         this.graficasPromedio = new ArrayList<>();
+        this.paletaColorAsignadaPartA = new ArrayList<>();
+        this.paletaColorAsignadaPartB = new ArrayList<>();
         
     }
     
@@ -260,6 +268,37 @@ public abstract class MedioTermografico{
         
     }
     
+    public void cargarPaleta(){
+        
+        PaletaColor pc = new PaletaColor();
+        
+        ArrayList<String> tempMax = 
+            new ArrayList<>(Arrays.asList(pc.arcoirisMax())); 
+        
+        ArrayList<String> tempMin = 
+            new ArrayList<>(Arrays.asList(pc.arcoirisMin())); 
+        
+        ArrayList<NodoTemp> nt = new ArrayList<>();
+        
+        for( int x = 0 ; x < tempMax.size() ; x++ ){
+            
+            NodoTemp n = new NodoTemp(tempMax.get(x));
+            nt.add(n);
+        }
+        
+        ArrayList<NodoTemp> ntm = new ArrayList<>();
+        
+        for( int x = 0 ; x < tempMin.size() ; x++ ){
+            
+            NodoTemp n = new NodoTemp(tempMin.get(x));
+            ntm.add(n);
+        }
+        
+        this.paletaColorAsignadaPartA = Ordenar.ordenarPorTonalidad(nt);
+        this.paletaColorAsignadaPartB = Ordenar.ordenarPorTonalidad(ntm);
+        
+    }
+    
     /**
      * Funcion para generar los archivos .txt del proyecto procesado
      * IBelmont
@@ -383,6 +422,14 @@ public abstract class MedioTermografico{
 
     public ArrayList<Grafica> getGraficasPromedio() {
         return graficasPromedio;
+    }
+
+    public ArrayList<NodoTemp> getPaletaColorAsignadaPartA() {
+        return paletaColorAsignadaPartA;
+    }
+
+    public ArrayList<NodoTemp> getPaletaColorAsignadaPartB() {
+        return paletaColorAsignadaPartB;
     }
     
 }

@@ -82,13 +82,17 @@ public class Imagen extends MedioTermografico{
     
     public void procesamientoImagenes(){
         
+        super.cargarPaleta();
+        
         for( int x = 0 ; x < super.getPuntosInteres().size() ; x++ ){
             
             int tamTemp = super.getPuntosInteres().get( x ).getTemperatura().size();
             
             for( int y = 0 ; y < tamTemp ; y++ ){
                 
-                super.getPuntosInteres().get( x ).getTemperatura().get( y ).calcularTemperatura();
+                super.getPuntosInteres().get( x ).getTemperatura().get( y ).calcularTemperatura(
+                        super.getPaletaColorAsignadaPartA(), super.getPaletaColorAsignadaPartB()
+                );
                 
             }
         }
@@ -114,7 +118,7 @@ public class Imagen extends MedioTermografico{
             double[] azul = auxHistograma.get( 2 );
             String[] nombres = { "al inicio", " a la mitad", "al final" }; 
             
-            Grafica grafica = new Grafica( "Tono", "Frecuencia","Nivel de Temperatura " + nombres[ x ] );
+            Grafica grafica = new Grafica( "Tono", "Frecuencia","Histograma de Temperatura " + nombres[ x ] );
             
             grafica.agregarSerie( "Rojo", rojo );
             grafica.agregarSerie( "Azul", verde );

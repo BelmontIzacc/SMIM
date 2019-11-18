@@ -88,13 +88,17 @@ public class Video extends MedioTermografico{
     
     public void procesamientoVideo(){
         
+        super.cargarPaleta();
+        
         for( int x = 0 ; x < super.getPuntosInteres().size() ; x++ ){
             
             int tamTemp = super.getPuntosInteres().get( x ).getTemperatura().size();
             
             for( int y = 0 ; y < tamTemp ; y++ ){
                 
-                super.getPuntosInteres().get( x ).getTemperatura().get( y ).calcularTemperatura();
+                super.getPuntosInteres().get( x ).getTemperatura().get( y ).calcularTemperatura(
+                        super.getPaletaColorAsignadaPartA(), super.getPaletaColorAsignadaPartB()
+                );
                 
             }
         }
@@ -119,7 +123,9 @@ public class Video extends MedioTermografico{
             double[] verde = auxHistograma.get( 1 );
             double[] azul = auxHistograma.get( 2 );
             
-            Grafica grafica = new Grafica( "Tono", "Frecuencia", "Frecuencias de Color Original" );
+            String[] nombres = { "al inicio", " a la mitad", "al final" }; 
+            
+            Grafica grafica = new Grafica( "Tono", "Frecuencia","Histograma de Temperatura " + nombres[ x ] );
             
             grafica.agregarSerie( "Rojo", rojo );
             grafica.agregarSerie( "Azul", verde );

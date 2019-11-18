@@ -5,7 +5,9 @@
  */
 package modelos;
 
+import herramientas.Comparador;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -51,9 +53,38 @@ public class Temperatura{
         this.temperaturaKelvin = convertirTemp( this.temperaturaCelsius, 2 );
     }
     
-    public void calcularTemperatura(){
+    /**
+     * Funcion para calcular temperaturas
+     * IBelmont
+     * Desde 01/05/19
+     * @param Se carga las dos partes de paleta de colores que se tiene
+     **/ 
+    
+    public void calcularTemperatura(ArrayList<NodoTemp> paletaColorAsignadaPartA, 
+        ArrayList<NodoTemp> paletaColorAsignadaPartB){
         
-        this.temperaturaCelsius = ThreadLocalRandom.current().nextInt(20, 400);
+        int eleccion = this.color.getRGB()* -1 ;
+        
+        if( eleccion > 3160048 &&  eleccion < 10441429 ){
+            
+            double auxTemp = Comparador.Calcular(paletaColorAsignadaPartB, this.color.getRGB());
+            this.temperaturaCelsius = auxTemp;
+            
+            if(auxTemp == -1.1){
+                auxTemp = Comparador.Calcular(paletaColorAsignadaPartA, this.color.getRGB());
+            }
+            
+        }else{
+            
+            double auxTemp = Comparador.Calcular(paletaColorAsignadaPartA, this.color.getRGB());
+            this.temperaturaCelsius = auxTemp;
+            
+            if(auxTemp == -1.1){
+                auxTemp = Comparador.Calcular(paletaColorAsignadaPartB, this.color.getRGB());
+            }
+            
+        }
+        
         this.temperaturaFarenheit = convertirTemp( this.temperaturaCelsius, 1 );
         this.temperaturaKelvin = convertirTemp( this.temperaturaCelsius, 2 );
         
@@ -119,4 +150,5 @@ public class Temperatura{
         return temperaturaFarenheit;
         
     }    
+
 }
