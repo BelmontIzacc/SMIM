@@ -1,12 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
  */
 package herramientas;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYSeries;
@@ -113,9 +109,6 @@ public class Grafica {
     public void crearYmostrarGrafica(){
     
         this.grafica = ChartFactory.createXYLineChart( titulo, ejeX, ejeY, series );
-//        ChartFrame frame = new ChartFrame( "Histograma de color", grafica );
-//        frame.setSize( 700, 250 );
-//        frame.setVisible( true );
          
     }
 }

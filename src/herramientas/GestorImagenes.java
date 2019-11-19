@@ -1,13 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
  */
 package herramientas;
 
-import static GUI_Generales.Prueba.Procesos;
-
-import GUI_Imagenes.Imagenes;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -89,34 +83,6 @@ public class GestorImagenes {
             GUI_Generales.Prueba.creditos.setEnabled(true);
             return false;
         }
-    }
-    
-    public static BufferedImage muestra(int x, int y, int tam, int tam1, BufferedImage bi){
-        
-        BufferedImage imagenCopia = new BufferedImage(tam1, tam, BufferedImage.TYPE_INT_RGB);
-        int c=0;
-        int v=0;
-        int finy;
-        int finx;
-        finy = y+tam1;
-        finx = x+tam;
-        
-        for(int j = y; j < finy; j++){
-            
-            for(int i = x; i < finx; i++){
-                
-                imagenCopia.setRGB(c, v, bi.getRGB(j, i));
-                v++;      
-                
-            }
-            
-            c++;
-            v=0;
-            
-        }
-        
-        return imagenCopia;
-        
     }
     
     public static Image toImage(BufferedImage bi){

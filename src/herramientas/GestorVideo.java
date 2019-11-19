@@ -1,11 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
  */
 package herramientas;
 
-import static GUI_Generales.Prueba.Procesos;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +10,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import GUI_Video.Video;
 import static GUI_Video.Video.rutaGeneral;
 import static GUI_Video.Video.tipoProcesoSelect;
 import java.nio.file.Files;
