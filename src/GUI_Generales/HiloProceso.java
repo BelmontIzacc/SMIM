@@ -65,7 +65,7 @@ public class HiloProceso extends Thread{
                 proceso.setVisible(true);
                 procesando  = 0;
             }
-
+            String rutaProyecto = null;
             while(active){
                 crearCarpetas(this.listaIm,nProceso,nombre,grupo,nombreProceso);
                 ///IMAGENES!
@@ -102,9 +102,15 @@ public class HiloProceso extends Thread{
                 
                 active =  false;
                 proceso.setVisible(true);
+                
+                String rutaUsuario = System.getProperty("user.home");
+                rutaProyecto = rutaUsuario+"\\Documents\\SMIM\\"+
+                    tipoProcesso+"\\"+fechaDia+"_"+
+                    nombreProceso+"_"+usuario+"_"+
+                    grupo+"";
             }
             System.out.println("salio del hilo");
-            this.p.muestraResultados();
+            this.p.muestraResultados(rutaProyecto);
              
         }else if(tipo == 2){ ////Tipo 2 --- Ventana Video
             if(procesando == 1){
@@ -112,32 +118,10 @@ public class HiloProceso extends Thread{
                 procesando = 0;
             }
             
+            String rutaProyecto = null;
             while(active){
                 guardarVideos(nombre,grupo,nombreProceso);
                 //VIDEO!
-                //numeroCoordenadas = 2; //Numero total de coordenadas seleccionadas en el panel
-                //------------PuntosVideo.vN.size();
-        //numeroImagenes = 4; // numero total de imagenes procesadas obtenidas del video
-                //------------
-                //tipo = "Fundicion"; // tipo de proceso seleccionado desde los menus
-                //------------Procesos.get(Video.tipoProceso.getSelectedIndex()-1);
-                //nombreProyecto = "Manufactura_1"; // nombre del proyecto ingresado por el usuario
-                //------------Video.nombreProceso.getText();
-                //fecha = "05/08/19"; // fecha tomada por el sistema
-                //------------Calendar fecha = Calendar.getInstance();
-                //------------String fechaDia = fecha.get(Calendar.DAY_OF_MONTH)+"-"+fecha.get(Calendar.MONTH)+"-"+fecha.get(Calendar.YEAR);
-        //rutaVideo = "C:\\Users\\izacc\\Pictures\\SMIM\\Manufactura\\profe.mp4"; //ruta donde estan guardado el video
-                //------------
-        //rutaVideo = "C:\\Users\\izacc\\Pictures\\SMIM\\Manufactura\\profe.mp4"; //ruta donde estan guardado el video Convertido
-                //------------
-        //rutaImagenes = /ruta donde se guarda las imagenes
-                //------------GestorVideo.rutaNueva;
-        //tiempoAnalisis = 10;
-                //------------Tiempo.get(Video.tiempoImagenes.getSelectedIndex()-1);
-                //nombreAlumno = "Alejandra Beltran Silva";
-                //------------Video.nombreAlumno.getText();
-                //grupoAlumno = "5CM1";
-                //------------Video.Grupo.getText();
                 
                 int numeroCoordenadas = PuntosVideo.vectorNodo.size();
                 String tipoProcesso =  nProceso;
@@ -184,12 +168,16 @@ public class HiloProceso extends Thread{
                 
                 vid.guardarGrafica(700, 250, "png");
                 
+                rutaProyecto = rutaUsuario+"\\Documents\\SMIM\\"+
+                    tipoProcesoSelect+"\\"+fechaDia+"_"+
+                    nombreProceso+"_"+usuario+"_"+
+                    grupo+"";
                 
                 active = false;
                 proceso.setVisible(false);
             }
             System.out.println("salio del hilo");
-            this.p.muestraResultados();
+            this.p.muestraResultados(rutaProyecto);
         }
         
     }

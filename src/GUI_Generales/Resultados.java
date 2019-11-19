@@ -1,21 +1,68 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
  */
 package GUI_Generales;
+
+import GUI_Imagenes.*;
+import GUI_Imagenes.Imagenes;
+import static herramientas.GestorImagenes.rutas;
+
+
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.Timer;
 
 /**
  *
  * @author rebel
  */
 public class Resultados extends javax.swing.JInternalFrame {
-
+    
+    public JDesktopPane principal;
+    public int s;
+    public ArrayList<ImageIcon> imagen;
+    public ArrayList<ImageIcon> imagenHistograma;
+    public ArrayList<ImageIcon> imagenAux;
+    public ArrayList<ImageIcon> imagenPuntos;
+    public ArrayList<ImageIcon> imagenPromedio;
+    
+    public int contador = 1;
+    public Timer timer = null;
+    public String rutaProyecto;
     /**
-     * Creates new form Resultados
+     * Creates new form CorrecciónImagenes
      */
     public Resultados() {
         initComponents();
+        this.setLocation((this.principal.getWidth()-this.getWidth())/2,(this.principal.getHeight()-this.getHeight())/2);
+    }
+
+    public Resultados(JDesktopPane principal,String ruta) {
+        initComponents();
+       
+       this.principal = principal;
+       this.setLocation((this.principal.getWidth()-this.getWidth())/2,(this.principal.getHeight()-this.getHeight())/2);
+       rutaProyecto = ruta;
+       
+       
+       cargarHistograma(ruta);
+       cargarPromedios(ruta);
+       cargarPuntos(ruta);
+       cargarImagenes(ruta);
+       
+       imagenAux = imagen;
     }
 
     /**
@@ -28,16 +75,235 @@ public class Resultados extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        menu = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        mostrarImagenes = new javax.swing.JLabel();
+        play = new javax.swing.JButton();
+        izquierda = new javax.swing.JButton();
+        derecha = new javax.swing.JButton();
+        pause = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        menu.setText("Menú");
+        menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Descargar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(menu)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(menu)
+                    .addComponent(jButton5))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        mostrarImagenes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        play.setText("Play");
+        play.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playActionPerformed(evt);
+            }
+        });
+
+        izquierda.setText("<<");
+        izquierda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                izquierdaActionPerformed(evt);
+            }
+        });
+
+        derecha.setText(">>");
+        derecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                derechaActionPerformed(evt);
+            }
+        });
+
+        pause.setText("Pause");
+        pause.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pauseActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(mostrarImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(izquierda)
+                        .addGap(35, 35, 35)
+                        .addComponent(play)
+                        .addGap(38, 38, 38)
+                        .addComponent(pause)
+                        .addGap(43, 43, 43)
+                        .addComponent(derecha)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mostrarImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(play)
+                    .addComponent(izquierda)
+                    .addComponent(derecha)
+                    .addComponent(pause))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jButton1.setText("Ver Promedio");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Ver Imagenes");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Ver Histrograma");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Punto de Interes");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -54,8 +320,271 @@ public class Resultados extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playActionPerformed
+        
+        if(timer == null){
+            timer = new Timer(600,new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+
+                        mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(440,
+                    440,Image.SCALE_DEFAULT)));
+                        contador++;
+                        if(contador == s){
+                            contador = 1;
+                        }
+                    }
+                });
+            timer.start();
+        }else{
+            
+            if(timer.isRunning()){
+                timer.restart();
+            }else{
+                timer = new Timer(600,new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+
+                        mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(440,
+                    440,Image.SCALE_DEFAULT)));
+                        contador++;
+                        if(contador == s){
+                            contador = 1;
+                        }
+                    }
+                });
+                timer.start();
+            }
+            
+        }
+        
+        
+    }//GEN-LAST:event_playActionPerformed
+
+    private void izquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_izquierdaActionPerformed
+        
+        if( timer != null ){
+            if(timer.isRunning()){
+                timer.stop();
+            }
+
+            if(contador == 1){
+                contador =s;
+            }
+            contador--;
+            mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(440,
+                    440,Image.SCALE_DEFAULT)));
+        }
+        
+//        mostrarImagenes.setIcon(imagen[contador]);
+    }//GEN-LAST:event_izquierdaActionPerformed
+
+    private void derechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_derechaActionPerformed
+        
+        if(timer != null){
+            if(timer.isRunning()){
+                timer.stop();
+            }
+
+            if(contador == s-1){
+                contador = 0;
+            }
+            contador++;
+            mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(440,
+                    440,Image.SCALE_DEFAULT)));
+        }
+//        mostrarImagenes.setIcon(imagen[contador]);
+    }//GEN-LAST:event_derechaActionPerformed
+
+    private void pauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseActionPerformed
+        timer.stop();
+    }//GEN-LAST:event_pauseActionPerformed
+
+    private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
+        
+        dispose();
+    }//GEN-LAST:event_menuActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        imagenAux = new ArrayList<>();
+        s = imagenPromedio.size();
+        contador = 1;
+        imagenAux = this.imagenPromedio;
+        mostrarImagenes.setIcon(new ImageIcon(imagenPromedio.get(1).getImage().getScaledInstance(950,
+                450,Image.SCALE_DEFAULT)));
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        imagenAux = new ArrayList<>();
+        s = imagen.size();
+        contador = 1;
+        imagenAux = imagen;
+        mostrarImagenes.setIcon(new ImageIcon(imagen.get(1).getImage().getScaledInstance(440,
+                440,Image.SCALE_DEFAULT)));
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        imagenAux = new ArrayList<>();
+        s = imagenHistograma.size();
+        contador = 1;
+        imagenAux = this.imagenHistograma;
+        
+        mostrarImagenes.setIcon(new ImageIcon(imagenHistograma.get(1).getImage().getScaledInstance(700,
+                250,Image.SCALE_DEFAULT)));
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        imagenAux = new ArrayList<>();
+        s = imagenPuntos.size();
+        contador = 1;
+        imagenAux =this.imagenPuntos;
+        
+        mostrarImagenes.setIcon(new ImageIcon(imagenPuntos.get(1).getImage().getScaledInstance(950,
+                550,Image.SCALE_DEFAULT)));
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        File f = new File(this.rutaProyecto);
+        String[] list = f.list();
+        zip(list);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton derecha;
+    private javax.swing.JButton izquierda;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JButton menu;
+    private javax.swing.JLabel mostrarImagenes;
+    private javax.swing.JButton pause;
+    private javax.swing.JButton play;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarImagenes(String ruta) {
+       
+        
+        File f = new File(ruta+"\\Imagenes");
+        File[] imagenes = f.listFiles();
+        
+        s = imagenes.length;
+        imagen = new ArrayList<>();
+        
+        for(int i=0; i<s; i++){
+            
+            imagen.add(new ImageIcon(imagenes[i].getAbsolutePath()));
+            
+        }
+        
+        mostrarImagenes.setIcon(new ImageIcon(imagen.get(1).getImage().getScaledInstance(440,
+                440,Image.SCALE_DEFAULT)));
+        
+    }
+
+    private void cargarHistograma(String ruta) {
+        
+        String[] nombres = {"inicio.png","mitad.png","final.png"};
+        
+        imagenHistograma = new ArrayList<>();
+        
+        for(int i=0; i<nombres.length; i++){
+            
+            File f = new File(ruta+"\\graficas\\"+nombres[i]);
+            imagenHistograma.add(new ImageIcon(f.getAbsolutePath())) ;
+            
+        }
+        
+        mostrarImagenes.setIcon(new ImageIcon(imagenHistograma.get(1).getImage().getScaledInstance(440,
+                440,Image.SCALE_DEFAULT)));
+    }
+
+    private void cargarPromedios(String ruta) {
+        
+        String[] nombres = {"Celsius.png","Farenheit.png","Kelvin.png"};
+        
+        imagenPromedio = new ArrayList<>();
+        
+        for(int i=0; i<nombres.length; i++){
+            
+            File f = new File(ruta+"\\graficas\\"+nombres[i]);
+            imagenPromedio.add(new ImageIcon(f.getAbsolutePath()));
+            
+        }
+        
+        mostrarImagenes.setIcon(new ImageIcon(imagenPromedio.get(1).getImage().getScaledInstance(440,
+                440,Image.SCALE_DEFAULT)));
+    }
+
+    private void cargarPuntos(String ruta) {
+        String[] nombres = {"Punto Interes Celsius.png","Punto Interes Farenheit.png","Punto Interes Kelvin.png"};
+        
+        imagenPuntos = new ArrayList<>();
+        
+        for(int i=0; i<nombres.length; i++){
+            
+            File f = new File(ruta+"\\graficas\\"+nombres[i]);
+            imagenPuntos.add(new ImageIcon(f.getAbsolutePath()));
+            
+        }
+        
+        mostrarImagenes.setIcon(new ImageIcon(imagenPuntos.get(1).getImage().getScaledInstance(440,
+                440,Image.SCALE_DEFAULT)));
+    }
+    
+    public void zip(String[] archivos){
+        FileOutputStream fileOutputStream = null;
+        try {
+            
+            byte[] buffer = new byte[1024];
+            
+            String rutaUsuario = System.getProperty("user.home");
+            String rutaProyecto = rutaUsuario+"\\Downloads\\Proyecto.zip";
+            
+            fileOutputStream = new FileOutputStream(rutaProyecto);
+            ZipOutputStream zout = new ZipOutputStream(fileOutputStream);
+            
+            for(int x = 0 ; x< archivos.length ; x++){
+                
+                String rutaOrigen = this.rutaProyecto+"\\"+archivos[x];
+                
+                FileInputStream fin = new FileInputStream(rutaOrigen);
+                zout.putNextEntry( new ZipEntry(archivos[x]));
+                
+                int length = 0;
+                
+                while( (length = fin.read(buffer)) > 0 ){
+                    zout.write(buffer, 0, length);
+                }
+                
+                zout.closeEntry();
+                fin.close();
+            }
+            
+            zout.close();
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fileOutputStream.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
 }

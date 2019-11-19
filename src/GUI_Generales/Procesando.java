@@ -8,6 +8,7 @@ package GUI_Generales;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -40,11 +41,29 @@ public class Procesando extends javax.swing.JInternalFrame {
         procesando.setImageObserver(gif);
     }
     
-    public void muestraResultados(){
+    public void muestraResultados(String rutaProyecto){
         dispose();
-        Resultados resultados = new Resultados();
-        this.principal.add(resultados);
-        resultados.setVisible(true);
+        
+        if(rutaProyecto == null){
+            
+            int respuestaSeguridad = JOptionPane.showConfirmDialog(null,"A ocurrido un error desconocido intenta de nuevo",null,
+                      JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+        
+            while(respuestaSeguridad != 0){
+
+                respuestaSeguridad = JOptionPane.showConfirmDialog(null,"A ocurrido un error desconocido intenta de nuevo",null,
+                          JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+
+            }
+            
+        }else{
+            
+            Resultados resultados = new Resultados(principal,rutaProyecto);
+            this.principal.add(resultados);
+            resultados.setVisible(true);
+            
+        }
+        
     }
 
     /**

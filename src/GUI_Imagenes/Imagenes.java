@@ -64,6 +64,7 @@ public class Imagenes extends javax.swing.JInternalFrame {
     public Instrucciones instrucciones;
     public int respuestaSeguridad;
     public int numPuntos;
+    public int valorFalta = maxPuntos+1, valorVa = 0;
     /**
      * Creates new form AbrirImagen
      */
@@ -133,6 +134,11 @@ public class Imagenes extends javax.swing.JInternalFrame {
         coordenadaX = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         Pp = new puntos.LabelPaint();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        puntosVan4 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        puntosFaltan4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         panel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -368,20 +374,55 @@ public class Imagenes extends javax.swing.JInternalFrame {
             .addComponent(Pp, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
         );
 
+        jLabel16.setText("Puntos seleccionados:");
+
+        jLabel17.setText("Puntos restantes:");
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(puntosVan4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(puntosFaltan4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(puntosFaltan4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(puntosVan4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel17)
+                        .addComponent(jLabel16)))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,7 +433,9 @@ public class Imagenes extends javax.swing.JInternalFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(66, 66, 66))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "1.- Selección de Imágenes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
@@ -504,7 +547,7 @@ public class Imagenes extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 27, Short.MAX_VALUE))
+                .addGap(0, 20, Short.MAX_VALUE))
         );
 
         pack();
@@ -576,7 +619,13 @@ public class Imagenes extends javax.swing.JInternalFrame {
                     this.vectorNodo.add(n);
                     System.out.println("X: "+evt.getX()+" , Y: "+evt.getY());
                     numPuntos++;
-                     Pp.repaint();
+                    
+                    valorFalta = valorFalta - 1; //Para mostrar cuantos puntos faltan por seleccionar
+                    this.puntosFaltan4.setText(""+valorFalta);
+                    valorVa = valorVa + 1; //Para mostrar cuantos puntos se seleccionaron
+                    this.puntosVan4.setText(""+valorVa);
+                    
+                    Pp.repaint();
                 }
             }
             if(evt.getButton() == MouseEvent.BUTTON3){
@@ -600,6 +649,12 @@ public class Imagenes extends javax.swing.JInternalFrame {
                         if(yGuardado >= minY && yGuardado <= maxY ){
                             vectorNodo.remove(i);
                             numPuntos--;
+                            
+                            valorFalta = valorFalta + 1; //Para mostrar cuantos puntos faltan por seleccionar
+                            this.puntosFaltan4.setText(""+valorFalta);
+                            valorVa = valorVa - 1; //Para mostrar cuantos puntos se seleccionaron
+                            this.puntosVan4.setText(""+valorVa);
+                            
                             break;
                         }
                     }
@@ -620,6 +675,8 @@ public class Imagenes extends javax.swing.JInternalFrame {
                 Instrucciones.ac = false;
                 vectorNodo.clear();
                 numPuntos = 0;
+                valorFalta = maxPuntos+1;
+                valorVa = 0;
                 Pp.repaint();
                 break;
             case 1:
@@ -826,13 +883,28 @@ public class Imagenes extends javax.swing.JInternalFrame {
     public javax.swing.JComboBox<String> formas;
     public javax.swing.JTextField grupo;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -846,6 +918,16 @@ public class Imagenes extends javax.swing.JInternalFrame {
     public javax.swing.JTextField nombre;
     public javax.swing.JTextField nombreProceso;
     public javax.swing.JPanel panel;
+    private javax.swing.JLabel puntosFaltan;
+    private javax.swing.JLabel puntosFaltan1;
+    private javax.swing.JLabel puntosFaltan2;
+    private javax.swing.JLabel puntosFaltan3;
+    private javax.swing.JLabel puntosFaltan4;
+    private javax.swing.JLabel puntosVan;
+    private javax.swing.JLabel puntosVan1;
+    private javax.swing.JLabel puntosVan2;
+    private javax.swing.JLabel puntosVan3;
+    private javax.swing.JLabel puntosVan4;
     private javax.swing.JButton regresar;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables

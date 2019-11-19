@@ -36,7 +36,6 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
     public JButton boton;
     public JDesktopPane principal;
     public int s;
-//    public ImageIcon imagen[] = new ImageIcon[Imagenes.listaIm.size()];
     public ImageIcon imagen[] ;
     public int contador = 1;
     public Timer timer;
@@ -54,17 +53,6 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
         initComponents();
         this.setLocation((this.principal.getWidth()-this.getWidth())/2,(this.principal.getHeight()-this.getHeight())/2);
     }
-
-//    CorreccionImagenes(JDesktopPane principal) {
-//        initComponents();
-//        this.principal = principal;
-//        this.setLocation((this.principal.getWidth()-this.getWidth())/2,(this.principal.getHeight()-this.getHeight())/2);
-//        for(int i=1; i<Imagenes.listaIm.size(); i++){
-//            imagen[i] = new ImageIcon(rutas.get(i));
-//        }
-//        mostrarImagenes.setIcon(new ImageIcon(imagen[1].getImage().getScaledInstance(440,
-//                440,Image.SCALE_DEFAULT)));
-//    }
 
     CorreccionImagenes(JDesktopPane principal, List<BufferedImage> listaIm) {
         initComponents();

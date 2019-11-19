@@ -46,6 +46,9 @@ public class Folio {
             int ip = Integer.parseInt(remplazado);
             String exIP = Integer.toHexString((int)ip);
             //ultimas palabras nombre
+            if( nombreProyecto.length() < 3 ){
+                nombreProyecto = nombreProyecto + "IBAB";
+            }
             String np = ""+nombreProyecto.charAt(nombreProyecto.length()-2);
             np += ""+nombreProyecto.charAt(nombreProyecto.length()-1);
             char a = np.charAt(0);
