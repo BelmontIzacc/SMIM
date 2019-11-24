@@ -5,25 +5,67 @@
  */
 package GUI_Generales;
 
-import GUI_Imagenes.Imagenes;
+
+import static herramientas.GestorImagenes.rutas;
+import static herramientas.GestorVideo.video;
+
+import GUI_Imagenes.Pasos;
+import GUI_Imagenes.Validacion;
+import GUI_Video.Video;
+import herramientas.GestorImagenes;
+import herramientas.GestorVideo;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.EncoderException;
+import it.sauronsoftware.jave.MultimediaInfo;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.awt.Image;
+import java.awt.Graphics;
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author Alejandra
  */
 public class Principal extends javax.swing.JFrame {
-
+    
+    public static int maxPuntos = 4, maxImagenes = 30;
+    public static int duracionVideo = 300;
+    public static ArrayList<String> Procesos,Tiempo;
+    
+    public int respuestaSeguridad;
+    public int x,y;
+    public boolean abrirImagenes;
+    public boolean abrirVideo;
+    public Seguridad ventanaSeguridad;
+    public Pasos pasos;
+    public Cargando cargando;
+    
+    public int respuestaOk;
     /**
-     * Creates new form Principal
+     * Creates new form Prueba
      */
     public Principal() {
         initComponents();
+//        this.setResizable(true);
+        this.setSize(1200,800);
+        this.setLocationRelativeTo(this);
+        this.setTitle("SMIM");
+        
+        Procesos = new ArrayList<>();
+        Procesos.add("Soldadura");
+        Procesos.add("Fundicion");
+        Procesos.add("Manufactura");
+        
+        Tiempo = new ArrayList<>();
+        Tiempo.add("10");
+        Tiempo.add("15");
+//        this.setExtendedState(MAXIMIZED_BOTH);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,84 +75,203 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        principal = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        ImageIcon icon = new ImageIcon("src\\Fotos\\fondo3.jpg");
+        Image image = icon.getImage();
+        principal = new javax.swing.JDesktopPane(){
+            public void paintComponent(Graphics g){
+                g.drawImage(image,0,0,getWidth(),getHeight(),this);
+            }
+        };
+        barra = new javax.swing.JMenuBar();
+        archivos = new javax.swing.JMenu();
+        AbrirVideo = new javax.swing.JMenuItem();
+        AbrirImagen = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        VerRegistro = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        Salir = new javax.swing.JMenuItem();
+        creditos = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
 
         javax.swing.GroupLayout principalLayout = new javax.swing.GroupLayout(principal);
         principal.setLayout(principalLayout);
         principalLayout.setHorizontalGroup(
             principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 384, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
         principalLayout.setVerticalGroup(
             principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
+            .addGap(0, 340, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Archivos");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+        barra.setBackground(new java.awt.Color(255, 0, 0));
+        barra.setForeground(new java.awt.Color(255, 51, 51));
+        barra.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        archivos.setText("Archivos");
+
+        AbrirVideo.setText("Abrir Video");
+        AbrirVideo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
+                AbrirVideoActionPerformed(evt);
             }
         });
+        archivos.add(AbrirVideo);
 
-        jMenuItem1.setText("Abrir Video");
-        jMenu1.add(jMenuItem1);
-
-        jMenuItem2.setText("Abrir Imagen");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        AbrirImagen.setText("Abrir Imagen");
+        AbrirImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                AbrirImagenActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        archivos.add(AbrirImagen);
+        archivos.add(jSeparator1);
 
-        jMenuItem3.setText("Registros");
-        jMenu1.add(jMenuItem3);
+        VerRegistro.setText("Registro");
+        VerRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VerRegistroActionPerformed(evt);
+            }
+        });
+        archivos.add(VerRegistro);
+        archivos.add(jSeparator2);
 
-        jMenuItem4.setText("Salir");
-        jMenu1.add(jMenuItem4);
+        Salir.setText("Salir");
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
+        archivos.add(Salir);
 
-        jMenuBar1.add(jMenu1);
+        barra.add(archivos);
 
-        jMenu2.setText("Créditos");
-        jMenuBar1.add(jMenu2);
+        creditos.setText("Créditos");
+        creditos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                creditosActionPerformed(evt);
+            }
+        });
+        barra.add(creditos);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(barra);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(principal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(principal)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(principal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(principal)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu1ActionPerformed
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_SalirActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Imagenes ai = new Imagenes();
-        principal.add(ai);
-        ai.show();
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void AbrirImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AbrirImagenActionPerformed
+        archivos.setEnabled(false);
+        creditos.setEnabled(false);  
+        abrirI();
+    }//GEN-LAST:event_AbrirImagenActionPerformed
 
+    private void AbrirVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AbrirVideoActionPerformed
+        archivos.setEnabled(false);
+        creditos.setEnabled(false);
+        abrirV();
+    }//GEN-LAST:event_AbrirVideoActionPerformed
+
+    private void VerRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerRegistroActionPerformed
+//        Cargando c = new Cargando();
+//        principal.add(c);
+//        c.setVisible(true);
+        archivos.setEnabled(false);
+        creditos.setEnabled(false);
+    }//GEN-LAST:event_VerRegistroActionPerformed
+
+    private void creditosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creditosActionPerformed
+        archivos.setEnabled(false);
+        creditos.setEnabled(false);
+    }//GEN-LAST:event_creditosActionPerformed
+
+    public void abrirS(){
+        respuestaSeguridad = JOptionPane.showConfirmDialog(null,"¿Estas seguro de la selección?",null,
+                      JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
+        while(respuestaSeguridad!=0 && respuestaSeguridad!=1){
+                  respuestaSeguridad = JOptionPane.showConfirmDialog(null,"¿Estas seguro de la selección?",null,
+                          JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    public void abrirI(){
+        abrirImagenes = GestorImagenes.abrirImagenes();
+        if(abrirImagenes==true){
+            abrirS();
+            if(respuestaSeguridad==0){
+                if(rutas.size()>=5){
+                    if(rutas.size() <= maxImagenes){
+                        pasos = new Pasos(this.principal);
+                        this.principal.add(pasos);
+                        pasos.setVisible(true);
+                    }else{
+                        Validacion v = new Validacion(principal);
+                        this.principal.add(v);
+                        v.setVisible(true);
+                    }
+                }else{
+                    respuestaSeguridad = JOptionPane.showConfirmDialog(null,"Se deben seleccionar un mínimo de 5 imágenes",null,
+                      JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+                    while(respuestaSeguridad!=0){
+                              respuestaSeguridad = JOptionPane.showConfirmDialog(null,"Se deben seleccionar un mínimo de 5 imágenes",null,
+                                      JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+                    }
+                    archivos.setEnabled(true);
+                    creditos.setEnabled(true);
+                }
+              }else if(respuestaSeguridad==1){
+                  abrirI();
+              }
+        }
+    }
+    
+    public void abrirV(){
+        abrirVideo = GestorVideo.abrirVideo();
+        long vInfo = duracionVideo();
+        if(abrirVideo==true){
+            abrirS();
+            if(respuestaSeguridad==0){
+                cargando = new Cargando(this.principal,vInfo);
+                this.principal.add(cargando);
+                HiloTest.active  = true;
+                Video ventanaVideo = new Video(this.principal);
+                HiloTest h = new HiloTest(cargando);
+                h.cargarVideo(ventanaVideo);
+                h.start();
+            }else if(respuestaSeguridad==1){
+                abrirV();
+            }
+        }
+    }
+    
+    public long duracionVideo(){
+        Encoder encoder = new Encoder();
+        MultimediaInfo info;
+        long dInfo = 0;
+        try {
+            info = encoder.getInfo(new File(video));
+            dInfo = info.getDuration();
+            System.out.println(""+dInfo);
+        } catch (EncoderException ex) {
+            Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dInfo;
+    }
     /**
      * @param args the command line arguments
      */
@@ -126,6 +287,8 @@ public class Principal extends javax.swing.JFrame {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
+//                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -137,11 +300,15 @@ public class Principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+//                    UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
                     UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
                 } catch (Exception e) { }
                 new Principal().setVisible(true);
@@ -150,13 +317,15 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JDesktopPane principal;
+    private javax.swing.JMenuItem AbrirImagen;
+    private javax.swing.JMenuItem AbrirVideo;
+    private javax.swing.JMenuItem Salir;
+    private javax.swing.JMenuItem VerRegistro;
+    public static javax.swing.JMenu archivos;
+    private javax.swing.JMenuBar barra;
+    public static javax.swing.JMenu creditos;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    public javax.swing.JDesktopPane principal;
     // End of variables declaration//GEN-END:variables
 }
