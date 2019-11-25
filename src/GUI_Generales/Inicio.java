@@ -5,11 +5,15 @@
  */
 package GUI_Generales;
 
+import conexion.EndPoint;
+import herramientas.Folio;
 import java.awt.Color;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 /**
@@ -17,10 +21,15 @@ import javax.swing.UIManager;
  * @author Alejandra
  */
 public class Inicio extends javax.swing.JFrame implements Runnable{
-
+    
+    public int maxPuntos; 
+    public int maxImagenes;
+    public int duracionVideo;
+    public ArrayList<String> Tiempo;
+    public ArrayList<String> Procesos;
+    
     public ImageIcon icono,logoIpn,logoUpiiz;
     public Thread hiloCargando;
-    public int contador;
     /**
      * Creates new form Principal
      */
@@ -37,6 +46,7 @@ public class Inicio extends javax.swing.JFrame implements Runnable{
     }
     
     public final void muestraFondo(){
+        
         icono = new ImageIcon("src\\Fotos\\Inicio.jpg");
         logoIpn = new ImageIcon("src\\Fotos\\ipn.png");
         logoUpiiz = new ImageIcon("src\\Fotos\\upiiz.png");
@@ -46,6 +56,7 @@ public class Inicio extends javax.swing.JFrame implements Runnable{
         fondo.setIcon(icono);
         ipn.setIcon(logoIpn);
         upiiz.setIcon(logoUpiiz);
+        
     }
 
     /**
@@ -156,6 +167,9 @@ public class Inicio extends javax.swing.JFrame implements Runnable{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                try {
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                } catch (Exception e) { }
                 new Inicio().setVisible(true);
             }
         });
@@ -177,65 +191,140 @@ public class Inicio extends javax.swing.JFrame implements Runnable{
 
     @Override
     public void run() {
-        loading.setStringPainted(true);
+        
         try{
-            for(contador = 0; contador<=100; contador++){
-                Thread.sleep(100);
-                loading.setString(contador+"%");
-                loading.setValue(contador);
-                if( contador==100 ){
-                    Principal p = new Principal();
-                    p.setVisible(true);
-                    hiloCargando.interrupt();
+            
+            loading.setStringPainted(true);
+            int contador = 0; 
+            boolean ciclo = true;
+            boolean correcto = false;
+            
+            while(ciclo){
+                
+                Thread.sleep(90);
+                
+                if( correcto != true ){
+                    
+                    correcto = cargarDatos();
+                
                 }
+                
+                if( correcto == false && contador == 100 ){
+                    
+                    datosPorDefecto();
+                    
+                }
+                
+                ciclo = mostrarPrincipal( contador );
+                
+                contador+= 2;
+                
             }
+            
+            this.dispose();
+            
         }catch(InterruptedException ex){
+            
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
-//        int i = 0;
-//        loading.setStringPainted(true);
-//        
-//        while(true){
-//            try {
-//                this.loading.setValue(i);
-//                
-//                loading.setString(i+"%");
-//                
-//                if(i == 100){
-//                    i = -1;
-//                }
-//                
-//                i++;
-//                Thread.sleep(300);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        int i = 0;
-//        loading.setStringPainted(true);
-//        
-//        while(true){
-//            try {
-//                this.loading.setValue(i);
-//                
-//                loading.setString(i+"%");
-//                
-//                if(i == 100){
-//                    i = -1;
-//                }
-//                
-//                i++;
-//                Thread.sleep(300);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
         
     }
 
     private void color() {
+        
         UIManager.put( "nimbusOrange", new Color( 102,102,102 ) );
         loading.setBorderPainted(true);
         loading.setBorder(javax.swing.BorderFactory.createLineBorder(Color.GRAY));
+        
+    }
+    
+    public boolean cargarDatos(){
+        
+        String db = EndPoint.endPoint(3);
+        
+        EndPoint e = new EndPoint(db);
+        
+        String folio = Folio.generarFolio("Consulta");
+        String key = e.key(folio);
+        
+        String res = e.consulta(key, folio);
+        
+        if( res != null ){
+            
+            procesarInformacion( res );
+            
+            return true;
+            
+        }
+        
+        return false;
+        
+    }
+
+    private boolean mostrarPrincipal( int contador ) {
+        
+        loading.setString(contador+"%");
+        loading.setValue(contador);
+        
+        if( contador == 100 ){
+            
+            Principal p = new Principal();
+            p.ingresarInformacion(maxPuntos,maxImagenes,duracionVideo,Procesos,Tiempo);
+            p.setVisible(true);
+            
+            return false;
+            
+        }
+        
+        return true;
+        
+    }
+    
+    public void datosPorDefecto(){
+        
+        maxPuntos = 4; 
+        maxImagenes = 30;
+        duracionVideo = 300;
+        
+        procesos();
+        
+        Tiempo = new ArrayList<>();
+        Tiempo.add("10");
+        Tiempo.add("15");
+        
+        int respuesta = JOptionPane.showConfirmDialog(null,"No se pudo conectar\nCargando configuración"
+                            + " predeterminada",null,
+                      JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+        
+    }
+    
+    private void procesos(){
+        
+        Procesos = new ArrayList<>();
+        Procesos.add("Soldadura");
+        Procesos.add("Fundicion");
+        Procesos.add("Manufactura");
+        
+    }
+    
+    private void procesarInformacion( String resultado ) {
+        
+        System.out.println("carga: "+resultado);
+        
+        String datos[] = resultado.split("---");
+        maxPuntos = Integer.parseInt(datos[1])-1;
+        maxImagenes = Integer.parseInt(datos[2]);
+        duracionVideo = Integer.parseInt(datos[3]) * 60;
+        
+        Tiempo = new ArrayList<>();
+        String tiem[] = datos[4].split(",");
+        
+        for (String tiem1 : tiem) {
+            Tiempo.add("" + tiem1);
+        }
+        
+        procesos();
+        
     }
 }

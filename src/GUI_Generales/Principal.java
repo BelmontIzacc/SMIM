@@ -328,4 +328,15 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     public javax.swing.JDesktopPane principal;
     // End of variables declaration//GEN-END:variables
+
+    public void ingresarInformacion(int mP, int mI, int dVideo, 
+            ArrayList<String> Pro, ArrayList<String> Ti) {
+        
+        maxPuntos = mP;
+        maxImagenes = mI;
+        duracionVideo = dVideo;
+        Procesos = Pro;
+        Tiempo = Ti;
+        
+    }
 }

@@ -76,7 +76,7 @@ public class EndPoint {
             conn.setRequestProperty( "charset", "utf-8");
             conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
             conn.setUseCaches( false );
-
+            
             DataOutputStream wr = new DataOutputStream( conn.getOutputStream() );
             wr.write( postData );
 
@@ -112,11 +112,6 @@ public class EndPoint {
                 
                 return respuesta;
 
-            }else{
-                
-                JOptionPane.showMessageDialog(null, "Error inesperado\nPorfavor Intente de nuevo.", 
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                
             }
             
             return null;
@@ -558,6 +553,76 @@ public class EndPoint {
         }
         
         return null;
+        
+    }
+    
+    /**
+     * Funcion para el manejo de direcciones endpoint
+     * IBelmont
+     * Desde 25/11/19
+     * params id de endpoint que se requiere
+     **/ 
+    
+    public static String endPoint( int id ){
+        
+        String endPoint = null;
+        
+        switch(id){
+            
+            case 1:{
+                
+                endPoint = "http://148.204.142.251/isc/SMIM/SMIM/public/Gestion/credenciales/key.php";
+                
+                break;
+                
+            }
+            case 2:{
+                
+                endPoint = "http://148.204.142.251/isc/SMIM/SMIM/public/Gestion/archivos/archivo.php";
+                
+                break;
+                
+            }
+            case 3:{
+                
+                endPoint = "http://148.204.142.251/isc/SMIM/SMIM/public/Datos/consulta.php";
+                
+                break;
+                
+            }
+            case 4:{
+                
+                endPoint = "http://148.204.142.251/isc/SMIM/SMIM/public/Datos/BaseDatos.php";
+                
+                break;
+                
+            }
+            default:{
+                
+                endPoint = null;
+                
+                break;
+                
+            }
+            
+        }
+        
+        return endPoint;
+        
+    }
+    
+    /**
+     * Funcion creacion de llave de identificacion con el servidor
+     * IBelmont
+     * Desde 25/11/19
+     * params folio de identificacion
+     **/ 
+    
+    public String key( String folio ){
+        
+        String f = "A"+folio+"I";
+        
+        return f;
         
     }
 }
