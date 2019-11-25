@@ -5,7 +5,7 @@
  */
 package GUI_Imagenes;
 
-import static GUI_Generales.Prueba.maxPuntos;
+import static GUI_Generales.Principal.maxPuntos;
 
 import GUI_Generales.Editar;
 import GUI_Generales.Instrucciones;

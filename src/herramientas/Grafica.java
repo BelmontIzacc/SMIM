@@ -7,7 +7,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-
 /**
  * Clase Grafica.
  * Fecha Martes 15 de abril 2019.

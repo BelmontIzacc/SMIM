@@ -79,8 +79,8 @@ public class GestorImagenes {
             }
             return true;
         } else{
-            GUI_Generales.Prueba.archivos.setEnabled(true);
-            GUI_Generales.Prueba.creditos.setEnabled(true);
+            GUI_Generales.Principal.archivos.setEnabled(true);
+            GUI_Generales.Principal.creditos.setEnabled(true);
             return false;
         }
     }

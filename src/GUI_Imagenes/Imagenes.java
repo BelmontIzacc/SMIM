@@ -5,9 +5,9 @@
  */
 package GUI_Imagenes;
 
-import static GUI_Generales.Prueba.Procesos;
-import static GUI_Generales.Prueba.maxImagenes;
-import static GUI_Generales.Prueba.maxPuntos;
+import static GUI_Generales.Principal.Procesos;
+import static GUI_Generales.Principal.maxImagenes;
+import static GUI_Generales.Principal.maxPuntos;
 import static herramientas.GestorImagenes.rutas;
 
 import GUI_Generales.Editar;
@@ -719,8 +719,8 @@ public class Imagenes extends javax.swing.JInternalFrame {
         
         
         dispose();
-        GUI_Generales.Prueba.archivos.setEnabled(true);
-        GUI_Generales.Prueba.creditos.setEnabled(true);
+        GUI_Generales.Principal.archivos.setEnabled(true);
+        GUI_Generales.Principal.creditos.setEnabled(true);
 //        abrirI();
     }//GEN-LAST:event_regresarActionPerformed
 

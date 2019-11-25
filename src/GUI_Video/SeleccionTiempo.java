@@ -5,7 +5,7 @@
  */
 package GUI_Video;
 
-import static GUI_Generales.Prueba.Tiempo;
+import static GUI_Generales.Principal.Tiempo;
 import static herramientas.GestorVideo.video;
 
 import herramientas.GestorVideo;

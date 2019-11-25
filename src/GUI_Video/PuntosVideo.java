@@ -7,8 +7,8 @@ package GUI_Video;
 
 import GUI_Generales.Editar;
 import GUI_Generales.Instrucciones;
-import static GUI_Generales.Prueba.Tiempo;
-import static GUI_Generales.Prueba.maxPuntos;
+import static GUI_Generales.Principal.Tiempo;
+import static GUI_Generales.Principal.maxPuntos;
 import static GUI_Video.Video.rutaGeneral;
 import puntos.HiloV;
 import puntos.Nodo;

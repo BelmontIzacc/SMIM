@@ -141,8 +141,8 @@ public class GestorVideo {
             }
             return true;
         }else{
-            GUI_Generales.Prueba.archivos.setEnabled(true);
-            GUI_Generales.Prueba.creditos.setEnabled(true);
+            GUI_Generales.Principal.archivos.setEnabled(true);
+            GUI_Generales.Principal.creditos.setEnabled(true);
             return false;
         }
     }
@@ -150,8 +150,8 @@ public class GestorVideo {
     public static List<BufferedImage> obtenerRutaVideo(String ruta, int tiempoAnalisis, int duracionV,double fps,
             String nombreProceso, String nombreAlumno, String grupo){
         int im;
-        if(duracionV>GUI_Generales.Prueba.duracionVideo){
-            duracionV = GUI_Generales.Prueba.duracionVideo;
+        if(duracionV>GUI_Generales.Principal.duracionVideo){
+            duracionV = GUI_Generales.Principal.duracionVideo;
             im =  (duracionV/tiempoAnalisis);
         }else{
             im =  (duracionV/tiempoAnalisis);
@@ -260,8 +260,8 @@ public class GestorVideo {
     public static List<BufferedImage> obtenerRutaNueva(String ruta, int tiempoAnalisis, int duracionV,double fps){
         eliminarArchivo(new File(rutaArchivo));
         int im;
-        if(duracionV>GUI_Generales.Prueba.duracionVideo){
-            duracionV = GUI_Generales.Prueba.duracionVideo;
+        if(duracionV>GUI_Generales.Principal.duracionVideo){
+            duracionV = GUI_Generales.Principal.duracionVideo;
             im = (duracionV/tiempoAnalisis);
         }else{
             im = (duracionV/tiempoAnalisis);

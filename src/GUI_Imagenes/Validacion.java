@@ -5,7 +5,7 @@
  */
 package GUI_Imagenes;
 
-import static GUI_Generales.Prueba.maxImagenes;
+import static GUI_Generales.Principal.maxImagenes;
 import static herramientas.GestorImagenes.rutas;
 
 import herramientas.GestorImagenes;

@@ -345,8 +345,8 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
         vectorNodo.clear();
         System.gc();
         dispose();
-        GUI_Generales.Prueba.archivos.setEnabled(true);
-        GUI_Generales.Prueba.creditos.setEnabled(true);
+        GUI_Generales.Principal.archivos.setEnabled(true);
+        GUI_Generales.Principal.creditos.setEnabled(true);
     }//GEN-LAST:event_menuActionPerformed
 
     public void archivo(){

@@ -6,8 +6,8 @@
 package GUI_Video;
 
 
-import static GUI_Generales.Prueba.Procesos;
-import static GUI_Generales.Prueba.Tiempo;
+import static GUI_Generales.Principal.Procesos;
+import static GUI_Generales.Principal.Tiempo;
 
 import GUI_Generales.Cargando;
 import GUI_Generales.HiloTest;
@@ -480,7 +480,7 @@ public final class Video extends javax.swing.JInternalFrame {
         Encoder encoder = new Encoder();
         MultimediaInfo info;
         long dInfo = 0;
-        maximo = GUI_Generales.Prueba.duracionVideo*1000;
+        maximo = GUI_Generales.Principal.duracionVideo*1000;
         try {
             File vAux = new File(GestorVideo.video);
             info = encoder.getInfo(vAux);
@@ -499,7 +499,7 @@ public final class Video extends javax.swing.JInternalFrame {
             bw = new BufferedWriter(new FileWriter(rutaCbat));
             if(dInfo>maximo){
                 bw.write("" +
-                "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -t "+GUI_Generales.Prueba.duracionVideo+" -s 440x440 -an " +
+                "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -t "+GUI_Generales.Principal.duracionVideo+" -s 440x440 -an " +
                 rutaNueva + "\n" + "" + "exit");
             }else{
                 bw.write("" +
@@ -509,7 +509,7 @@ public final class Video extends javax.swing.JInternalFrame {
 
 //            if(dInfo>maximo){
 //                bw.write("@echo No sierre la ventana, al terminar se cierra sola\n" +
-//                "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -t "+GUI_Generales.Prueba.duracionVideo+" -s 440x440 -an " +
+//                "ffmpeg -y -i "+ GestorVideo.video + " -preset superfast -t "+GUI_Generales.Principal.duracionVideo+" -s 440x440 -an " +
 //                rutaNueva + "\n" + "@echo termino!\n" + "exit");
 //            }else{
 //                bw.write("@echo No sierre la ventana, al terminar se cierra sola\n" +
