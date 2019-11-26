@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-
 /**
  *
  * @author Alejandra
@@ -48,6 +47,9 @@ public class Inicio extends javax.swing.JFrame implements Runnable{
     public final void muestraFondo(){
         
         icono = new ImageIcon("src\\Fotos\\Inicio.jpg");
+        
+//        icono = new ImageIcon(getClass().getResource("Fotos//Inicio.jpg"));
+        
         logoIpn = new ImageIcon("src\\Fotos\\ipn.png");
         logoUpiiz = new ImageIcon("src\\Fotos\\upiiz.png");
         icono.setImage(icono.getImage().getScaledInstance(this.getWidth(),this.getHeight(),Image.SCALE_DEFAULT));
@@ -87,7 +89,6 @@ public class Inicio extends javax.swing.JFrame implements Runnable{
 
         loading.setBackground(new java.awt.Color(102, 102, 102));
         loading.setForeground(new java.awt.Color(102, 102, 102));
-        loading.setValue(10);
         loading.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153)));
         loading.setRequestFocusEnabled(false);
         loading.setVerifyInputWhenFocusTarget(false);
@@ -248,13 +249,17 @@ public class Inicio extends javax.swing.JFrame implements Runnable{
         String folio = Folio.generarFolio("Consulta");
         String key = e.key(folio);
         
-        String res = e.consulta(key, folio);
+        String res = ""+e.consulta(key, folio);
         
-        if( res != null ){
+        if( res != null){
             
-            procesarInformacion( res );
+            if( !res.equals("false") ){
+                
+                procesarInformacion( res );
             
-            return true;
+                return true;
+                
+            }
             
         }
         
