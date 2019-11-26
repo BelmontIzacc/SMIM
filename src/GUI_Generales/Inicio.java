@@ -249,7 +249,7 @@ public class Inicio extends javax.swing.JFrame implements Runnable{
         String folio = Folio.generarFolio("Consulta");
         String key = e.key(folio);
         
-        String res = ""+e.consulta(key, folio);
+        String res = e.consulta(key, folio);
         
         if( res != null){
             
