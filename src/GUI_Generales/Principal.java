@@ -17,6 +17,8 @@ import herramientas.GestorVideo;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.MultimediaInfo;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,6 +26,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.awt.Image;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
@@ -33,9 +36,11 @@ import javax.swing.UIManager;
  */
 public class Principal extends javax.swing.JFrame {
     
-    public static int maxPuntos = 4, maxImagenes = 30;
-    public static int duracionVideo = 300;
+    public static int maxPuntos, maxImagenes;
+    public static int duracionVideo;
     public static ArrayList<String> Procesos,Tiempo;
+    public Toolkit tool;
+    public Dimension screenSize;
     
     public int respuestaSeguridad;
     public int x,y;
@@ -46,25 +51,19 @@ public class Principal extends javax.swing.JFrame {
     public Cargando cargando;
     
     public int respuestaOk;
+    public ImageIcon im,im2,im3,im4,im5;
     /**
      * Creates new form Prueba
      */
     public Principal() {
         initComponents();
-//        this.setResizable(true);
-        this.setSize(1200,800);
+        tool = Toolkit.getDefaultToolkit();
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize((int) screenSize.getWidth()-500, (int) screenSize.getHeight()-200);
         this.setLocationRelativeTo(this);
         this.setTitle("SMIM");
-        
-        Procesos = new ArrayList<>();
-        Procesos.add("Soldadura");
-        Procesos.add("Fundicion");
-        Procesos.add("Manufactura");
-        
-        Tiempo = new ArrayList<>();
-        Tiempo.add("10");
-        Tiempo.add("15");
-//        this.setExtendedState(MAXIMIZED_BOTH);
+        this.setResizable(false);
+        mustraIconos();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,7 +74,7 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ImageIcon icon = new ImageIcon("src\\Fotos\\fondo3.jpg");
+        ImageIcon icon = new ImageIcon("src\\Fotos\\fondo.jpg");
         Image image = icon.getImage();
         principal = new javax.swing.JDesktopPane(){
             public void paintComponent(Graphics g){
@@ -84,15 +83,16 @@ public class Principal extends javax.swing.JFrame {
         };
         barra = new javax.swing.JMenuBar();
         archivos = new javax.swing.JMenu();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         AbrirVideo = new javax.swing.JMenuItem();
         AbrirImagen = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        VerRegistro = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         Salir = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         creditos = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         javax.swing.GroupLayout principalLayout = new javax.swing.GroupLayout(principal);
         principal.setLayout(principalLayout);
@@ -102,16 +102,20 @@ public class Principal extends javax.swing.JFrame {
         );
         principalLayout.setVerticalGroup(
             principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 340, Short.MAX_VALUE)
+            .addGap(0, 304, Short.MAX_VALUE)
         );
 
         barra.setBackground(new java.awt.Color(255, 0, 0));
+        barra.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SMIM", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Tahoma", 1, 20), new java.awt.Color(0, 153, 153))); // NOI18N
         barra.setForeground(new java.awt.Color(255, 51, 51));
-        barra.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        barra.setToolTipText("");
+        barra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         archivos.setText("Archivos");
+        archivos.add(jSeparator3);
 
         AbrirVideo.setText("Abrir Video");
+        AbrirVideo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AbrirVideo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AbrirVideoActionPerformed(evt);
@@ -120,6 +124,7 @@ public class Principal extends javax.swing.JFrame {
         archivos.add(AbrirVideo);
 
         AbrirImagen.setText("Abrir Imagen");
+        AbrirImagen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AbrirImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AbrirImagenActionPerformed(evt);
@@ -128,22 +133,15 @@ public class Principal extends javax.swing.JFrame {
         archivos.add(AbrirImagen);
         archivos.add(jSeparator1);
 
-        VerRegistro.setText("Registro");
-        VerRegistro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VerRegistroActionPerformed(evt);
-            }
-        });
-        archivos.add(VerRegistro);
-        archivos.add(jSeparator2);
-
         Salir.setText("Salir");
+        Salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SalirActionPerformed(evt);
             }
         });
         archivos.add(Salir);
+        archivos.add(jSeparator2);
 
         barra.add(archivos);
 
@@ -186,14 +184,6 @@ public class Principal extends javax.swing.JFrame {
         creditos.setEnabled(false);
         abrirV();
     }//GEN-LAST:event_AbrirVideoActionPerformed
-
-    private void VerRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerRegistroActionPerformed
-//        Cargando c = new Cargando();
-//        principal.add(c);
-//        c.setVisible(true);
-        archivos.setEnabled(false);
-        creditos.setEnabled(false);
-    }//GEN-LAST:event_VerRegistroActionPerformed
 
     private void creditosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creditosActionPerformed
         archivos.setEnabled(false);
@@ -320,12 +310,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem AbrirImagen;
     private javax.swing.JMenuItem AbrirVideo;
     private javax.swing.JMenuItem Salir;
-    private javax.swing.JMenuItem VerRegistro;
     public static javax.swing.JMenu archivos;
     private javax.swing.JMenuBar barra;
     public static javax.swing.JMenu creditos;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     public javax.swing.JDesktopPane principal;
     // End of variables declaration//GEN-END:variables
 
@@ -338,5 +328,23 @@ public class Principal extends javax.swing.JFrame {
         Procesos = Pro;
         Tiempo = Ti;
         
+    }
+
+    private void mustraIconos() {
+        im = new ImageIcon("src\\Fotos\\archivos.png");
+        im.setImage(im.getImage().getScaledInstance(30,30,Image.SCALE_DEFAULT));
+        archivos.setIcon(im);
+        im2 = new ImageIcon("src\\Fotos\\creditos.png");
+        im2.setImage(im2.getImage().getScaledInstance(30,30,Image.SCALE_DEFAULT));
+        creditos.setIcon(im2);
+        im3 = new ImageIcon("src\\Fotos\\video.png");
+        im3.setImage(im3.getImage().getScaledInstance(20,20,Image.SCALE_DEFAULT));
+        AbrirVideo.setIcon(im3);
+        im4 = new ImageIcon("src\\Fotos\\imagen.png");
+        im4.setImage(im4.getImage().getScaledInstance(20,20,Image.SCALE_DEFAULT));
+        AbrirImagen.setIcon(im4);
+        im5 = new ImageIcon("src\\Fotos\\salir.png");
+        im5.setImage(im5.getImage().getScaledInstance(20,20,Image.SCALE_DEFAULT));
+        Salir.setIcon(im5);
     }
 }

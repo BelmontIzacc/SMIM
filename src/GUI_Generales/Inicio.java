@@ -318,9 +318,9 @@ public class Inicio extends javax.swing.JFrame implements Runnable{
         System.out.println("carga: "+resultado);
         
         String datos[] = resultado.split("---");
-        maxPuntos = Integer.parseInt(datos[1])-1;
+        maxPuntos = Integer.parseInt(datos[3])-1;
         maxImagenes = Integer.parseInt(datos[2]);
-        duracionVideo = Integer.parseInt(datos[3]) * 60;
+        duracionVideo = Integer.parseInt(datos[1]) * 60;
         
         Tiempo = new ArrayList<>();
         String tiem[] = datos[4].split(",");

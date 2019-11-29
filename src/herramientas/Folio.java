@@ -43,7 +43,8 @@ public class Folio {
             //ip
             String aip = InetAddress.getLocalHost().getHostAddress();
             String remplazado=aip.replace(".", "");
-            int ip = Integer.parseInt(remplazado);
+            //int ip = Integer.parseInt(remplazado);
+            long ip = Long.parseLong(remplazado);
             String exIP = Integer.toHexString((int)ip);
             //ultimas palabras nombre
             if( nombreProyecto.length() < 3 ){

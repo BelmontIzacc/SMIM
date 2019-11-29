@@ -2,11 +2,6 @@
  */
 package GUI_Generales;
 
-import GUI_Imagenes.*;
-import GUI_Imagenes.Imagenes;
-import static herramientas.GestorImagenes.rutas;
-
-
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,12 +36,16 @@ public class Resultados extends javax.swing.JInternalFrame {
     public int contador = 1;
     public Timer timer = null;
     public String rutaProyecto;
+    
+    private int cantidadHistograma,cantidadPromedio,cantidadPuntoInteres;
+    private int indexHistograma,indexPromedio,indexPuntoInteres;
     /**
      * Creates new form CorrecciónImagenes
      */
     public Resultados() {
         initComponents();
         this.setLocation((this.principal.getWidth()-this.getWidth())/2,(this.principal.getHeight()-this.getHeight())/2);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
     }
 
     public Resultados(JDesktopPane principal,String ruta) {
@@ -54,8 +53,14 @@ public class Resultados extends javax.swing.JInternalFrame {
        
        this.principal = principal;
        this.setLocation((this.principal.getWidth()-this.getWidth())/2,(this.principal.getHeight()-this.getHeight())/2);
+       ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
        rutaProyecto = ruta;
-       
+       indexHistograma = 1;
+       indexPromedio = 1;
+       indexPuntoInteres = 1;
+       cantidadHistograma = 2;
+       cantidadPromedio = 2;
+       cantidadPuntoInteres = 2;
        
        cargarHistograma(ruta);
        cargarPromedios(ruta);
@@ -77,61 +82,36 @@ public class Resultados extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        menu = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         mostrarImagenes = new javax.swing.JLabel();
         play = new javax.swing.JButton();
         izquierda = new javax.swing.JButton();
         derecha = new javax.swing.JButton();
         pause = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        muestraHistogramas = new javax.swing.JLabel();
+        anteriorHistograma = new javax.swing.JButton();
+        siguienteHistograma = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        muestraPromedio = new javax.swing.JLabel();
+        anteriorPromedio = new javax.swing.JButton();
+        siguientePromedio = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        muestraPuntos = new javax.swing.JLabel();
+        anteriorPuntos = new javax.swing.JButton();
+        siguientePuntos = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        menu = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        setBorder(null);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 4));
 
-        menu.setText("Menú");
-        menu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("Descargar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(menu)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addContainerGap())
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(menu)
-                    .addComponent(jButton5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Imagenes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 16), new java.awt.Color(0, 153, 153))); // NOI18N
 
         mostrarImagenes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -168,26 +148,24 @@ public class Resultados extends javax.swing.JInternalFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(48, 48, 48)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(mostrarImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(mostrarImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
                         .addComponent(izquierda)
-                        .addGap(35, 35, 35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(play)
-                        .addGap(38, 38, 38)
+                        .addGap(26, 26, 26)
                         .addComponent(pause)
-                        .addGap(43, 43, 43)
+                        .addGap(26, 26, 26)
                         .addComponent(derecha)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mostrarImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mostrarImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(play)
@@ -197,6 +175,57 @@ public class Resultados extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Histogramas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 16), new java.awt.Color(0, 153, 153))); // NOI18N
+
+        muestraHistogramas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        muestraHistogramas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                muestraHistogramasMouseClicked(evt);
+            }
+        });
+
+        anteriorHistograma.setText("<<");
+        anteriorHistograma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anteriorHistogramaActionPerformed(evt);
+            }
+        });
+
+        siguienteHistograma.setText(">>");
+        siguienteHistograma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                siguienteHistogramaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(anteriorHistograma)
+                        .addGap(82, 82, 82)
+                        .addComponent(siguienteHistograma))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(muestraHistogramas, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(muestraHistogramas, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(anteriorHistograma, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(siguienteHistograma, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -204,47 +233,165 @@ public class Resultados extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Ver Promedio");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Promedio", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 16), new java.awt.Color(0, 153, 153))); // NOI18N
+
+        muestraPromedio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        muestraPromedio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                muestraPromedioMouseClicked(evt);
             }
         });
 
-        jButton2.setText("Ver Imagenes");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        anteriorPromedio.setText("<<");
+        anteriorPromedio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                anteriorPromedioActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Ver Histrograma");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        siguientePromedio.setText(">>");
+        siguientePromedio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                siguientePromedioActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Punto de Interes");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(muestraPromedio, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addComponent(anteriorPromedio)
+                        .addGap(44, 44, 44)
+                        .addComponent(siguientePromedio)))
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(muestraPromedio, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(anteriorPromedio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(siguientePromedio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Puntos de Interés", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 16), new java.awt.Color(0, 153, 153))); // NOI18N
+
+        muestraPuntos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        muestraPuntos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                muestraPuntosMouseClicked(evt);
             }
         });
+
+        anteriorPuntos.setText("<<");
+        anteriorPuntos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anteriorPuntosActionPerformed(evt);
+            }
+        });
+
+        siguientePuntos.setText(">>");
+        siguientePuntos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                siguientePuntosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(muestraPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(anteriorPuntos)
+                .addGap(43, 43, 43)
+                .addComponent(siguientePuntos)
+                .addGap(135, 135, 135))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(muestraPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(anteriorPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(siguientePuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Acciones", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 16), new java.awt.Color(0, 153, 153))); // NOI18N
+
+        menu.setText("Terminar");
+        menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Exportar Graficas");
+
+        jButton5.setText("Descargar .zip");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addGap(37, 37, 37))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(menu)
+                .addGap(156, 156, 156))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton5)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(menu)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -253,25 +400,25 @@ public class Resultados extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(18, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -282,17 +429,17 @@ public class Resultados extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -303,19 +450,12 @@ public class Resultados extends javax.swing.JInternalFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -327,8 +467,8 @@ public class Resultados extends javax.swing.JInternalFrame {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
 
-                        mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(440,
-                    440,Image.SCALE_DEFAULT)));
+                        mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(340,
+                    340,Image.SCALE_DEFAULT)));
                         contador++;
                         if(contador == s){
                             contador = 1;
@@ -345,8 +485,8 @@ public class Resultados extends javax.swing.JInternalFrame {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
 
-                        mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(440,
-                    440,Image.SCALE_DEFAULT)));
+                        mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(340,
+                    340,Image.SCALE_DEFAULT)));
                         contador++;
                         if(contador == s){
                             contador = 1;
@@ -372,8 +512,8 @@ public class Resultados extends javax.swing.JInternalFrame {
                 contador =s;
             }
             contador--;
-            mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(440,
-                    440,Image.SCALE_DEFAULT)));
+            mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(340,
+                    340,Image.SCALE_DEFAULT)));
         }
         
 //        mostrarImagenes.setIcon(imagen[contador]);
@@ -390,8 +530,8 @@ public class Resultados extends javax.swing.JInternalFrame {
                 contador = 0;
             }
             contador++;
-            mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(440,
-                    440,Image.SCALE_DEFAULT)));
+            mostrarImagenes.setIcon(new ImageIcon(imagenAux.get(contador).getImage().getScaledInstance(340,
+                    340,Image.SCALE_DEFAULT)));
         }
 //        mostrarImagenes.setIcon(imagen[contador]);
     }//GEN-LAST:event_derechaActionPerformed
@@ -401,49 +541,10 @@ public class Resultados extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_pauseActionPerformed
 
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
-        
         dispose();
+        GUI_Generales.Principal.archivos.setEnabled(true);
+        GUI_Generales.Principal.creditos.setEnabled(true);
     }//GEN-LAST:event_menuActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        imagenAux = new ArrayList<>();
-        s = imagenPromedio.size();
-        contador = 1;
-        imagenAux = this.imagenPromedio;
-        mostrarImagenes.setIcon(new ImageIcon(imagenPromedio.get(1).getImage().getScaledInstance(950,
-                450,Image.SCALE_DEFAULT)));
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        imagenAux = new ArrayList<>();
-        s = imagen.size();
-        contador = 1;
-        imagenAux = imagen;
-        mostrarImagenes.setIcon(new ImageIcon(imagen.get(1).getImage().getScaledInstance(440,
-                440,Image.SCALE_DEFAULT)));
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        imagenAux = new ArrayList<>();
-        s = imagenHistograma.size();
-        contador = 1;
-        imagenAux = this.imagenHistograma;
-        
-        mostrarImagenes.setIcon(new ImageIcon(imagenHistograma.get(1).getImage().getScaledInstance(700,
-                250,Image.SCALE_DEFAULT)));
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        imagenAux = new ArrayList<>();
-        s = imagenPuntos.size();
-        contador = 1;
-        imagenAux =this.imagenPuntos;
-        
-        mostrarImagenes.setIcon(new ImageIcon(imagenPuntos.get(1).getImage().getScaledInstance(950,
-                550,Image.SCALE_DEFAULT)));
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -452,14 +553,135 @@ public class Resultados extends javax.swing.JInternalFrame {
         zip(list);
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void muestraHistogramasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_muestraHistogramasMouseClicked
+        try {
+            
+            String[] nombres = {"inicio.png","mitad.png","final.png"};
+            String nom = nombres[indexHistograma];
+            String url = rutaProyecto+"\\graficas\\"+nom;
+            ProcessBuilder p = new ProcessBuilder();
+            p.command("cmd.exe","/c",url);
+            p.start();
+        } catch (IOException ex) {
+            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_muestraHistogramasMouseClicked
+
+    private void anteriorHistogramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorHistogramaActionPerformed
+        indexHistograma--;
+         
+        if( indexHistograma >= 0 && indexHistograma <= cantidadHistograma ){
+            
+            muestraHistogramas.setIcon(new ImageIcon(imagenHistograma.get(indexHistograma).getImage().getScaledInstance(399,
+                153,Image.SCALE_DEFAULT)));
+            
+        }else{
+            indexHistograma = 0;
+        }
+        
+       
+    }//GEN-LAST:event_anteriorHistogramaActionPerformed
+
+    private void siguienteHistogramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteHistogramaActionPerformed
+        indexHistograma++;
+        
+        if( indexHistograma >= 0 && indexHistograma <= cantidadHistograma ){
+            
+            muestraHistogramas.setIcon(new ImageIcon(imagenHistograma.get(indexHistograma).getImage().getScaledInstance(399,
+                153,Image.SCALE_DEFAULT)));
+            
+        }else{
+            indexHistograma = cantidadHistograma;
+        }
+                
+    }//GEN-LAST:event_siguienteHistogramaActionPerformed
+
+    private void anteriorPromedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorPromedioActionPerformed
+        indexPromedio--;
+         
+        if( indexPromedio >= 0 && indexPromedio <= cantidadPromedio ){
+            
+            muestraPromedio.setIcon(new ImageIcon(imagenPromedio.get(indexPromedio).getImage().getScaledInstance(399,
+                153,Image.SCALE_DEFAULT)));
+            
+        }else{
+            indexPromedio = 0;
+        }
+    }//GEN-LAST:event_anteriorPromedioActionPerformed
+
+    private void siguientePromedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguientePromedioActionPerformed
+        indexPromedio++;
+        
+        if( indexPromedio >= 0 && indexPromedio <= cantidadPromedio ){
+            
+            muestraPromedio.setIcon(new ImageIcon(imagenPromedio.get(indexPromedio).getImage().getScaledInstance(399,
+                153,Image.SCALE_DEFAULT)));
+            
+        }else{
+            indexPromedio = cantidadPromedio;
+        }
+    }//GEN-LAST:event_siguientePromedioActionPerformed
+
+    private void muestraPromedioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_muestraPromedioMouseClicked
+        try {
+            String[] nombres = {"Celsius.png","Farenheit.png","Kelvin.png"};
+            String nom = nombres[indexPromedio];
+            String url = rutaProyecto+"\\graficas\\"+nom;
+            ProcessBuilder p = new ProcessBuilder();
+            p.command("cmd.exe","/c",url);
+            p.start();
+        } catch (IOException ex) {
+            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_muestraPromedioMouseClicked
+
+    private void anteriorPuntosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorPuntosActionPerformed
+        indexPuntoInteres--;
+         
+        if( indexPuntoInteres >= 0 && indexPuntoInteres <= cantidadPuntoInteres ){
+            
+            muestraPuntos.setIcon(new ImageIcon(imagenPuntos.get(indexPuntoInteres).getImage().getScaledInstance(399,
+                153,Image.SCALE_DEFAULT)));
+            
+        }else{
+            indexPuntoInteres = 0;
+        }
+    }//GEN-LAST:event_anteriorPuntosActionPerformed
+
+    private void siguientePuntosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguientePuntosActionPerformed
+        indexPuntoInteres++;
+        
+        if( indexPuntoInteres >= 0 && indexPuntoInteres <= cantidadPuntoInteres ){
+            
+            muestraPuntos.setIcon(new ImageIcon(imagenPuntos.get(indexPuntoInteres).getImage().getScaledInstance(399,
+                153,Image.SCALE_DEFAULT)));
+            
+        }else{
+            indexPuntoInteres = cantidadPuntoInteres;
+        }
+    }//GEN-LAST:event_siguientePuntosActionPerformed
+
+    private void muestraPuntosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_muestraPuntosMouseClicked
+        try {
+            String[] nombres = {"Punto Interes Celsius.png","Punto Interes Farenheit.png","Punto Interes Kelvin.png"};
+            String nom = nombres[indexPuntoInteres];
+            String url = rutaProyecto+"\\graficas\\"+nom;
+            ProcessBuilder p = new ProcessBuilder();
+            p.command("cmd.exe","/c",url);
+            p.start();
+        } catch (IOException ex) {
+            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_muestraPuntosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton anteriorHistograma;
+    private javax.swing.JButton anteriorPromedio;
+    private javax.swing.JButton anteriorPuntos;
     private javax.swing.JButton derecha;
     private javax.swing.JButton izquierda;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -467,10 +689,19 @@ public class Resultados extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JButton menu;
     private javax.swing.JLabel mostrarImagenes;
+    private javax.swing.JLabel muestraHistogramas;
+    private javax.swing.JLabel muestraPromedio;
+    private javax.swing.JLabel muestraPuntos;
     private javax.swing.JButton pause;
     private javax.swing.JButton play;
+    private javax.swing.JButton siguienteHistograma;
+    private javax.swing.JButton siguientePromedio;
+    private javax.swing.JButton siguientePuntos;
     // End of variables declaration//GEN-END:variables
 
     private void cargarImagenes(String ruta) {
@@ -488,8 +719,8 @@ public class Resultados extends javax.swing.JInternalFrame {
             
         }
         
-        mostrarImagenes.setIcon(new ImageIcon(imagen.get(1).getImage().getScaledInstance(440,
-                440,Image.SCALE_DEFAULT)));
+        mostrarImagenes.setIcon(new ImageIcon(imagen.get(1).getImage().getScaledInstance(340,
+                340,Image.SCALE_DEFAULT)));
         
     }
 
@@ -506,8 +737,8 @@ public class Resultados extends javax.swing.JInternalFrame {
             
         }
         
-        mostrarImagenes.setIcon(new ImageIcon(imagenHistograma.get(1).getImage().getScaledInstance(440,
-                440,Image.SCALE_DEFAULT)));
+        muestraHistogramas.setIcon(new ImageIcon(imagenHistograma.get(indexHistograma).getImage().getScaledInstance(399,
+                153,Image.SCALE_DEFAULT)));
     }
 
     private void cargarPromedios(String ruta) {
@@ -522,9 +753,8 @@ public class Resultados extends javax.swing.JInternalFrame {
             imagenPromedio.add(new ImageIcon(f.getAbsolutePath()));
             
         }
-        
-        mostrarImagenes.setIcon(new ImageIcon(imagenPromedio.get(1).getImage().getScaledInstance(440,
-                440,Image.SCALE_DEFAULT)));
+        muestraPromedio.setIcon(new ImageIcon(imagenPromedio.get(indexPromedio).getImage().getScaledInstance(399,
+                153,Image.SCALE_DEFAULT)));
     }
 
     private void cargarPuntos(String ruta) {
@@ -539,8 +769,8 @@ public class Resultados extends javax.swing.JInternalFrame {
             
         }
         
-        mostrarImagenes.setIcon(new ImageIcon(imagenPuntos.get(1).getImage().getScaledInstance(440,
-                440,Image.SCALE_DEFAULT)));
+        muestraPuntos.setIcon(new ImageIcon(imagenPuntos.get(indexPuntoInteres).getImage().getScaledInstance(399,
+                153,Image.SCALE_DEFAULT)));
     }
     
     public void zip(String[] archivos){
@@ -586,5 +816,4 @@ public class Resultados extends javax.swing.JInternalFrame {
             }
         }
     }
-
 }
