@@ -29,6 +29,7 @@ public class Procesando extends javax.swing.JInternalFrame {
 
     public Procesando(JDesktopPane principal) {
         initComponents();
+        ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.principal = principal;
         mostrarImagen();
         this.setLocation((this.principal.getWidth()-this.getWidth())/2,(this.principal.getHeight()-this.getHeight())/2);
@@ -36,7 +37,7 @@ public class Procesando extends javax.swing.JInternalFrame {
     
     public void mostrarImagen(){
         procesando = new ImageIcon("src\\Fotos\\car_.gif");
-        procesando.setImage(procesando.getImage().getScaledInstance(200,70,Image.SCALE_DEFAULT));
+        procesando.setImage(procesando.getImage().getScaledInstance(300,70,Image.SCALE_DEFAULT));
         this.gif.setIcon(procesando);
         procesando.setImageObserver(gif);
     }
@@ -80,8 +81,10 @@ public class Procesando extends javax.swing.JInternalFrame {
         gif = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 6));
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 153, 51));
+        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
         jLabel1.setText("Procesando");
 
         jLabel3.setText("(Espere unos segundos)");
@@ -90,28 +93,30 @@ public class Procesando extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(153, 153, 153))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(97, 97, 97)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jLabel1))
-                    .addComponent(gif, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90)
+                        .addComponent(gif, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                        .addGap(180, 180, 180)
+                        .addComponent(jLabel1)))
+                .addGap(90, 90, 90))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(gif, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(gif, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel3)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -46,6 +46,7 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
     public String nombreProceso;
     public Procesando proceso;
     public int forma;
+    public ImageIcon playI,pauseI,atras,adelante,procesarF,menuS;
     /**
      * Creates new form CorrecciónImagenes
      */
@@ -56,9 +57,11 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
 
     CorreccionImagenes(JDesktopPane principal, List<BufferedImage> listaIm) {
         initComponents();
+        ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
+        ponerIconos();
         this.listaIm = listaIm;
         s = listaIm.size();
-        ImageIcon imagen[] = new ImageIcon[s];
+        imagen = new ImageIcon[s];
         
         this.principal = principal;
         this.setLocation((this.principal.getWidth()-this.getWidth())/2,(this.principal.getHeight()-this.getHeight())/2);
@@ -94,17 +97,21 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         Panel = new javax.swing.JPanel();
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 4));
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        procesar.setText("Procesar");
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        procesar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         procesar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 procesarActionPerformed(evt);
             }
         });
 
+        seleccionarPuntos.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        seleccionarPuntos.setForeground(new java.awt.Color(0, 153, 153));
         seleccionarPuntos.setText("Seleccionar Puntos");
         seleccionarPuntos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,7 +119,7 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
             }
         });
 
-        menu.setText("Menú");
+        menu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         menu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuActionPerformed(evt);
@@ -124,51 +131,47 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(procesar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(58, 58, 58)
+                .addComponent(procesar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
                 .addComponent(seleccionarPuntos)
-                .addGap(40, 40, 40)
-                .addComponent(menu)
-                .addGap(35, 35, 35))
+                .addGap(54, 54, 54)
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(procesar)
-                    .addComponent(seleccionarPuntos)
-                    .addComponent(menu))
+                    .addComponent(procesar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(seleccionarPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         mostrarImagenes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        play.setText("Play");
         play.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playActionPerformed(evt);
             }
         });
 
-        izquierda.setText("<<");
         izquierda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 izquierdaActionPerformed(evt);
             }
         });
 
-        derecha.setText(">>");
         derecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 derechaActionPerformed(evt);
             }
         });
 
-        pause.setText("Pause");
         pause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pauseActionPerformed(evt);
@@ -180,20 +183,19 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(mostrarImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(izquierda)
-                        .addGap(35, 35, 35)
-                        .addComponent(play)
-                        .addGap(38, 38, 38)
-                        .addComponent(pause)
-                        .addGap(43, 43, 43)
-                        .addComponent(derecha)))
+                .addContainerGap()
+                .addComponent(mostrarImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(izquierda, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(pause, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(derecha, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,10 +204,10 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
                 .addComponent(mostrarImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(play)
-                    .addComponent(izquierda)
-                    .addComponent(derecha)
-                    .addComponent(pause))
+                    .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(derecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pause, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(izquierda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -247,11 +249,11 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(2, 2, 2))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -329,6 +331,8 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
         rutas.clear();
         Imagenes.btn = null;
         dispose();
+        GUI_Generales.Principal.archivos.setEnabled(true);
+        GUI_Generales.Principal.creditos.setEnabled(true);
     }//GEN-LAST:event_menuActionPerformed
 
     private void procesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procesarActionPerformed
@@ -382,6 +386,36 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
     public void forma(int f) {
        forma = f;
     }
+    
+    private void ponerIconos() {
+        playI = new ImageIcon("src\\Fotos\\play.png");
+        pauseI = new ImageIcon("src\\Fotos\\pausa.png");
+        atras = new ImageIcon("src\\Fotos\\atras.png");
+        adelante = new ImageIcon("src\\Fotos\\adelante.png");
+        procesarF = new ImageIcon("src\\Fotos\\play.png");
+        menuS = new ImageIcon("src\\Fotos\\menu.png");
+        
+        playI.setImage(playI.getImage().getScaledInstance(30,30,Image.SCALE_DEFAULT));
+        pauseI.setImage(pauseI.getImage().getScaledInstance(30,30,Image.SCALE_DEFAULT));
+        atras.setImage(atras.getImage().getScaledInstance(50,30,Image.SCALE_DEFAULT));
+        adelante.setImage(adelante.getImage().getScaledInstance(50,30,Image.SCALE_DEFAULT));
+        procesarF.setImage(procesarF.getImage().getScaledInstance(30,30,Image.SCALE_DEFAULT));
+        menuS.setImage(menuS.getImage().getScaledInstance(30,30,Image.SCALE_DEFAULT));
+        
+        play.setIcon(playI);
+        pause.setIcon(pauseI);
+        izquierda.setIcon(atras);
+        derecha.setIcon(adelante);
+        procesar.setIcon(procesarF);
+        menu.setIcon(menuS);
+        
+        play.setContentAreaFilled(false);
+        pause.setContentAreaFilled(false);
+        izquierda.setContentAreaFilled(false);
+        derecha.setContentAreaFilled(false);
+        procesar.setContentAreaFilled(false);
+        menu.setContentAreaFilled(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel;
@@ -401,5 +435,5 @@ public class CorreccionImagenes extends javax.swing.JInternalFrame {
     private javax.swing.JButton seleccionarPuntos;
     // End of variables declaration//GEN-END:variables
 
-
+    
 }

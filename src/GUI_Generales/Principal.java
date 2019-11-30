@@ -52,6 +52,7 @@ public class Principal extends javax.swing.JFrame {
     
     public int respuestaOk;
     public ImageIcon im,im2,im3,im4,im5;
+    public Creditos creditosV;
     /**
      * Creates new form Prueba
      */
@@ -146,9 +147,9 @@ public class Principal extends javax.swing.JFrame {
         barra.add(archivos);
 
         creditos.setText("Créditos");
-        creditos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                creditosActionPerformed(evt);
+        creditos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                creditosMouseClicked(evt);
             }
         });
         barra.add(creditos);
@@ -185,10 +186,13 @@ public class Principal extends javax.swing.JFrame {
         abrirV();
     }//GEN-LAST:event_AbrirVideoActionPerformed
 
-    private void creditosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creditosActionPerformed
+    private void creditosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_creditosMouseClicked
         archivos.setEnabled(false);
         creditos.setEnabled(false);
-    }//GEN-LAST:event_creditosActionPerformed
+        creditosV = new Creditos(this.principal);
+        principal.add(creditosV);
+        creditosV.setVisible(true);
+    }//GEN-LAST:event_creditosMouseClicked
 
     public void abrirS(){
         respuestaSeguridad = JOptionPane.showConfirmDialog(null,"¿Estas seguro de la selección?",null,
@@ -232,10 +236,10 @@ public class Principal extends javax.swing.JFrame {
     
     public void abrirV(){
         abrirVideo = GestorVideo.abrirVideo();
-        long vInfo = duracionVideo();
         if(abrirVideo==true){
             abrirS();
             if(respuestaSeguridad==0){
+                long vInfo = duracionVideo();
                 cargando = new Cargando(this.principal,vInfo);
                 this.principal.add(cargando);
                 HiloTest.active  = true;
@@ -315,7 +319,7 @@ public class Principal extends javax.swing.JFrame {
     public static javax.swing.JMenu creditos;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     public javax.swing.JDesktopPane principal;
     // End of variables declaration//GEN-END:variables
 
