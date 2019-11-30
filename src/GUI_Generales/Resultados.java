@@ -2,12 +2,17 @@
  */
 package GUI_Generales;
 
-import java.awt.Image;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.Timer;
+
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,10 +20,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
-import javax.swing.Timer;
-
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author rebel
@@ -39,6 +44,10 @@ public class Resultados extends javax.swing.JInternalFrame {
     
     private int cantidadHistograma,cantidadPromedio,cantidadPuntoInteres;
     private int indexHistograma,indexPromedio,indexPuntoInteres;
+    
+    public ArrayList<String> listaArchivos;
+    private String comprimido; 
+    private String folderComprimir; // SourceFolder path
     /**
      * Creates new form CorrecciónImagenes
      */
@@ -358,6 +367,11 @@ public class Resultados extends javax.swing.JInternalFrame {
         });
 
         jButton1.setText("Exportar Graficas");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Descargar .zip");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -548,9 +562,28 @@ public class Resultados extends javax.swing.JInternalFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        File f = new File(this.rutaProyecto);
-        String[] list = f.list();
-        zip(list);
+        
+        listaArchivos = new ArrayList<>();
+        
+        String rutaUsuario = System.getProperty("user.home");
+        String rutaVideoOriginal = rutaUsuario+"\\Documents\\proyecto.zip";
+        
+        comprimido = rutaVideoOriginal;
+        folderComprimir = rutaProyecto;
+        
+        generarListaArchivos( new File( folderComprimir ) );
+        comprimelo( comprimido );
+        
+        JOptionPane.showMessageDialog(null,"Se mostrara la ubicacion el archivo",
+                "Operación realizada correctamente",JOptionPane.INFORMATION_MESSAGE);
+        
+        Runtime rt = Runtime.getRuntime();
+        
+        try {
+            Process p = rt.exec(new String[]{"explorer.exe",comprimido});
+        } catch (IOException ex) {
+        
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void muestraHistogramasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_muestraHistogramasMouseClicked
@@ -674,6 +707,35 @@ public class Resultados extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_muestraPuntosMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        Image iPuntos = imagenPuntos.get(indexPuntoInteres).getImage();
+        Image iPromedio = imagenPromedio.get(indexPromedio).getImage();
+        Image iHistograma = imagenHistograma.get(indexHistograma).getImage();
+        
+        JOptionPane.showMessageDialog(null,"Se guardaran las gráficas que se muestran en pantalla",
+                    "Guardar imagen",JOptionPane.INFORMATION_MESSAGE);
+        
+        JOptionPane.showMessageDialog(null,"Guardar grafica de puntos de interés",
+                    "Guardar imagen",JOptionPane.INFORMATION_MESSAGE);
+        
+        guardarImagen(iPuntos, "Puntos.png");
+        
+        JOptionPane.showMessageDialog(null,"Guardar gráfica de promedios",
+                    "Guardar imagen",JOptionPane.INFORMATION_MESSAGE);
+        
+        guardarImagen(iPromedio, "Promedio.png");
+        
+        JOptionPane.showMessageDialog(null,"Guardar gráfica de Histograma",
+                    "Guardar imagen",JOptionPane.INFORMATION_MESSAGE);
+        
+        guardarImagen(iHistograma, "Histograma.png");
+        
+        JOptionPane.showMessageDialog(null,"Se a guardado correctamente las imágenes",
+                    "Exito",JOptionPane.INFORMATION_MESSAGE);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anteriorHistograma;
@@ -773,47 +835,136 @@ public class Resultados extends javax.swing.JInternalFrame {
                 153,Image.SCALE_DEFAULT)));
     }
     
-    public void zip(String[] archivos){
-        FileOutputStream fileOutputStream = null;
+    public void comprimelo(String archivoZip){
+        
+        byte[] buffer = new byte[1024];
+        String source = new File(folderComprimir).getName();
+        
+        try{
+            
+            FileOutputStream fos = new FileOutputStream(archivoZip); 
+            ZipOutputStream zos = new ZipOutputStream(fos); 
+
+            System.out.println("Destino del Zip : " + archivoZip);
+
+            FileInputStream in = null;
+
+            for ( String file: listaArchivos ) {
+
+                System.out.println("Archivo agregado : " + file); 
+                ZipEntry ze = new ZipEntry(source + File.separator + file); 
+                zos.putNextEntry(ze); 
+
+                try { 
+
+                    in = new FileInputStream(folderComprimir + File.separator + file); 
+                    int len; 
+
+                    while ((len = in .read(buffer)) > 0) {
+
+                        zos.write(buffer, 0, len); 
+
+                    } 
+                } finally { 
+
+                    in.close();
+
+                } 
+
+            }
+            
+            zos.closeEntry(); 
+            System.out.println("Zip creado satisfactoriamente");
+            zos.close();
+            
+            
+        }catch(IOException ex){
+            
+        }
+        
+    }
+    
+    public void generarListaArchivos(File f){
+        
+        if( f.isFile() ){
+            
+            listaArchivos.add(generarZip(f.toString())); 
+            
+        }
+        
+        if( f.isDirectory() ){
+            
+            String[] subDirectorio = f.list(); 
+            
+            for (String nombreArchivo: subDirectorio) { 
+                
+                generarListaArchivos(new File(f, nombreArchivo));
+             
+            } 
+            
+        }
+    }
+    
+    private String generarZip(String archivo) { 
+        
+        String arc = archivo.substring(folderComprimir.length() + 1 , archivo.length() );
+        
+        return arc;
+        
+    }
+    
+    
+    public void guardarImagen(Image img,String nombre)
+    {
         try {
             
-            byte[] buffer = new byte[1024];
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes", "jpg","png");
+            // convertimos a buffered
+
+            BufferedImage bi = toBufferedImage(img);
+            // declaramos la ventana para seleccionar la ruta
+            JFileChooser ventana = new JFileChooser();
+            ventana.setAcceptAllFileFilterUsed(false);
+            ventana.addChoosableFileFilter(filter);
+            ventana.setSelectedFile( new File(""+nombre) );
             
-            String rutaUsuario = System.getProperty("user.home");
-            String rutaProyecto = rutaUsuario+"\\Downloads\\Proyecto.zip";
+            int res = ventana.showSaveDialog(null);
             
-            fileOutputStream = new FileOutputStream(rutaProyecto);
-            ZipOutputStream zout = new ZipOutputStream(fileOutputStream);
-            
-            for(int x = 0 ; x< archivos.length ; x++){
+            if (res == JFileChooser.APPROVE_OPTION){
+                File archivo = ventana.getSelectedFile();
                 
-                String rutaOrigen = this.rutaProyecto+"\\"+archivos[x];
-                
-                FileInputStream fin = new FileInputStream(rutaOrigen);
-                zout.putNextEntry( new ZipEntry(archivos[x]));
-                
-                int length = 0;
-                
-                while( (length = fin.read(buffer)) > 0 ){
-                    zout.write(buffer, 0, length);
+                if( !archivo.getName().endsWith(".png") ){
+                    
+                    String ruta = archivo.getAbsolutePath()+".png";
+                    File aux = new File(ruta);
+                    ImageIO.write(bi,"png", aux);
+                    
+                }else{
+                    
+                    ImageIO.write(bi,"png", archivo);
+                    
                 }
-                
-                zout.closeEntry();
-                fin.close();
+
             }
             
-            zout.close();
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fileOutputStream.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
         }
+          
+    }
+    
+    private BufferedImage toBufferedImage (Image imagen){
+         // imagen es un objeto de tipo BufferedImage
+        if (imagen instanceof BufferedImage){
+          return (BufferedImage)imagen;
+        }
+        BufferedImage bi = 
+        new BufferedImage(imagen.getWidth(null), imagen.getHeight(null), BufferedImage.TYPE_INT_RGB);
+        
+        Graphics2D nueva = bi.createGraphics();
+        nueva.drawImage(imagen, 0, 0,null);
+        nueva.dispose();
+        
+        return bi;
     }
 }

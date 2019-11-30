@@ -152,6 +152,8 @@ public class EndPoint {
             String g = grupo;
             String lk = linkProyecto;
             
+            String[] urli = lk.split("_var_www_html_isc_SMIM_public_");
+            lk = urli[0];
             String urlParameters  = "key="+k+"&nombreProyecto="+np+"&tipo="+t+
                     "&fecha="+f+"&tiempoAnalisis="+ta+"&noSerie="+ns+"&alumno="+a+"&grupo="+g+"&linkProyecto="+lk;
             

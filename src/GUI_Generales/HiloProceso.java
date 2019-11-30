@@ -12,6 +12,7 @@ import static herramientas.GestorVideo.guardarVideos;
 import GUI_Imagenes.Imagenes;
 import GUI_Video.PuntosVideo;
 import static GUI_Video.Video.tipoProcesoSelect;
+import conexion.EndPoint;
 import herramientas.Folio;
 import herramientas.GestorImagenes;
 import static herramientas.GestorVideo.rutaImagenesFinal;
@@ -108,6 +109,12 @@ public class HiloProceso extends Thread{
                     tipoProcesso+"\\"+fechaDia+"_"+
                     nombreProceso+"_"+usuario+"_"+
                     grupo+"";
+                
+                
+//                String ruProyecto = enviarEndPoint(folio, tipoProcesso, rutaProyecto);
+//                
+//                registrarDB(nombreProceso,tipoProcesso,fechaDia,"0",folio,usuario,grupo,ruProyecto);
+                
             }
             System.out.println("salio del hilo");
             this.p.muestraResultados(rutaProyecto);
@@ -173,8 +180,14 @@ public class HiloProceso extends Thread{
                     nombreProceso+"_"+usuario+"_"+
                     grupo+"";
                 
+                
+//                String ruProyecto = enviarEndPoint(folio, tipoProcesso, rutaProyecto);
+//                
+//                registrarDB(nombreProceso,tipoProcesso,fechaDia,""+tiempo,folio,usuario,grupo,ruProyecto);
+                
                 active = false;
                 proceso.setVisible(false);
+                
             }
             System.out.println("salio del hilo");
             this.p.muestraResultados(rutaProyecto);
@@ -286,6 +299,200 @@ public class HiloProceso extends Thread{
             i++;
         }
         return puntosInteres;  
+    }
+    
+    private String enviarEndPoint(String folio, String tipoProceso, String rutaProyecto){
+        
+        String credenciales = EndPoint.endPoint(1);
+        String archivo = EndPoint.endPoint(2);
+        
+        EndPoint ep = new EndPoint( credenciales, archivo );
+        
+        String key = ep.key(folio);
+        
+        String link = enviarCredenciales(key,folio,tipoProceso,ep,0);
+        String respuesta = enviarArchivo(link,rutaProyecto,ep);
+        
+        return respuesta;
+        
+    }
+    
+    private String enviarArchivo(String link, String rutaProyecto, EndPoint ep) {
+        
+        String lin = link;
+        String directorioServidor="";
+        
+        if( link != null || !link.equals( "false" ) ){
+            
+            String rProyecto = rutaProyecto;
+        
+            String[] contenido =  lin.split("coordenada_");
+            directorioServidor = contenido[0];
+            
+            envioDocumentos(rProyecto, directorioServidor, ep);
+        }
+        
+        return directorioServidor;
+    }
+    
+    private void envioDocumentos( String rProyecto, String directorioServidor, EndPoint ep ){
+        
+        File proyecto = new File(rProyecto);
+        String[] listado = proyecto.list();
+        
+        for( String index : listado ){
+            
+            System.out.println("Contenido : "+index);
+            
+            if(index.endsWith(".mp4")){
+                
+                enviarArchivo(index, rProyecto, directorioServidor, ep);
+                
+            }else{
+                
+                enviarDirectorio( index, rProyecto, directorioServidor, ep);
+                
+            }
+            
+        }
+        
+        System.out.println(" : ");
+        
+    }
+    
+    private void enviarArchivo(String index, String rProyecto, String directorioServidor, EndPoint ep){
+        
+        String ruta = rProyecto+"\\"+index;
+        int tipo = enteroIndex( index );
+        String resultado = ep.subirArchivo( ruta, directorioServidor,tipo );
+        
+    }
+    
+    private void enviarDirectorio(String index, String rProyecto, String directorioServidor, EndPoint ep) {
+        
+        File proyecto = new File(rProyecto+"\\"+index);
+        String[] listado = proyecto.list();
+        
+        String destino = validarIndex( index );
+        int tipo = enteroIndex( index );
+                
+        for( String contenido : listado ){
+            
+            String archivo = rProyecto+"\\"+index+"\\"+contenido;
+            String d = directorioServidor+""+destino+"_";
+            String resultado = ep.subirArchivo( archivo, d,tipo );
+            
+        }
+        
+    }
+    
+    private int enteroIndex( String index ){
+        
+        if( index.equals("coordenada") || index.equals("Estadistica") 
+                || index.equals("estadisticaXimagen") || index.equals("txt") ){
+            
+            return 1;
+            
+        }else if( index.equals("Imagenes") || index.equals("graficas") ){
+            
+            return 2;
+            
+        }else{
+            
+            return 3;
+            
+        }
+        
+    }
+    
+    private String validarIndex(String index) {
+    
+        switch(index){
+            case "coordenada":{
+                
+                return "coordenada";
+                
+            }
+            case "Estadistica":{
+                
+                return "estadistica";
+                
+            }
+            case "estadisticaXimagen":{
+                
+                return "estadisticaXimagen";
+                
+            }
+            case "graficas":{
+                
+                return "graficas";
+                
+            }
+            case "Imagenes":{
+                
+                return "img";
+                
+            }
+            case "txt":{
+                
+                return "txt";
+                
+            }
+            default:{
+                
+                return "vid";
+                
+            }
+        }
+        
+    }
+    
+    private String enviarCredenciales(String key, String folio, String tipoProceso, EndPoint ep,int pos) {
+        
+        String formato = formato(pos);
+        String carpeta = ""+pos;
+        
+        String link = ep.enviarCredencialesArchivo(key,folio,tipoProceso,formato,carpeta);
+        System.out.println("Recibir destino : "+link);
+        
+        return link;
+        
+    }
+    
+    private String formato( int pos ){
+        
+        if( (pos >= 0 && pos <= 2) || pos == 5 ){
+            
+            return "7";
+            
+        }else if( pos == 3 || pos == 4 ){
+            
+            return "8";
+            
+        }else if( pos == 6 ){
+            
+            return "9";
+            
+        }
+        
+        return "0";
+    }
+
+    private void registrarDB(String nombreProceso, String tipoProcesso, 
+            String fechaDia, String tiempoAnalisis, String folio, String usuario, String grupo, String ruProyecto) {
+        
+        //key,nombreProyecto,tipoProceso,fecha,tiempoAnalisis,noSerie,alumno,grupo,linkProyecto
+        
+        String baseDatos = EndPoint.endPoint(4);
+        
+        EndPoint ep = new EndPoint( baseDatos );
+        
+        String key = ep.key(folio);
+        
+        String registro = ep.enviarRaegistro(key,nombreProceso,tipoProcesso,fechaDia,
+                tiempoAnalisis,folio,usuario,grupo,ruProyecto);
+//        System.out.println(registro);
+        
     }
 
 }
