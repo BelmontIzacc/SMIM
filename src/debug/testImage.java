@@ -34,7 +34,7 @@ public class testImage {
              
             // esta informacion es la que se proporcionara al momento de estar seleccionando imagenes
             int numeroCoordenadas = 3; //Numero total de coordenadas seleccionadas en el panel
-            int numeroImagenes = 10; // numero total de imagenes procesadas
+            int numeroImagenes = 4; // numero total de imagenes procesadas
             String tipo = "Fundicion"; // tipo de proceso seleccionado desde los menus
             String nombreProyecto = "Practica_1"; // nombre del proyecto ingresado por el usuario
             String fecha = "02/05/19"; // fecha tomada por el sistema
@@ -64,11 +64,13 @@ public class testImage {
                 BufferedImage bi = ImageIO.read(archivo); // se transforma el archivo a Buffered
                 ImageJFrame frame = new ImageJFrame(bi); // por prueba se muestran las imagenes en esa carpeta, se quitara esto
                 
+                BufferedImage imagenConstruida = new BufferedImage(frame.getWidth(),frame.getHeight(),BufferedImage.TYPE_INT_RGB);
+                
                 for(int x = 0 ; x<puntosInteres.size();x++){ // se aplicara por punto de interes en las imagenes
                     
                     int xInicial = (int)puntosInteres.get(x).getCoordX(); //Cordenada seleccionada por el usuario X
                     int yInicial = (int) puntosInteres.get(x).getCoordY(); //Coordenada seleccionada por el usuario Y
-                    int muestra = 3; //tamaño final = 2*muestra + 1
+                    int muestra = 50; //tamaño final = 2*muestra + 1
                     int xNuevoInicio = xInicial-muestra; //Nuevo inicio X para iniciar el recorrido matriz
                     int xNuevoFin = xInicial+muestra; //Nuevo tope X para finalizar el recorrido en matriz
                     int yNuevoInicio = yInicial-muestra; //Nuevo inicio Y para iniciar el recorrido matriz
@@ -83,14 +85,16 @@ public class testImage {
                     for(int i = xNuevoInicio ; i <= xNuevoFin ; i++){
                         for(int j = yNuevoInicio ; j <= yNuevoFin ; j++){
                             
-                            int color = bi.getRGB((int)puntosInteres.get(x).getCoordX(),(int)puntosInteres.get(x).getCoordX()); // se obtiene el color de la coordenada                            
+                            int color = bi.getRGB(i,j); // se obtiene el color de la coordenada                            
                             Color pixel = new Color(color); //se crea el color obtenido de la coordenada
                             //System.out.println(""+c.getRed()+","+c.getGreen()+","+c.getBlue());
                             acumuladoRojo += pixel.getRed(); //acumula la tonalidad roja de los pixeles
                             acumuladoVerde += pixel.getGreen(); //acumula la tonalidad verde de los pixeles
                             acumuladoAzul += pixel.getBlue(); //acumula la tonalidad zul de los pixeles
                             total += 1; //acumula cada pixel recorrido
-                        
+                            
+                            imagenConstruida.setRGB(i, j, color);
+                            
                         }
                     }
                     
@@ -107,6 +111,8 @@ public class testImage {
                     Temperatura temp = new Temperatura(puntosInteres.get(x).getId(),colorPromedio,""+numero); //se guarda el color de la temperatura obtenida
                     puntosInteres.get(x).agregarTemperatura(temp);
                     
+                    ImageJFrame fram = new ImageJFrame(imagenConstruida);
+                    System.out.println();
                 }
                 numero = 0;
             }

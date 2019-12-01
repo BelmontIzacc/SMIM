@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.util.Calendar;
 
 /**
  * Clase Imagen.
@@ -153,9 +154,17 @@ public class EndPoint {
             String lk = linkProyecto;
             
             String[] urli = lk.split("_var_www_html_isc_SMIM_public_");
-            lk = urli[0];
+            lk = urli[1];
+
+            t = tipo(t);
+            
+            Calendar fcha = Calendar.getInstance();
+            f = fcha.get(Calendar.YEAR)+"-"+fcha.get(Calendar.MONTH)+"-"+fcha.get(Calendar.DAY_OF_MONTH);
+            
             String urlParameters  = "key="+k+"&nombreProyecto="+np+"&tipo="+t+
                     "&fecha="+f+"&tiempoAnalisis="+ta+"&noSerie="+ns+"&alumno="+a+"&grupo="+g+"&linkProyecto="+lk;
+            
+            System.out.println(urlParameters);
             
             byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
             int    postDataLength = postData.length;
@@ -625,6 +634,25 @@ public class EndPoint {
         String f = "A"+folio+"I";
         
         return f;
+        
+    }
+    
+    public String tipo( String nombre ){
+        
+        switch( nombre ){
+            case "Soldadura":{
+                return "1";
+            }
+            case "Fundicion":{
+                return "3";
+            }
+            case "Manufactura":{
+                return "2";
+            }
+            default:{
+                return "1";
+            }
+        }
         
     }
 }

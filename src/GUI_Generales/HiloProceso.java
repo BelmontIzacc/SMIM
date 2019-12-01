@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import modelos.Coordenada;
 import modelos.Temperatura;
 import procesamiento.Imagen;
@@ -88,9 +89,6 @@ public class HiloProceso extends Thread{
                 
                 ArrayList<Coordenada> puntosInteres = iniciarPuntos(Imagenes.vectorNodo);
                 
-                int tam = tamanioS;
-                int f = forma;
-                
                 preProseamiento(puntosInteres,numeroImagenes,ruta);
                 
                 img.agregarPuntosInteres(puntosInteres);
@@ -110,10 +108,10 @@ public class HiloProceso extends Thread{
                     nombreProceso+"_"+usuario+"_"+
                     grupo+"";
                 
+                String tiempo = "0";
                 
-//                String ruProyecto = enviarEndPoint(folio, tipoProcesso, rutaProyecto);
-//                
-//                registrarDB(nombreProceso,tipoProcesso,fechaDia,"0",folio,usuario,grupo,ruProyecto);
+//                envioInformacionArchivos(folio, tipoProcesso, rutaProyecto, tiempo,
+//                        nombreProceso,fechaDia,"0",usuario,grupo);
                 
             }
             System.out.println("salio del hilo");
@@ -181,9 +179,8 @@ public class HiloProceso extends Thread{
                     grupo+"";
                 
                 
-//                String ruProyecto = enviarEndPoint(folio, tipoProcesso, rutaProyecto);
-//                
-//                registrarDB(nombreProceso,tipoProcesso,fechaDia,""+tiempo,folio,usuario,grupo,ruProyecto);
+//                envioInformacionArchivos(folio, tipoProcesso, rutaProyecto, ""+tiempo,
+//                        nombreProceso,fechaDia,"0",usuario,grupo);
                 
                 active = false;
                 proceso.setVisible(false);
@@ -212,8 +209,8 @@ public class HiloProceso extends Thread{
 
     private void preProseamiento(ArrayList<Coordenada> puntosInteres, int numeroImagenes, String ruta) {
         
-        int f = forma;
-        int muestra = tamanioS;
+        int f = forma; //
+        int muestra = tamanioS;//diametro 3 = cuadrado //2 rombo
         
         for(int im = 0 ; im<numeroImagenes ; im++){
 
@@ -226,7 +223,6 @@ public class HiloProceso extends Thread{
                     
                     int xInicial = (int)puntosInteres.get(x).getCoordX(); 
                     int yInicial = (int) puntosInteres.get(x).getCoordY();
-                    //int muestra = (tamanioS/2); //tamaño final = 2*muestra + 1
                     
                     int xNuevoInicio = xInicial-muestra; 
                     int xNuevoFin = xInicial+muestra;
@@ -243,7 +239,12 @@ public class HiloProceso extends Thread{
                             
                             try{
                                 
-                                int color = bi.getRGB((int)puntosInteres.get(x).getCoordX(),(int)puntosInteres.get(x).getCoordX()); // se obtiene el color de la coordenada
+                                System.out.println("- imagen "+x+" -");
+                                System.out.println((int)puntosInteres.get(x).getCoordX());
+                                System.out.println((int)puntosInteres.get(x).getCoordY());
+                                System.out.println("- - - - - - - -");
+                                int color = bi.getRGB(i,j); // se obtiene el color de la coordenada
+                                
                                 Color pixel = new Color(color); 
                                 acumuladoRojo += pixel.getRed();
                                 acumuladoVerde += pixel.getGreen();
@@ -301,6 +302,32 @@ public class HiloProceso extends Thread{
         return puntosInteres;  
     }
     
+    
+    private void envioInformacionArchivos(String folio, String tipoProcesso, String rutaProyecto,
+            String tiempo, String nombreProceso, String fechaDia, String string, String usuario, String grupo) {
+        
+        //(Espere unos segundos)
+        this.p.jLabel3.setText("(Conectando al servidor...)");
+        
+        String ruProyecto = enviarEndPoint(folio, tipoProcesso, rutaProyecto);
+
+        if( ruProyecto == null ){
+            
+            JOptionPane.showMessageDialog(null,"No se pudo conectar al servidor",
+            "Error",JOptionPane.WARNING_MESSAGE);
+
+        }else{
+            
+            this.p.jLabel3.setText("(Registrando el proyecto...)");
+            
+            registrarDB(nombreProceso,tipoProcesso,fechaDia,"0",folio,usuario,grupo,ruProyecto);
+
+        }
+        
+        this.p.jLabel3.setText("(Espere unos segundos)");
+        
+    }
+    
     private String enviarEndPoint(String folio, String tipoProceso, String rutaProyecto){
         
         String credenciales = EndPoint.endPoint(1);
@@ -311,10 +338,19 @@ public class HiloProceso extends Thread{
         String key = ep.key(folio);
         
         String link = enviarCredenciales(key,folio,tipoProceso,ep,0);
-        String respuesta = enviarArchivo(link,rutaProyecto,ep);
         
-        return respuesta;
+        if( link != null ){
+            
+            this.p.jLabel3.setText("(Enviando Archivos...)");
+            String respuesta = enviarArchivo(link,rutaProyecto,ep);
         
+            return respuesta;
+            
+        }else{
+            
+            return null;
+            
+        }
     }
     
     private String enviarArchivo(String link, String rutaProyecto, EndPoint ep) {
