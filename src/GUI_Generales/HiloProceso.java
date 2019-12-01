@@ -98,7 +98,7 @@ public class HiloProceso extends Thread{
                 
                 img.generarArchivos();
                 img.guardarGrafica(700, 250, "png");
-                
+                //Izacc
                 active =  false;
                 proceso.setVisible(true);
                 
@@ -212,78 +212,28 @@ public class HiloProceso extends Thread{
         int f = forma; //
         int muestra = tamanioS;//diametro 3 = cuadrado //2 rombo
         
-        for(int im = 0 ; im<numeroImagenes ; im++){
-
-            try {
-                int numero = im+1;
-                File archivo = new File(""+ruta+"\\"+numero+".png");
-                BufferedImage bi = ImageIO.read(archivo);
+        switch(forma){
+            case 2:{
                 
-                for(int x = 0 ; x<puntosInteres.size();x++){
-                    
-                    int xInicial = (int)puntosInteres.get(x).getCoordX(); 
-                    int yInicial = (int) puntosInteres.get(x).getCoordY();
-                    
-                    int xNuevoInicio = xInicial-muestra; 
-                    int xNuevoFin = xInicial+muestra;
-                    int yNuevoInicio = yInicial-muestra;
-                    int yNuevoFin = yInicial+muestra;
-                    
-                    int acumuladoRojo = 0;
-                    int acumuladoVerde = 0;
-                    int acumuladoAzul = 0;
-                    int total = 0;
-                    
-                    for(int i = xNuevoInicio ; i <= xNuevoFin ; i++){
-                        for(int j = yNuevoInicio ; j <= yNuevoFin ; j++){
-                            
-                            try{
-                                
-                                System.out.println("- imagen "+x+" -");
-                                System.out.println((int)puntosInteres.get(x).getCoordX());
-                                System.out.println((int)puntosInteres.get(x).getCoordY());
-                                System.out.println("- - - - - - - -");
-                                int color = bi.getRGB(i,j); // se obtiene el color de la coordenada
-                                
-                                Color pixel = new Color(color); 
-                                acumuladoRojo += pixel.getRed();
-                                acumuladoVerde += pixel.getGreen();
-                                acumuladoAzul += pixel.getBlue(); 
-                                total += 1;   
-                                
-                            }catch(RuntimeException e){
-                                
-                            }
-                            
-                        }
-                    }
-                    
-                    int r;
-                    int g;
-                    int b;
-                    
-                    try{ r = acumuladoRojo/total; }catch(ArithmeticException e){ r = 0; }
-                    
-                    try{ g = acumuladoVerde/total; }catch(ArithmeticException e){ g = 0; }
-                                        
-                    try{ b = acumuladoAzul/total; }catch(ArithmeticException e){ b = 0; }
-                   
-                    
-                    if( r > 255 ){ r = 255; }else if( r < 0 ){ r = 0; }
-                    if( g > 255 ){ g = 255; }else if( g < 0 ){ g = 0; }
-                    if( b > 255 ){ b = 255; }else if( b < 0 ){ b = 0; }
-                    
-                    Color colorPromedio = new Color(r,g,b);
-                    
-                    Temperatura temp = new Temperatura(puntosInteres.get(x).getId(),colorPromedio,""+numero);
-                    puntosInteres.get(x).agregarTemperatura(temp);
-                    
+                for(int im = 0 ; im<numeroImagenes ; im++){
+
+                    rombo(puntosInteres, ruta,muestra,im);
+
                 }
-                numero = 0;
-            } catch (IOException ex) {
-                Logger.getLogger(HiloProceso.class.getName()).log(Level.SEVERE, null, ex);
+                
+                break;
+            }
+            default:{
+                
+                for(int im = 0 ; im<numeroImagenes ; im++){
+
+                    cuadrado(puntosInteres, ruta,muestra,im);
+
+                }
+                
             }
         }
+        
     }
 
     private ArrayList<Coordenada> iniciarPuntos(ArrayList<Nodo> lista) {
@@ -528,6 +478,166 @@ public class HiloProceso extends Thread{
         String registro = ep.enviarRaegistro(key,nombreProceso,tipoProcesso,fechaDia,
                 tiempoAnalisis,folio,usuario,grupo,ruProyecto);
 //        System.out.println(registro);
+        
+    }
+    
+    private void cuadrado(ArrayList<Coordenada> puntosInteres, String ruta, int muestra, int im) {
+        
+        try {
+                int numero = im+1;
+                File archivo = new File(""+ruta+"\\"+numero+".png");
+                BufferedImage bi = ImageIO.read(archivo);
+                
+                for(int x = 0 ; x<puntosInteres.size();x++){
+                    
+                    int xInicial = (int)puntosInteres.get(x).getCoordX(); 
+                    int yInicial = (int) puntosInteres.get(x).getCoordY();
+                    
+                    int xNuevoInicio = xInicial-muestra; 
+                    int xNuevoFin = xInicial+muestra;
+                    int yNuevoInicio = yInicial-muestra;
+                    int yNuevoFin = yInicial+muestra;
+                    
+                    int acumuladoRojo = 0;
+                    int acumuladoVerde = 0;
+                    int acumuladoAzul = 0;
+                    int total = 0;
+                    
+                    for(int i = xNuevoInicio ; i <= xNuevoFin ; i++){
+                        for(int j = yNuevoInicio ; j <= yNuevoFin ; j++){
+                            
+                            try{
+
+                                int color = bi.getRGB(i,j); // se obtiene el color de la coordenada
+                                
+                                Color pixel = new Color(color); 
+                                acumuladoRojo += pixel.getRed();
+                                acumuladoVerde += pixel.getGreen();
+                                acumuladoAzul += pixel.getBlue(); 
+                                total += 1;   
+                                
+                            }catch(RuntimeException e){
+                                
+                            }
+                            
+                        }
+                    }
+                    
+                    int r;
+                    int g;
+                    int b;
+                    
+                    try{ r = acumuladoRojo/total; }catch(ArithmeticException e){ r = 0; }
+                    
+                    try{ g = acumuladoVerde/total; }catch(ArithmeticException e){ g = 0; }
+                                        
+                    try{ b = acumuladoAzul/total; }catch(ArithmeticException e){ b = 0; }
+                   
+                    
+                    if( r > 255 ){ r = 255; }else if( r < 0 ){ r = 0; }
+                    if( g > 255 ){ g = 255; }else if( g < 0 ){ g = 0; }
+                    if( b > 255 ){ b = 255; }else if( b < 0 ){ b = 0; }
+                    
+                    Color colorPromedio = new Color(r,g,b);
+                    
+                    Temperatura temp = new Temperatura(puntosInteres.get(x).getId(),colorPromedio,""+numero);
+                    puntosInteres.get(x).agregarTemperatura(temp);
+                    
+                }
+                numero = 0;
+            } catch (IOException ex) {
+                Logger.getLogger(HiloProceso.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+    }
+
+    private void rombo(ArrayList<Coordenada> puntosInteres, String ruta, int muestra, int im) {
+    
+        try {
+                int numero = im+1;
+                File archivo = new File(""+ruta+"\\"+numero+".png");
+                BufferedImage bi = ImageIO.read(archivo);
+                
+                for(int x = 0 ; x<puntosInteres.size();x++){
+                    
+                    int cordX = (int)puntosInteres.get(x).getCoordX(); 
+                    int cordY = (int) puntosInteres.get(x).getCoordY();
+                    
+                    double radio = muestra/2.0;
+                    
+                    int inicio = (int) (cordX-radio);
+                    int fin = (int) (cordX + radio);
+
+                    int iteracion = 0;
+                    int rango = 0;
+                    
+                    int acumuladoRojo = 0;
+                    int acumuladoVerde = 0;
+                    int acumuladoAzul = 0;
+                    int total = 0;
+                    
+                    for( int i = inicio ; i <= fin ; i++ ){
+
+                       int inicioY = cordY-rango; 
+                       int topeY = cordY+rango;
+
+                       for( int j = inicioY ; j <= topeY ; j++){
+                           
+                           try{
+                                
+                                int color = bi.getRGB(i,j); // se obtiene el color de la coordenada
+                                
+                                Color pixel = new Color(color); 
+                                acumuladoRojo += pixel.getRed();
+                                acumuladoVerde += pixel.getGreen();
+                                acumuladoAzul += pixel.getBlue(); 
+                                total += 1;   
+                                
+                            }catch(RuntimeException e){
+                                
+                            }  
+                            
+                       }
+
+                       iteracion++;
+
+                       if( iteracion > radio ){
+
+                           rango--;
+
+                       }else{
+
+                           rango++;
+
+                       }
+
+                    }
+                    
+                    int r;
+                    int g;
+                    int b;
+                    
+                    try{ r = acumuladoRojo/total; }catch(ArithmeticException e){ r = 0; }
+                    
+                    try{ g = acumuladoVerde/total; }catch(ArithmeticException e){ g = 0; }
+                                        
+                    try{ b = acumuladoAzul/total; }catch(ArithmeticException e){ b = 0; }
+                   
+                    
+                    if( r > 255 ){ r = 255; }else if( r < 0 ){ r = 0; }
+                    if( g > 255 ){ g = 255; }else if( g < 0 ){ g = 0; }
+                    if( b > 255 ){ b = 255; }else if( b < 0 ){ b = 0; }
+                    
+                    Color colorPromedio = new Color(r,g,b);
+                    
+                    Temperatura temp = new Temperatura(puntosInteres.get(x).getId(),colorPromedio,""+numero);
+                    puntosInteres.get(x).agregarTemperatura(temp);
+                    
+                }
+                numero = 0;
+            } catch (IOException ex) {
+                Logger.getLogger(HiloProceso.class.getName()).log(Level.SEVERE, null, ex);
+            }
         
     }
 

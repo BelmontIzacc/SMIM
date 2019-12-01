@@ -171,6 +171,7 @@ public class Imagen extends MedioTermografico{
         }
         
         super.generarGraficaPromedioPunto();
+        
         String[] nombresTemp = { "Celsius", "Farenheit", "Kelvin" }; 
         int listGraficasPromedio = super.getGraficasPromedio().size();
         

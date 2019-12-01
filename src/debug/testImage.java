@@ -38,7 +38,7 @@ public class testImage {
             String tipo = "Fundicion"; // tipo de proceso seleccionado desde los menus
             String nombreProyecto = "Practica_1"; // nombre del proyecto ingresado por el usuario
             String fecha = "02/05/19"; // fecha tomada por el sistema
-            String ruta = "C:\\Users\\izacc\\Pictures\\SMIM\\Fundicion"; //ruta donde estan guardadas las imagenes
+            String ruta = "C:\\Users\\izacc\\Pictures\\SMIM\\Fundicion\\"; //ruta donde estan guardadas las imagenes
             String nombreAlumno = "Izacc Belmont Belmont";
             String grupoAlumno = "5CM1";
             String folio;
@@ -64,13 +64,13 @@ public class testImage {
                 BufferedImage bi = ImageIO.read(archivo); // se transforma el archivo a Buffered
                 ImageJFrame frame = new ImageJFrame(bi); // por prueba se muestran las imagenes en esa carpeta, se quitara esto
                 
-                BufferedImage imagenConstruida = new BufferedImage(frame.getWidth(),frame.getHeight(),BufferedImage.TYPE_INT_RGB);
+//                BufferedImage imagenConstruida = new BufferedImage(frame.getWidth(),frame.getHeight(),BufferedImage.TYPE_INT_RGB);
                 
                 for(int x = 0 ; x<puntosInteres.size();x++){ // se aplicara por punto de interes en las imagenes
                     
                     int xInicial = (int)puntosInteres.get(x).getCoordX(); //Cordenada seleccionada por el usuario X
                     int yInicial = (int) puntosInteres.get(x).getCoordY(); //Coordenada seleccionada por el usuario Y
-                    int muestra = 50; //tamaño final = 2*muestra + 1
+                    int muestra = 3; //tamaño final = 2*muestra + 1
                     int xNuevoInicio = xInicial-muestra; //Nuevo inicio X para iniciar el recorrido matriz
                     int xNuevoFin = xInicial+muestra; //Nuevo tope X para finalizar el recorrido en matriz
                     int yNuevoInicio = yInicial-muestra; //Nuevo inicio Y para iniciar el recorrido matriz
@@ -93,7 +93,7 @@ public class testImage {
                             acumuladoAzul += pixel.getBlue(); //acumula la tonalidad zul de los pixeles
                             total += 1; //acumula cada pixel recorrido
                             
-                            imagenConstruida.setRGB(i, j, color);
+//                            imagenConstruida.setRGB(i, j, color);
                             
                         }
                     }
@@ -111,7 +111,7 @@ public class testImage {
                     Temperatura temp = new Temperatura(puntosInteres.get(x).getId(),colorPromedio,""+numero); //se guarda el color de la temperatura obtenida
                     puntosInteres.get(x).agregarTemperatura(temp);
                     
-                    ImageJFrame fram = new ImageJFrame(imagenConstruida);
+//                    ImageJFrame fram = new ImageJFrame(imagenConstruida);
                     System.out.println();
                 }
                 numero = 0;
@@ -123,10 +123,10 @@ public class testImage {
             img.agregarPuntosInteres(puntosInteres); //se agrega los puntos de interes a la clase imagen
             img.procesamientoImagenes(); // calculo de temperatura
             img.calcularEstadistica(); //calculo de estadisticass
-//            img.graficarHistograma();
+            img.graficarHistograma();
             img.generarArchivos();
             
-//            img.guardarGrafica(700, 250, "png");
+            img.guardarGrafica(700, 250, "png");
             
             System.out.println();
             

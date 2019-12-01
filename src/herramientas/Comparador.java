@@ -39,6 +39,10 @@ public class Comparador {
     
     public static NodoTemp coincidencias(ArrayList<NodoTemp> temp, int tonalidad){
         
+        String ton = ""+tonalidad;
+        if(ton.length() < 7 ){
+            return new NodoTemp(0,tonalidad);
+        }
         
         NodoTemp aux = buscar(temp,tonalidad,7,0,0);
         
