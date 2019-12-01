@@ -73,7 +73,7 @@
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jScrollPane1" pref="625" max="32767" attributes="0"/>
-                          <Component id="jPanel3" pref="0" max="32767" attributes="0"/>
+                          <Component id="jPanel3" pref="625" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   </Group>
@@ -147,7 +147,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="procesar" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="seleccionarPuntos" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="menu" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
@@ -228,11 +228,13 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="mostrarImagenes" min="-2" pref="440" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="play" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="derecha" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="pause" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="izquierda" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="play" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="derecha" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="pause" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
