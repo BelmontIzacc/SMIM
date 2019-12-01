@@ -145,6 +145,74 @@ public abstract class MedioTermografico{
     }
     
     /**
+     * Funcion para generar las graficas de estadistica
+     * IBelmont
+     * Desde 1/12/19
+     **/
+    
+    public void generarGraficaEstadisticas(String rg){
+        
+        int alto = 950;
+        int ancho = 550;
+        
+        double[] eDesviacion = new double[estadisticas.size()];
+        double[] eMedia = new double[estadisticas.size()];
+        double[] eMediana = new double[estadisticas.size()];
+        double[] eModa = new double[estadisticas.size()];
+        double[] eVarianza = new double[estadisticas.size()];
+        
+        for(int x = 0 ; x < estadisticas.size() ; x++){
+            
+            eDesviacion[x] = estadisticas.get(x).getDesviacionEstandar();
+            eMedia[x] = estadisticas.get(x).getMedia();
+            eMediana[x] = estadisticas.get(x).getMediana();
+            eModa[x] = estadisticas.get(x).getModa();
+            eVarianza[x] = estadisticas.get(x).getVarianza();
+            
+        }
+        
+        Grafica grafica = new Grafica( "Punto de Interes", " ",
+                "Desviacion estandar de temperatura por punto de interes Celsius" );
+        
+        grafica.agregarSerie( "DesviacionEstandar", eDesviacion );
+        grafica.crearYmostrarGrafica();
+        
+        grafica.guardarGrafica(alto, ancho, rg, "Desviacion estandar", "png");
+        
+        Grafica grafica2 = new Grafica( "Punto de Interes", " Temperatura",
+                "Media de temperatura por punto de interes Celsius" );
+        
+        grafica2.agregarSerie( "Media", eMedia );
+        grafica2.crearYmostrarGrafica();
+        
+        grafica2.guardarGrafica(alto, ancho, rg, "Media", "png");
+        
+        Grafica grafica3 = new Grafica( "Punto de Interes", " Temperatura",
+                "Mediana de temperatura por punto de interes Celsius" );
+        
+        grafica3.agregarSerie( "Mediana", eMediana );
+        grafica3.crearYmostrarGrafica();
+        
+        grafica3.guardarGrafica(alto, ancho, rg, "Mediana", "png");
+        
+        Grafica grafica4 = new Grafica( "Punto de Interes", " Temperatura",
+                "Moda de temperatura por punto de interes Celsius" );
+        
+        grafica4.agregarSerie( "Moda", eModa );
+        grafica4.crearYmostrarGrafica();
+        
+        grafica4.guardarGrafica(alto, ancho, rg, "Moda", "png");
+        
+        Grafica grafica5 = new Grafica( "Punto de Interes", " ",
+                "Varianza de temperatura por punto de interes Celsius" );
+        
+        grafica5.agregarSerie( "Varianza", eVarianza );
+        grafica5.crearYmostrarGrafica();
+        
+        grafica5.guardarGrafica(alto, ancho, rg, "Varianza", "png");
+    }
+    
+    /**
      * Funcion para generar las graficas por punto de interes
      * IBelmont
      * Desde 15/11/19
@@ -189,7 +257,7 @@ public abstract class MedioTermografico{
             
         }
         
-        Grafica grafica = new Grafica( "Punto de Interes", "Temperatura","Comportamiento de Temperatura por punto de Interes Celsius" );
+        Grafica grafica = new Grafica( "Punto de Interes", "Temperatura","Comportamiento de temperatura por punto de interes Celsius" );
         
         for( int i = 0 ; i < comportamientoC.size() ; i++ ){
             
@@ -200,7 +268,7 @@ public abstract class MedioTermografico{
         
         grafica.guardarGrafica(alto, ancho, rg, "Punto Interes Celsius", "png");
         
-        Grafica grafica1 = new Grafica( "Punto de Interes", "Temperatura","Comportamiento de Temperatura por punto de Interes Farenheit" );
+        Grafica grafica1 = new Grafica( "Punto de Interes", "Temperatura","Comportamiento de temperatura por punto de interes Farenheit" );
         
         for( int i = 0 ; i < comportamientoF.size() ; i++ ){
             
@@ -211,7 +279,7 @@ public abstract class MedioTermografico{
         
         grafica1.guardarGrafica(alto, ancho, rg, "Punto Interes Farenheit", "png");
         
-        Grafica grafica2 = new Grafica( "Punto de Interes", "Temperatura","Comportamiento de Temperatura por punto de Interes Kelvin" );
+        Grafica grafica2 = new Grafica( "Punto de Interes", "Temperatura","Comportamiento de temperatura por punto de interes Kelvin" );
         
         for( int i = 0 ; i < comportamientoK.size() ; i++ ){
             
@@ -222,6 +290,7 @@ public abstract class MedioTermografico{
         
         grafica2.guardarGrafica(alto, ancho, rg, "Punto Interes Kelvin", "png");
         
+        generarGraficaEstadisticas(rg);
     }
     
     /**
@@ -244,17 +313,17 @@ public abstract class MedioTermografico{
             
         }
         
-        Grafica grafica1 = new Grafica( "Imagen", "Temperatura","Nivel de Temperatura promedio por Imagen Celsius" );
+        Grafica grafica1 = new Grafica( "Imagen", "Temperatura","Nivel de temperatura promedio por imagen Celsius" );
             
         grafica1.agregarSerie( "Celsius", datosC );
         grafica1.crearYmostrarGrafica();
         
-        Grafica grafica2 = new Grafica( "Imagen", "Temperatura","Nivel de Temperatura promedio por Imagen Farenheit" );
+        Grafica grafica2 = new Grafica( "Imagen", "Temperatura","Nivel de temperatura promedio por imagen Farenheit" );
             
         grafica2.agregarSerie( "Farenheit", datosF );
         grafica2.crearYmostrarGrafica();
         
-        Grafica grafica3 = new Grafica( "Imagen", "Temperatura","Nivel de Temperatura promedio por Imagen Kelvin" );
+        Grafica grafica3 = new Grafica( "Imagen", "Temperatura","Nivel de temperatura promedio por imagen Kelvin" );
             
         grafica3.agregarSerie( "Kelvin", datosK );
         grafica3.crearYmostrarGrafica();

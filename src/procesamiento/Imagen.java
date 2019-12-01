@@ -115,7 +115,7 @@ public class Imagen extends MedioTermografico{
             double[] azul = auxHistograma.get( 2 );
             String[] nombres = { "al inicio", " a la mitad", "al final" }; 
             
-            Grafica grafica = new Grafica( "Tono", "Frecuencia","Histograma de Temperatura " + nombres[ x ] );
+            Grafica grafica = new Grafica( "Tono", "Frecuencia","Histograma de temperatura " + nombres[ x ] );
             
             grafica.agregarSerie( "Rojo", rojo );
             grafica.agregarSerie( "Azul", verde );

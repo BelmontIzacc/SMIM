@@ -330,7 +330,7 @@ public class HiloProceso extends Thread{
             
             System.out.println("Contenido : "+index);
             
-            if(index.endsWith(".mp4")){
+            if(index.equals("Video.mp4")){
                 
                 enviarArchivo(index, rProyecto, directorioServidor, ep);
                 

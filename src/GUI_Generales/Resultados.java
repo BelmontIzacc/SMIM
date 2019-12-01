@@ -37,13 +37,15 @@ public class Resultados extends javax.swing.JInternalFrame {
     public ArrayList<ImageIcon> imagenAux;
     public ArrayList<ImageIcon> imagenPuntos;
     public ArrayList<ImageIcon> imagenPromedio;
+    public ArrayList<ImageIcon> imagenEstadistica;
     
     public int contador = 1;
     public Timer timer = null;
     public String rutaProyecto;
     
-    private int cantidadHistograma,cantidadPromedio,cantidadPuntoInteres;
+    private int cantidadHistograma,cantidadPromedio,cantidadPuntoInteres,cantidadEstadistica;
     private int indexHistograma,indexPromedio,indexPuntoInteres;
+    private int indexEstadistica;
     
     public ArrayList<String> listaArchivos;
     private String comprimido; 
@@ -70,14 +72,18 @@ public class Resultados extends javax.swing.JInternalFrame {
        indexHistograma = 1;
        indexPromedio = 1;
        indexPuntoInteres = 1;
+       indexEstadistica = 1;
+       
        cantidadHistograma = 2;
        cantidadPromedio = 2;
        cantidadPuntoInteres = 2;
-       
+       cantidadEstadistica = 4;
+               
        cargarHistograma(ruta);
        cargarPromedios(ruta);
        cargarPuntos(ruta);
        cargarImagenes(ruta);
+       cargarEstadistica(ruta);
        
        imagenAux = imagen;
     }
@@ -118,6 +124,9 @@ public class Resultados extends javax.swing.JInternalFrame {
         anteriorHistograma = new javax.swing.JButton();
         siguienteHistograma = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
+        muestraEstadistica = new javax.swing.JLabel();
+        anteriorEstadistica = new javax.swing.JButton();
+        siguienteEstadistica = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 4));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -178,7 +187,7 @@ public class Resultados extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(mostrarImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(play, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(izquierda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(derecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,7 +316,7 @@ public class Resultados extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(muestraPromedio, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(anteriorPromedio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(siguientePromedio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -357,9 +366,9 @@ public class Resultados extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(muestraPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(anteriorPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(siguientePuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(anteriorPuntos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(siguientePuntos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -438,15 +447,52 @@ public class Resultados extends javax.swing.JInternalFrame {
 
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadísticas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 16), new java.awt.Color(0, 153, 153))); // NOI18N
 
+        muestraEstadistica.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        muestraEstadistica.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                muestraEstadisticaMouseClicked(evt);
+            }
+        });
+
+        anteriorEstadistica.setText("jButton2");
+        anteriorEstadistica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anteriorEstadisticaActionPerformed(evt);
+            }
+        });
+
+        siguienteEstadistica.setText("jButton3");
+        siguienteEstadistica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                siguienteEstadisticaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 429, Short.MAX_VALUE)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(muestraEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(anteriorEstadistica)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(siguienteEstadistica)
+                .addGap(72, 72, 72))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 251, Short.MAX_VALUE)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(muestraEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(anteriorEstadistica)
+                    .addComponent(siguienteEstadistica))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -739,6 +785,7 @@ public class Resultados extends javax.swing.JInternalFrame {
         Image iPuntos = imagenPuntos.get(indexPuntoInteres).getImage();
         Image iPromedio = imagenPromedio.get(indexPromedio).getImage();
         Image iHistograma = imagenHistograma.get(indexHistograma).getImage();
+        Image iEstadistica = imagenEstadistica.get(indexEstadistica).getImage();
         
         JOptionPane.showMessageDialog(null,"Se guardaran las gráficas que se muestran en pantalla",
                     "Guardar imagen",JOptionPane.INFORMATION_MESSAGE);
@@ -758,13 +805,58 @@ public class Resultados extends javax.swing.JInternalFrame {
         
         guardarImagen(iHistograma, "Histograma.png");
         
+        JOptionPane.showMessageDialog(null,"Guardar gráfica de Estadistica",
+                    "Guardar imagen",JOptionPane.INFORMATION_MESSAGE);
+        
+        guardarImagen(iEstadistica, "Estadistica.png");
+        
         JOptionPane.showMessageDialog(null,"Se a guardado correctamente las imágenes",
                     "Exito",JOptionPane.INFORMATION_MESSAGE);
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void siguienteEstadisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteEstadisticaActionPerformed
+        indexEstadistica++;
+        
+        if( indexEstadistica >= 0 && indexEstadistica <= cantidadEstadistica ){
+            
+            muestraEstadistica.setIcon(new ImageIcon(imagenEstadistica.get(indexEstadistica).getImage().getScaledInstance(399,
+                153,Image.SCALE_DEFAULT)));
+            
+        }else{
+            indexEstadistica = cantidadEstadistica;
+        }
+    }//GEN-LAST:event_siguienteEstadisticaActionPerformed
+
+    private void anteriorEstadisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorEstadisticaActionPerformed
+        indexEstadistica--;
+         
+        if( indexEstadistica >= 0 && indexEstadistica <= cantidadEstadistica ){
+            
+            muestraEstadistica.setIcon(new ImageIcon(imagenEstadistica.get(indexEstadistica).getImage().getScaledInstance(399,
+                153,Image.SCALE_DEFAULT)));
+            
+        }else{
+            indexEstadistica = 0;
+        }
+    }//GEN-LAST:event_anteriorEstadisticaActionPerformed
+
+    private void muestraEstadisticaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_muestraEstadisticaMouseClicked
+        try {
+            String[] nombres = {"Mediana.png","Media.png","Moda.png","Varianza.png","Desviacion estandar.png"};
+            String nom = nombres[indexEstadistica];
+            String url = rutaProyecto+"\\graficas\\"+nom;
+            ProcessBuilder p = new ProcessBuilder();
+            p.command("cmd.exe","/c",url);
+            p.start();
+        } catch (IOException ex) {
+            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_muestraEstadisticaMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton anteriorEstadistica;
     private javax.swing.JButton anteriorHistograma;
     private javax.swing.JButton anteriorPromedio;
     private javax.swing.JButton anteriorPuntos;
@@ -784,16 +876,36 @@ public class Resultados extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JButton menu;
     private javax.swing.JLabel mostrarImagenes;
+    private javax.swing.JLabel muestraEstadistica;
     private javax.swing.JLabel muestraHistogramas;
     private javax.swing.JLabel muestraPromedio;
     private javax.swing.JLabel muestraPuntos;
     private javax.swing.JButton pause;
     private javax.swing.JButton play;
+    private javax.swing.JButton siguienteEstadistica;
     private javax.swing.JButton siguienteHistograma;
     private javax.swing.JButton siguientePromedio;
     private javax.swing.JButton siguientePuntos;
     // End of variables declaration//GEN-END:variables
-
+    
+    private void cargarEstadistica(String ruta) {
+        
+        String[] nombres = {"Mediana.png","Media.png","Moda.png","Varianza.png","Desviacion estandar.png"};
+        
+        imagenEstadistica = new ArrayList<>();
+        
+        for(int i=0; i<nombres.length; i++){
+            
+            File f = new File(ruta+"\\graficas\\"+nombres[i]);
+            imagenEstadistica.add(new ImageIcon(f.getAbsolutePath())) ;
+            
+        }
+        
+        muestraEstadistica.setIcon(new ImageIcon(imagenEstadistica.get(indexEstadistica).getImage().getScaledInstance(399,
+                171,Image.SCALE_DEFAULT)));
+        
+    }
+    
     private void cargarImagenes(String ruta) {
        
         
@@ -1033,4 +1145,6 @@ public class Resultados extends javax.swing.JInternalFrame {
         siguientePuntos.setContentAreaFilled(false);
         siguienteHistograma.setContentAreaFilled(false);
     }
+
+    
 }

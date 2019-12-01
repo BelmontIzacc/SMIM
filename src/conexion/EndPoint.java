@@ -497,7 +497,7 @@ public class EndPoint {
                 
                 double tamMBytes = (tamKBytes/1024.0);
                 
-                if( tamMBytes <= 20 ){ // 20 Mb
+                if( tamMBytes <= 32 ){ // 32 Mb
                     
                     return true;
                     
