@@ -355,6 +355,7 @@ public final class Video extends javax.swing.JInternalFrame {
                           JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
             }
         }else{
+        
             dispose();
             int tipoP = this.tipoProceso.getSelectedIndex();
             
@@ -362,7 +363,11 @@ public final class Video extends javax.swing.JInternalFrame {
             String g = this.Grupo.getText();
             String al = this.nombreAlumno.getText();
             String np = this.nombreProceso.getText();
-                    
+            
+            g = g.replaceAll("[^\\dA-Za-z]", "");
+            al = al.replaceAll("[^\\dA-Za-z]", "");
+            np = np.replaceAll("[^\\dA-Za-z]", "");       
+            
             tipoProcesoSelect = tipo;
             Editar.gc = false;
             
