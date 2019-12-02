@@ -454,14 +454,12 @@ public class Resultados extends javax.swing.JInternalFrame {
             }
         });
 
-        anteriorEstadistica.setText("jButton2");
         anteriorEstadistica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 anteriorEstadisticaActionPerformed(evt);
             }
         });
 
-        siguienteEstadistica.setText("jButton3");
         siguienteEstadistica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 siguienteEstadisticaActionPerformed(evt);
@@ -477,11 +475,11 @@ public class Resultados extends javax.swing.JInternalFrame {
                 .addComponent(muestraEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(anteriorEstadistica)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(siguienteEstadistica)
-                .addGap(72, 72, 72))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(anteriorEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75)
+                .addComponent(siguienteEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(141, 141, 141))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -490,8 +488,8 @@ public class Resultados extends javax.swing.JInternalFrame {
                 .addComponent(muestraEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(anteriorEstadistica)
-                    .addComponent(siguienteEstadistica))
+                    .addComponent(anteriorEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(siguienteEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -747,7 +745,7 @@ public class Resultados extends javax.swing.JInternalFrame {
         if( indexPuntoInteres >= 0 && indexPuntoInteres <= cantidadPuntoInteres ){
             
             muestraPuntos.setIcon(new ImageIcon(imagenPuntos.get(indexPuntoInteres).getImage().getScaledInstance(399,
-                153,Image.SCALE_DEFAULT)));
+                171,Image.SCALE_DEFAULT)));
             
         }else{
             indexPuntoInteres = 0;
@@ -760,7 +758,7 @@ public class Resultados extends javax.swing.JInternalFrame {
         if( indexPuntoInteres >= 0 && indexPuntoInteres <= cantidadPuntoInteres ){
             
             muestraPuntos.setIcon(new ImageIcon(imagenPuntos.get(indexPuntoInteres).getImage().getScaledInstance(399,
-                153,Image.SCALE_DEFAULT)));
+                171,Image.SCALE_DEFAULT)));
             
         }else{
             indexPuntoInteres = cantidadPuntoInteres;
@@ -821,7 +819,7 @@ public class Resultados extends javax.swing.JInternalFrame {
         if( indexEstadistica >= 0 && indexEstadistica <= cantidadEstadistica ){
             
             muestraEstadistica.setIcon(new ImageIcon(imagenEstadistica.get(indexEstadistica).getImage().getScaledInstance(399,
-                153,Image.SCALE_DEFAULT)));
+                171,Image.SCALE_DEFAULT)));
             
         }else{
             indexEstadistica = cantidadEstadistica;
@@ -834,7 +832,7 @@ public class Resultados extends javax.swing.JInternalFrame {
         if( indexEstadistica >= 0 && indexEstadistica <= cantidadEstadistica ){
             
             muestraEstadistica.setIcon(new ImageIcon(imagenEstadistica.get(indexEstadistica).getImage().getScaledInstance(399,
-                153,Image.SCALE_DEFAULT)));
+                171,Image.SCALE_DEFAULT)));
             
         }else{
             indexEstadistica = 0;
@@ -1130,9 +1128,11 @@ public class Resultados extends javax.swing.JInternalFrame {
         anteriorPromedio.setIcon(izquierdaG);
         anteriorPuntos.setIcon(izquierdaG);
         anteriorHistograma.setIcon(izquierdaG);
+        anteriorEstadistica.setIcon(izquierdaG);
         siguientePromedio.setIcon(derechaG);
         siguientePuntos.setIcon(derechaG);
         siguienteHistograma.setIcon(derechaG);
+        siguienteEstadistica.setIcon(derechaG);
         
         izquierda.setContentAreaFilled(false);
         derecha.setContentAreaFilled(false);
@@ -1141,9 +1141,11 @@ public class Resultados extends javax.swing.JInternalFrame {
         anteriorPromedio.setContentAreaFilled(false);
         anteriorPuntos.setContentAreaFilled(false);
         anteriorHistograma.setContentAreaFilled(false);
+        anteriorEstadistica.setContentAreaFilled(false);
         siguientePromedio.setContentAreaFilled(false);
         siguientePuntos.setContentAreaFilled(false);
         siguienteHistograma.setContentAreaFilled(false);
+        siguienteEstadistica.setContentAreaFilled(false);
     }
 
     
