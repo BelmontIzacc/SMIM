@@ -487,9 +487,9 @@ public class Resultados extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(muestraEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(anteriorEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(siguienteEstadistica, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(anteriorEstadistica, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(siguienteEstadistica, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -645,7 +645,7 @@ public class Resultados extends javax.swing.JInternalFrame {
         generarListaArchivos( new File( folderComprimir ) );
         comprimelo( comprimido );
         
-        JOptionPane.showMessageDialog(null,"Se mostrara la ubicacion el archivo",
+        JOptionPane.showMessageDialog(null,"Se mostrara la ubicacion del archivo comprimido",
                 "Operación realizada correctamente",JOptionPane.INFORMATION_MESSAGE);
         
         Runtime rt = Runtime.getRuntime();

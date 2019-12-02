@@ -599,7 +599,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="muestraEstadistica" min="-2" pref="171" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="anteriorEstadistica" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="siguienteEstadistica" alignment="1" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>

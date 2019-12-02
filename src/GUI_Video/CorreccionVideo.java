@@ -295,7 +295,7 @@ public class CorreccionVideo extends javax.swing.JInternalFrame {
         this.principal.add(proceso);
         HiloProceso.active = true;
         HiloProceso h = new HiloProceso(proceso,this.listaIm,2);
-        h.pasarProceso("",nombreAlummno,grupo,nombreProc);
+        h.pasarProceso(tipoProceso,nombreAlummno,grupo,nombreProc);
         h.darProcesando(proceso);
         
         h.start();

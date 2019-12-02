@@ -191,7 +191,7 @@ public class HiloProceso extends Thread{
                     grupo+"";
                 
                 
-                envioInformacionArchivos(folio, tipoProcesso, rutaProyecto, ""+tiempo,
+                envioInformacionArchivos(folio, tipoProcesso, rutaProyecto, ""+tiempoAnalisisVideo,
                         nombreProceso,fechaDia,"0",usuario,grupo);
                 
                 active = false;
@@ -309,7 +309,7 @@ public class HiloProceso extends Thread{
 
                 this.p.jLabel3.setText("(Registrando el proyecto...)");
 
-                registrarDB(nombreProceso,tipoProcesso,fechaDia,"0",folio,usuario,grupo,ruProyecto);
+                registrarDB(nombreProceso,tipoProcesso,fechaDia,tiempo,folio,usuario,grupo,ruProyecto);
 
             }
 
@@ -373,9 +373,12 @@ public class HiloProceso extends Thread{
             
             if(index.equals("Video.mp4")){
                 
+                System.out.println("index : "+index+" | proyecto : "+
+                        rProyecto+" | directorioServidor : "+directorioServidor);
+                
                 enviarArchivo(index, rProyecto, directorioServidor, ep);
                 
-            }else{
+            }else if( !index.equals("VideoOriginal.mp4") ){
                 
                 enviarDirectorio( index, rProyecto, directorioServidor, ep);
                 
