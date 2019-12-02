@@ -18,9 +18,12 @@ import herramientas.GestorImagenes;
 import static herramientas.GestorVideo.rutaImagenesFinal;
 import static herramientas.GestorVideo.tiempoAnalisisVideo;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -110,8 +113,8 @@ public class HiloProceso extends Thread{
                 
                 String tiempo = "0";
                 
-//                envioInformacionArchivos(folio, tipoProcesso, rutaProyecto, tiempo,
-//                        nombreProceso,fechaDia,"0",usuario,grupo);
+                envioInformacionArchivos(folio, tipoProcesso, rutaProyecto, tiempo,
+                        nombreProceso,fechaDia,"0",usuario,grupo);
                 
             }
             System.out.println("salio del hilo");
@@ -179,8 +182,8 @@ public class HiloProceso extends Thread{
                     grupo+"";
                 
                 
-//                envioInformacionArchivos(folio, tipoProcesso, rutaProyecto, ""+tiempo,
-//                        nombreProceso,fechaDia,"0",usuario,grupo);
+                envioInformacionArchivos(folio, tipoProcesso, rutaProyecto, ""+tiempo,
+                        nombreProceso,fechaDia,"0",usuario,grupo);
                 
                 active = false;
                 proceso.setVisible(false);
@@ -256,25 +259,54 @@ public class HiloProceso extends Thread{
     private void envioInformacionArchivos(String folio, String tipoProcesso, String rutaProyecto,
             String tiempo, String nombreProceso, String fechaDia, String string, String usuario, String grupo) {
         
-        //(Espere unos segundos)
-        this.p.jLabel3.setText("(Conectando al servidor...)");
+        int resp = JOptionPane.showConfirmDialog(null, "Desea registrar el proyecto en SMIM-Web", "SMIM-Web", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         
-        String ruProyecto = enviarEndPoint(folio, tipoProcesso, rutaProyecto);
-
-        if( ruProyecto == null ){
+        
+        int web = JOptionPane.showConfirmDialog(null, "¿Desea visitar el sitio?", "SMIM-Web", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if(web == 0){
             
-            JOptionPane.showMessageDialog(null,"No se pudo conectar al servidor",
-            "Error",JOptionPane.WARNING_MESSAGE);
+            try {
 
-        }else{
-            
-            this.p.jLabel3.setText("(Registrando el proyecto...)");
-            
-            registrarDB(nombreProceso,tipoProcesso,fechaDia,"0",folio,usuario,grupo,ruProyecto);
+                Desktop.getDesktop().browse(new URI("http://148.204.142.251/isc/SMIM/public"));
 
+            } catch (URISyntaxException ex) {
+
+                System.out.println(ex);
+
+            }catch(IOException e){
+
+                System.out.println(e);
+
+            }
+            
         }
         
-        this.p.jLabel3.setText("(Espere unos segundos)");
+        if(resp == 0){
+            
+            //(Espere unos segundos)
+            this.p.jLabel3.setText("(Conectando al servidor...)");
+
+            String ruProyecto = enviarEndPoint(folio, tipoProcesso, rutaProyecto);
+
+            if( ruProyecto == null ){
+
+                JOptionPane.showMessageDialog(null,"No se pudo conectar al servidor",
+                "Error",JOptionPane.WARNING_MESSAGE);
+
+            }else{
+
+                this.p.jLabel3.setText("(Registrando el proyecto...)");
+
+                registrarDB(nombreProceso,tipoProcesso,fechaDia,"0",folio,usuario,grupo,ruProyecto);
+
+            }
+
+            this.p.jLabel3.setText("(Espere unos segundos)");
+            
+        }
         
     }
     
