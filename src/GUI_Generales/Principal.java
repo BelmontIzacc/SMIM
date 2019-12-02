@@ -60,7 +60,7 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         tool = Toolkit.getDefaultToolkit();
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize((int) screenSize.getWidth()-200, (int) screenSize.getHeight()-100);
+        this.setSize((int) screenSize.getWidth()-50, (int) screenSize.getHeight()-25);
         this.setLocationRelativeTo(this);
         this.setTitle("SMIM");
         this.setResizable(false);

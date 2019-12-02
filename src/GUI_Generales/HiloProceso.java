@@ -65,6 +65,15 @@ public class HiloProceso extends Thread{
     @Override
     public void run() {
        
+        String aux = nombre.replaceAll("[^\\dA-Za-z]", "");
+        nombre = aux;
+        
+        String aux2 = grupo.replaceAll("[^\\dA-Za-z]", "");
+        grupo = aux2;
+        
+        String aux3 = nombreProceso.replaceAll("[^\\dA-Za-z]", "");
+        nombreProceso = aux3;
+        
         if(tipo == 1){ ///Tipo 1 --- Ventana Imagenes
             if(procesando == 1){
                 proceso.setVisible(true);
