@@ -11,7 +11,6 @@ import GUI_Video.Video;
 import herramientas.GestorImagenes;
 import static herramientas.GestorImagenes.rutas;
 import herramientas.GestorVideo;
-import java.awt.Image;
 import javax.swing.JDesktopPane;
 
 /**

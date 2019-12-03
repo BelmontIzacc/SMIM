@@ -20,7 +20,6 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import java.util.Calendar;
 
 /**
@@ -164,7 +163,7 @@ public class EndPoint {
             String urlParameters  = "key="+k+"&nombreProyecto="+np+"&tipo="+t+
                     "&fecha="+f+"&tiempoAnalisis="+ta+"&noSerie="+ns+"&alumno="+a+"&grupo="+g+"&linkProyecto="+lk;
             
-            System.out.println(urlParameters);
+//            System.out.println(urlParameters);
             
             byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
             int    postDataLength = postData.length;

@@ -165,11 +165,11 @@ public class Resultados extends javax.swing.JInternalFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(mostrarImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(41, Short.MAX_VALUE))
+                        .addContainerGap(28, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(izquierda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,11 +256,11 @@ public class Resultados extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -538,7 +538,7 @@ public class Resultados extends javax.swing.JInternalFrame {
                 .addGap(0, 0, 0))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 640));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1350, 640));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -626,7 +626,7 @@ public class Resultados extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_pauseActionPerformed
 
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
-        dispose();
+        this.dispose();
         GUI_Generales.Principal.archivos.setEnabled(true);
         GUI_Generales.Principal.creditos.setEnabled(true);
     }//GEN-LAST:event_menuActionPerformed
@@ -983,13 +983,13 @@ public class Resultados extends javax.swing.JInternalFrame {
             FileOutputStream fos = new FileOutputStream(archivoZip); 
             ZipOutputStream zos = new ZipOutputStream(fos); 
 
-            System.out.println("Destino del Zip : " + archivoZip);
+//            System.out.println("Destino del Zip : " + archivoZip);
 
             FileInputStream in = null;
 
             for ( String file: listaArchivos ) {
 
-                System.out.println("Archivo agregado : " + file); 
+//                System.out.println("Archivo agregado : " + file); 
                 ZipEntry ze = new ZipEntry(source + File.separator + file); 
                 zos.putNextEntry(ze); 
 
@@ -1012,7 +1012,7 @@ public class Resultados extends javax.swing.JInternalFrame {
             }
             
             zos.closeEntry(); 
-            System.out.println("Zip creado satisfactoriamente");
+//            System.out.println("Zip creado satisfactoriamente");
             zos.close();
             
             

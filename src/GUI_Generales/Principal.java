@@ -12,12 +12,12 @@ import static herramientas.GestorVideo.video;
 import GUI_Imagenes.Pasos;
 import GUI_Imagenes.Validacion;
 import GUI_Video.Video;
+import herramientas.GestorArchivo;
 import herramientas.GestorImagenes;
 import herramientas.GestorVideo;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
 import it.sauronsoftware.jave.MultimediaInfo;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 import java.util.ArrayList;
@@ -65,6 +65,9 @@ public class Principal extends javax.swing.JFrame {
         this.setTitle("SMIM");
         this.setResizable(false);
         mustraIconos();
+        
+        setIconImage(new ImageIcon(GestorArchivo.icono()).getImage());
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -171,7 +174,9 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
-        this.dispose();
+//        this.dispose();
+        System.exit(0);
+        setDefaultCloseOperation(Principal.EXIT_ON_CLOSE);
     }//GEN-LAST:event_SalirActionPerformed
 
     private void AbrirImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AbrirImagenActionPerformed
@@ -260,7 +265,7 @@ public class Principal extends javax.swing.JFrame {
         try {
             info = encoder.getInfo(new File(video));
             dInfo = info.getDuration();
-            System.out.println(""+dInfo);
+//            System.out.println(""+dInfo);
         } catch (EncoderException ex) {
             Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
         }

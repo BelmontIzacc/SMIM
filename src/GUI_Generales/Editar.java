@@ -17,7 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 /**

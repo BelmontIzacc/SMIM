@@ -46,7 +46,7 @@ public class GestorImagenes {
             //Si lo que seleccionaron es un directorio
             if(selectorArchivos.getSelectedFile().isDirectory()){
                 listaImagenes = selectorArchivos.getSelectedFile().listFiles();                
-                System.out.println("Selecciono un directorio");
+//                System.out.println("Selecciono un directorio");
                                 
                 //cambiar de un arreglo simple a un lista
                 rutas = new ArrayList<>();
@@ -55,26 +55,26 @@ public class GestorImagenes {
                 for(i=0;i < listaImagenes.length; i++){
                     String pat = listaImagenes[i].getPath();
                     String ref = pat.substring(pat.lastIndexOf(".")+1,pat.length());
-                    System.out.println(ref);
+//                    System.out.println(ref);
                     if(ref.equals("jpg") || ref.equals("jpeg") || ref.equals("png")){
-                        System.out.println("Archivo "+listaImagenes[i]+" --- Nombre: "+listaImagenes[i].getName());
-                        System.out.println("---------------------------------------------------------------------");
+//                        System.out.println("Archivo "+listaImagenes[i]+" --- Nombre: "+listaImagenes[i].getName());
+//                        System.out.println("---------------------------------------------------------------------");
                         rutas.add(pat);
                     }else{
-                        System.out.println("Se remueve de la lista"+listaImagenes[i].getName()+"\n");
+//                        System.out.println("Se remueve de la lista"+listaImagenes[i].getName()+"\n");
                     }
                 }
 //*********************************************************************************
             }else if(selectorArchivos.getSelectedFile().isFile()){
                 listaImagenes = selectorArchivos.getSelectedFiles();
-                System.out.println("Se selecciono una imagen");
+//                System.out.println("Se selecciono una imagen");
                 
                 rutas = new ArrayList<>();
                 
                 for(i=0;i < listaImagenes.length; i++){
                     String pat = listaImagenes[i].getPath();
                     rutas.add(pat);
-                    System.out.println("Imagen "+listaImagenes[i]+" ---- Nombre: "+ listaImagenes[i].getName());
+//                    System.out.println("Imagen "+listaImagenes[i]+" ---- Nombre: "+ listaImagenes[i].getName());
                 }
             }
             return true;

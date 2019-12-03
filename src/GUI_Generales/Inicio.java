@@ -7,6 +7,7 @@ package GUI_Generales;
 
 import conexion.EndPoint;
 import herramientas.Folio;
+import herramientas.GestorArchivo;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -42,6 +43,9 @@ public class Inicio extends javax.swing.JFrame implements Runnable{
         
         hiloCargando=new Thread(this);
         hiloCargando.start();
+        
+        setIconImage(new ImageIcon(GestorArchivo.icono()).getImage());
+        
     }
     
     public final void muestraFondo(){
@@ -315,7 +319,7 @@ public class Inicio extends javax.swing.JFrame implements Runnable{
     
     private void procesarInformacion( String resultado ) {
         
-        System.out.println("carga: "+resultado);
+//        System.out.println("carga: "+resultado);
         
         String datos[] = resultado.split("---");
         maxPuntos = Integer.parseInt(datos[3])-1;

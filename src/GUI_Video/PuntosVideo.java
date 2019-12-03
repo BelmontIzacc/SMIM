@@ -21,7 +21,6 @@ import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,7 +33,6 @@ import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.SwingConstants;
@@ -589,7 +587,7 @@ public class PuntosVideo extends javax.swing.JInternalFrame {
                 if(numPuntos<=maxPuntos){
                     Nodo n = new Nodo(evt.getX(),evt.getY(),3);
                     vectorNodo.add(n);
-                    System.out.println("X: "+evt.getX()+" , Y: "+evt.getY());
+//                    System.out.println("X: "+evt.getX()+" , Y: "+evt.getY());
                     numPuntos++;
                     
                     valorFalta = valorFalta - 1; //Para mostrar cuantos puntos faltan por seleccionar

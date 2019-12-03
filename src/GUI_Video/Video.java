@@ -540,7 +540,7 @@ public final class Video extends javax.swing.JInternalFrame {
             
             Process p = rt.exec(new String[]{"cmd.exe","/C","start","/MIN",rutaCbat.getAbsolutePath()});
 //            Process p = rt.exec(new String[]{"cmd.exe","/c","start","/MIN",rutaCbat.getAbsolutePath()});
-            System.out.println(p.isAlive());
+//            System.out.println(p.isAlive());
             BufferedReader input = new BufferedReader (new InputStreamReader(p.getInputStream()));
             while((linea=input.readLine())!=null){
                 System.out.println(linea);
@@ -591,7 +591,7 @@ public final class Video extends javax.swing.JInternalFrame {
                 File vAux = new File(GestorVideo.video);
                 info = encoder.getInfo(vAux);
                 vInfo = info.getDuration();
-                System.out.println(""+vInfo);
+//                System.out.println(""+vInfo);
             } catch (EncoderException ex) {
                 Logger.getLogger(Video.class.getName()).log(Level.SEVERE, null, ex);
             }

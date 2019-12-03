@@ -71,7 +71,7 @@ public class GestorVideo {
                     // se obtiene la imagen
                     Frame frame = frameGrabber.grabImage();
                     //muestras informacion de la imagen obtenida
-                    System.out.println(frame.toString());
+//                    System.out.println(frame.toString());
                     // se inicia la conversion de frame a imagen
                     opencv_core.IplImage image = converterToIplImage.convert(frame);
                     // se crea un buffered con el frame obtenido
@@ -137,7 +137,7 @@ public class GestorVideo {
                 File v = selectorArchivos.getSelectedFile();
                 video = v.getAbsolutePath();
                 selectorArchivos.cancelSelection();
-                System.out.println("Selecciono un video: "+video);
+//                System.out.println("Selecciono un video: "+video);
             }
             return true;
         }else{
@@ -187,7 +187,7 @@ public class GestorVideo {
                     // se obtiene la imagen
                     Frame frame = frameGrabber.grabImage();
                     //muestras informacion de la imagen obtenida
-                    System.out.println(frame.toString());
+//                    System.out.println(frame.toString());
                     // se inicia la conversion de frame a imagen
                     opencv_core.IplImage image = converterToIplImage.convert(frame);
                     // se crea un buffered con el frame obtenido
@@ -296,7 +296,7 @@ public class GestorVideo {
                     // se obtiene la imagen
                     Frame frame = frameGrabber.grabImage();
                     //muestras informacion de la imagen obtenida
-                    System.out.println(frame.toString());
+//                    System.out.println(frame.toString());
                     // se inicia la conversion de frame a imagen
                     opencv_core.IplImage image = converterToIplImage.convert(frame);
                     // se crea un buffered con el frame obtenido
@@ -356,7 +356,7 @@ public class GestorVideo {
                     nombreProceso+"_"+alumno+"_"+
                     grupo+"\\VideoOriginal.mp4";
             Path origen = Paths.get(video);
-            System.out.println(video);
+//            System.out.println(video);
             Path fin = Paths.get(rutaOrig);
             Files.copy(origen,fin);
             /////REDUCIDO

@@ -43,7 +43,7 @@ public class Procesando extends javax.swing.JInternalFrame {
     }
     
     public void muestraResultados(String rutaProyecto){
-        dispose();
+        this.dispose();
         
         if(rutaProyecto == null){
             

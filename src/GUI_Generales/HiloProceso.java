@@ -126,9 +126,9 @@ public class HiloProceso extends Thread{
                         nombreProceso,fechaDia,"0",usuario,grupo);
                 
             }
-            System.out.println("salio del hilo");
+//            System.out.println("salio del hilo");
             this.p.muestraResultados(rutaProyecto);
-             
+            
         }else if(tipo == 2){ ////Tipo 2 --- Ventana Video
             if(procesando == 1){
                 proceso.setVisible(true);
@@ -198,8 +198,9 @@ public class HiloProceso extends Thread{
                 proceso.setVisible(false);
                 
             }
-            System.out.println("salio del hilo");
+//            System.out.println("salio del hilo");
             this.p.muestraResultados(rutaProyecto);
+            
         }
         
     }
@@ -283,11 +284,11 @@ public class HiloProceso extends Thread{
 
             } catch (URISyntaxException ex) {
 
-                System.out.println(ex);
+//                System.out.println(ex);
 
             }catch(IOException e){
 
-                System.out.println(e);
+//                System.out.println(e);
 
             }
             
@@ -315,6 +316,9 @@ public class HiloProceso extends Thread{
 
             this.p.jLabel3.setText("(Espere unos segundos)");
             
+        }else{
+            this.p.dispose();
+            this.proceso.dispose();
         }
         
     }
@@ -369,12 +373,12 @@ public class HiloProceso extends Thread{
         
         for( String index : listado ){
             
-            System.out.println("Contenido : "+index);
+//            System.out.println("Contenido : "+index);
             
             if(index.equals("Video.mp4")){
                 
-                System.out.println("index : "+index+" | proyecto : "+
-                        rProyecto+" | directorioServidor : "+directorioServidor);
+//                System.out.println("index : "+index+" | proyecto : "+
+//                        rProyecto+" | directorioServidor : "+directorioServidor);
                 
                 enviarArchivo(index, rProyecto, directorioServidor, ep);
                 
@@ -386,7 +390,7 @@ public class HiloProceso extends Thread{
             
         }
         
-        System.out.println(" : ");
+//        System.out.println(" : ");
         
     }
     
@@ -483,7 +487,7 @@ public class HiloProceso extends Thread{
         String carpeta = ""+pos;
         
         String link = ep.enviarCredencialesArchivo(key,folio,tipoProceso,formato,carpeta);
-        System.out.println("Recibir destino : "+link);
+//        System.out.println("Recibir destino : "+link);
         
         return link;
         

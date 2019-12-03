@@ -29,7 +29,7 @@ public class HiloTest extends Thread {
        
         if(cargando == 1){
            
-            System.out.println("-------Cargando-----");
+//            System.out.println("-------Cargando-----");
             c.setVisible(true);
             cargando  = 0;
         }
@@ -40,7 +40,7 @@ public class HiloTest extends Thread {
              c.setVisible(false);
         }
         
-        System.out.println("salio del hilo");
+//        System.out.println("salio del hilo");
         this.c.mostrarVideo(video);    
        
     }

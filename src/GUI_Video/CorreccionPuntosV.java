@@ -14,11 +14,6 @@ import puntos.Nodo;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -365,7 +360,7 @@ public class CorreccionPuntosV extends javax.swing.JInternalFrame {
                 if(numPuntos<=maxPuntos){
                     Nodo n = new Nodo(evt.getX(),evt.getY(),4);
                     PuntosVideo.vectorNodo.add(n);
-                    System.out.println("X: "+evt.getX()+" , Y: "+evt.getY());
+//                    System.out.println("X: "+evt.getX()+" , Y: "+evt.getY());
                     numPuntos++;
 
                     valorFalta = valorFalta - 1; //Para mostrar cuantos puntos faltan por seleccionar

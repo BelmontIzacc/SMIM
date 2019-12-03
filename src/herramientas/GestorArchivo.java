@@ -28,6 +28,12 @@ import modelos.TemperaturaPromedioPuntos;
  */
 public class GestorArchivo {
     
+    public static String icono(){
+        
+        return "src\\Fotos\\SMIM.png";
+        
+    }
+    
     /**
      * Funcion principal para generar los archivos en formato txt
      * IBelmont
@@ -299,7 +305,7 @@ public class GestorArchivo {
                 s.close();
                 bw.close();
                 fw.close();
-                System.out.println();
+//                System.out.println();
             } catch (IOException ex) {
                 Logger.getLogger(GestorArchivo.class.getName()).log(Level.SEVERE, null, ex);
             }
